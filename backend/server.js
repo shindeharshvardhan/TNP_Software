@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config(); 
+const authRoutes = require('./routes/auth');
 
 const app = express(); // Initialize the Express app
 
@@ -22,6 +23,8 @@ app.use("/api/students", studentRoutes); // Use student routes for /api/students
 
 const eventRoutes = require("./routes/eventRoutes"); // Import your event routes
 app.use("/api/events", eventRoutes); // Use event routes for /api/events endpoint
+
+app.use('/api/auth', authRoutes);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

@@ -34,12 +34,14 @@ import {
 import Navbar from "./components/Navbar";
 // import Dashboard from "./components/Dashboard";
 import Companies from "./components/Companies";
-import Login from "./components/Login";
+import Login from './components/Login';
+import Register from './components/Register';
+import SetPassword from './components/SetPassword';
 import Followup from "./components/Followup";
 import StudentDetails from "./components/StudentDetails";
 import "./App.css";
 import Content from "./components/Content";
-
+ 
 const App = () => {
   return (
     <Router>
@@ -47,12 +49,14 @@ const App = () => {
         <Navbar />
         <div className="flex-grow">
           <Routes>
-            {/* <Route path="/" element={<Navigate to="/events" />} /> */}
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/set-password" element={<SetPassword />} />
             <Route path="/events" element={<Content />} />
             <Route path="/students" element={<Followup />} />
             <Route path="/details" element={<StudentDetails />} />
             <Route path="/companies" element={<Companies />} />
-            <Route path="/login" element={<Login />} />
+
             {/* <Route path="/events" element={<Content />} /> */}
           </Routes>
         </div>
