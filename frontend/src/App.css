@@ -1,0 +1,81 @@
+#glass-navbar {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  backdrop-filter: blur(10px); /* Blurring effect */
+  -webkit-backdrop-filter: blur(10px); /* Support for Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Border to add depth */
+  z-index: 1000;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #FDFDFD;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/op4.png'); /* Correct image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(10px); /* Adjust the blur level (higher value = more blur) */
+  opacity: 0.15;
+  z-index: 0; /* Adjust to 0 or 1 so it's visible but behind content */
+}
+
+
+.lottie-background {
+  position: fixed;
+  bottom: 0;
+  left: -20%;
+  width: 100%;
+  height: 50%;
+  z-index: 0; /* Push it behind the content */
+  pointer-events: none; /* Ensure it doesn’t block any interactions */
+  transform: scale(1.75);
+  filter: blur(10px); /* Add a blur effect if you want */
+  opacity: 0.75; /* Optional: Adjust opacity */
+}
+
+.background-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.background-lottie {
+  width: 100%;
+  height: 100%;
+  filter: blur(5px); /* Add a blur effect if you want */
+  opacity: 0.8; /* Optional: Adjust opacity */
+}
+
+.foreground-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Keeps this content in the foreground */
+}
+
+.underline-link {
+  position: relative;
+}
+
+.underline-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* Controls the space between text and underline */
+  width: 100%;
+  height: 4px; /* Thickness of the underline */
+  background-color:#6366f1; /* Color of the underline */
+  border-radius: 3px; /* Optional: for smoother underline edges */
+}
+

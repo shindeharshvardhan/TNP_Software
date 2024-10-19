@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.block {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Semi-transparent border */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  border-radius: 12px; /* Rounded corners for smoother look */
+  padding: 10px 15px; /* Add some padding */
+  margin-bottom: 16px; /* Spacing between fields */
+  transition: box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.block:focus {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
+}
+
+
+.glass-navbar {
+  width: 100%;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  backdrop-filter: blur(10px); /* Blurring effect */
+  -webkit-backdrop-filter: blur(10px); /* Support for Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Border to add depth */
+  z-index: 1000;
+}
