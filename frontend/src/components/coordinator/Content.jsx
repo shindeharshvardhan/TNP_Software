@@ -4,7 +4,7 @@ import axios from 'axios';
 import MyCalendar from './MyCalendar';
 import EventForm  from './EventForm';
 import EventList  from './EventList';
-import '../Content.css';
+import '../../Content.css';
 
 function Content() {
   const [showForm, setShowForm] = useState(false);

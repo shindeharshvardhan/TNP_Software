@@ -16,7 +16,7 @@ function ActivityForm({ event, onSubmit }) {
 
   return (
     <form
-      className="block mt-4 w-full bg-gray-100 p-4 rounded"
+      className="glassmorphism mt-4 w-full bg-gray-100 p-4 rounded"
       onSubmit={handleSubmit(onFormSubmit)}
     >
       <h3 className="text-lg font-bold mb-1">Event: {event.name}</h3>
@@ -27,7 +27,7 @@ function ActivityForm({ event, onSubmit }) {
         <input
           type="text"
           {...register("name", { required: true })}
-          className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+          className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
         />
         {errors.name && <p className="text-red-500">Activity name is required</p>}
       </label>
@@ -37,7 +37,7 @@ function ActivityForm({ event, onSubmit }) {
         <input
           type="date"
           {...register("date", { required: true })}
-          className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+          className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
         />
         {errors.date && <p className="text-red-500">Date is required</p>}
       </label>
@@ -47,7 +47,7 @@ function ActivityForm({ event, onSubmit }) {
         <input
           type="text"
           {...register("description")}
-          className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+          className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
         />
       </label>
 

@@ -11,7 +11,7 @@
   z-index: 1;
 }
 
-.block {
+.glassmorphism {
   background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
   backdrop-filter: blur(10px); /* Blur effect */
   border: 1px solid rgba(255, 255, 255, 0.3); /* Semi-transparent border */
@@ -22,17 +22,27 @@
   transition: box-shadow 0.3s ease; /* Smooth transition */
 }
 
-.block:focus {
+.glassmorphism:focus {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
+}
+
+.glassmorphism-2 {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+  backdrop-filter: blur(10px); /* Blur effect */
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  /* border-radius: 12px;  */
+  padding: 10px 15px; /* Add some padding */
+  margin-bottom: 16px; /* Spacing between fields */
+  transition: box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.glassmorphism-2:focus {
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
 }
 
 
-.glass-navbar {
-  width: 100%;
-  padding: 15px 0;
-  display: flex;
-  justify-content: center;
-  position: fixed;
+#glass-navbar {
   top: 0;
   background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
