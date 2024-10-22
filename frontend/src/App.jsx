@@ -22,6 +22,7 @@ import { CgSpinner } from "react-icons/cg";
 import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
 import StudentLogin from "./components/student/StudentLogin";
+import Company_Description_Form from "./components/coordinator/Company_Description_Form";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
@@ -55,7 +56,7 @@ const App = () => {
             {/* Public Routes */}
             <Route path="/" element={<Landing/>}/>
             <Route path="/student_registration" element={<StudentForm/>}/>
-            <Route path="/student_login" element={<StudentForm/>}/>
+            <Route path="/student_login" element={<StudentLogin/>}/>
             <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
             <Route path="/register" element={<Register />} />
             <Route path="/set-password" element={<SetPassword />} />
@@ -66,6 +67,7 @@ const App = () => {
             <Route path="/students" element={ <Followup /> } />
             <Route path="/details" element={<StudentDetails /> } />
             <Route path="/companies" element={<Companies /> } />
+            <Route path="/company_description_form" element={<Company_Description_Form/>}/>
 
           </Routes>
         </div>
