@@ -89,6 +89,7 @@ import { Navigate } from "react-router-dom";
 import "./App.css"; // Import your CSS
 import { ImSpinner8 } from "react-icons/im";
 import { CgSpinner } from "react-icons/cg";
+import FacultyDashboard from "./components/admin/FacultyDashboard";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
@@ -130,6 +131,7 @@ const App = () => {
             <Route path="/students" element={ <Followup /> } />
             <Route path="/details" element={<StudentDetails /> } />
             <Route path="/companies" element={<Companies /> } />
+            <Route path="/faculty_dashboard" element={<FacultyDashboard /> } />
 
           </Routes>
         </div>
