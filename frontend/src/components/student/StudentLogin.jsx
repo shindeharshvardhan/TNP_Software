@@ -40,7 +40,6 @@ function StudentLogin() {
 
   return (
     <>
-      <Navbar />
       <AuthLayout>
         <div className="container w-full h-full md:px-20 ">
           <div className="glassmorphism rounded-2xl p-10  mx-auto mt-10 shadow-2xl">

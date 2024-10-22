@@ -1,69 +1,141 @@
-import React from "react";
+// // import React from "react";
+// // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// // import StudentForm from './components/StudentForm'; 
+// // import Content from './components/Content';
+// // import Navbar from './components/Navbar';
+// // import './App.css';
+
+// // function App() {
+// //   return (
+// //     <Router>
+// //     <div className="App">
+      
+// //       <Navbar /> 
+// //       <Routes>
+// //         <Route path="/" element={<StudentForm />} />  
+// //         <Route path="/events" element={<Content />} />  
+
+// //       </Routes>
+// //     </div>
+// //   </Router>
+// //   );
+// // }
+
+// // export default App;
+
+
+// import React from "react";
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Routes,
+//   Navigate,
+// } from "react-router-dom";
+// import Navbar from "./components/Navbar";
+// // import Dashboard from "./components/Dashboard";
+// import Companies from "./components/Companies";
+// import Login from './components/Login';
+// import Register from './components/Register';
+// import SetPassword from './components/SetPassword';
+// import Followup from "./components/Followup";
+// import StudentDetails from "./components/StudentDetails";
+// import "./App.css";
+// import Content from "./components/Content";
+ 
+// const App = () => {
+//   return (
+//     <Router>
+//       <div className="flex flex-col h-screen w-full">
+//         <Navbar />
+//         <div className="flex-grow">
+//           <Routes>
+//           <Route path="/" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+//           <Route path="/register" element={<Register />} />
+//           <Route path="/set-password" element={<SetPassword />} />
+//             <Route path="/cdashboard" element={<Content />} />
+//             <Route path="/events" element={<Content />} />
+//             <Route path="/students" element={<Followup />} />
+//             <Route path="/details" element={<StudentDetails />} />
+//             <Route path="/companies" element={<Companies />} />
+
+//             {/* <Route path="/events" element={<Content />} /> */}
+//           </Routes>
+//         </div>
+//       </div>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
+import axios from "axios"; // For making API calls
 import Navbar from "./components/coordinator/Navbar";
+import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
 import Register from "./components/coordinator/Register";
 import SetPassword from "./components/coordinator/SetPassword";
 import Followup from "./components/coordinator/Followup";
-import "./App.css";
-import Content from "./components/coordinator/Content";
-import { NavLink } from "react-router-dom";
 import StudentDetails from "./components/coordinator/StudentDetails";
-
-// Minimal Navbar Component (for login, register, set-password)
-const MinimalNavbar = () => (
-  <div className="navbar pt-3 pl-16 pr-16 text-neutral-950">
-    <div className="navbar-start text-3xl font-semibold">
-      T&P FTE
-    </div>
-
-    <div className="navbar-end">
-      <NavLink to="/help" className="btn btn-ghost text-lg">
-        Need Help?
-      </NavLink>
-    </div>
-  </div>
-);
+import Content from "./components/coordinator/Content";
+import { Navigate } from "react-router-dom";
+import "./App.css"; // Import your CSS
+import { ImSpinner8 } from "react-icons/im";
+import { CgSpinner } from "react-icons/cg";
 
 const App = () => {
-  // Get current path
-  const location = useLocation();
+  const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
+  const [loading, setLoading] = useState(true); // To show a loading screen while fetching auth status
 
-  // Check for login, register, or set-password paths
-  const showMinimalNavbar = ["/", "/register", "/set-password"].includes(
-    location.pathname
-  );
+  // Check authentication status when the app loads
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/auth/auth-status', { withCredentials: true })
+      .then((response) => {
+        setAuthStatus(response.data.isAuthenticated);
+      })
+      .catch((error) => {
+        console.error('Error checking auth status:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  
+  // // Show loading screen while waiting for auth status to load
+  if (loading) {
+    return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
+  }
 
   return (
-    <div className="flex flex-col h-screen w-full">
-      {/* Conditionally render the minimal or full Navbar */}
-      {showMinimalNavbar ? <MinimalNavbar /> : <Navbar />}
+    <Router>
+      <div className="flex flex-col h-screen w-full">
+        <Navbar authStatus={authStatus} /> {/* Pass authStatus to Navbar */}
+        <div className="flex-grow">
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/set-password" element={<SetPassword />} />
 
-      <div className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/set-password" element={<SetPassword />} />
-          <Route path="/events" element={<Content />} />
-          <Route path="/students" element={<Followup />} />
-          <Route path="/details" element={<StudentDetails />} />
-          <Route path="/companies" element={<Companies />} />
-        </Routes>
+            {/* Protected Routes (Accessible only if logged in) */}
+            <Route path="/cdashboard" element={<Content /> } />
+            <Route path="/events" element={<Content /> } />
+            <Route path="/students" element={ <Followup /> } />
+            <Route path="/details" element={<StudentDetails /> } />
+            <Route path="/companies" element={<Companies /> } />
+
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 };
 
-const WrappedApp = () => (
-  <Router>
-    <App />
-  </Router>
-);
-
-export default WrappedApp;
+export default App;

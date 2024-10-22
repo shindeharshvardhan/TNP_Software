@@ -1,13 +1,15 @@
 import React from 'react'
-import Navbar from './Navbar'
 import techo from '../../public/techo.jpg'
 import Footer from './Footer'
+import Student from "../assets/student.png"
+import Coordinator from "../assets/coordinator.png"
+import { Link } from "react-router-dom";
+import Navbar from './Navbar'
 
 function Landing() {
     return (
         <>
-            <Navbar />
-            <div className="max-w-screen-2xl container md:px-20 px-4 pt-20 flex flex-col-reverse md:flex-row">
+            <div className="max-w-screen-2xl container md:px-20 px-4 pt-20 h-screen flex flex-col-reverse md:flex-row">
                 <div className="md:w-1/2 space-y-12 my-12 md:my-20 p-3">
                     <h1 className="text-4xl font-bold">Welcome to <br /> <span className="text-blue-500">the Training and Placement Cell</span> <br /> of the Faculty of Technology and Engineering, MSU.</h1>
                     <p className="text-xl">We are committed to empowering students with the skills, knowledge, and opportunities needed to excel in their professional journeys. Our cell connects students with leading industries, ensuring a bright future through internships and campus placements.</p>
@@ -16,6 +18,39 @@ function Landing() {
                     <img className='drop-shadow-2xl border-8' src={techo} alt="" />
                 </div>
             </div>
+
+            <div className='text-center'>
+                <h1 className='text-3xl font-bold mb-5'>Roles</h1>
+                <div className='flex justify-around'>
+                    <div className="card bg-base-100 w-96 shadow-xl">
+                        <figure>
+                            <img className='h-60' src={Student} alt="" />
+                        </figure>
+                        <div className="card-body items-center text-center bg-indigo-200">
+                            <h2 className="card-title">Student</h2>
+                            <div className="card-actions">
+                                <Link to="/student_registration">
+                                    <button className="btn btn-primary">Login</button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card bg-base-100 w-96 shadow-xl">
+                        <figure>
+                            <img className='h-60' src={Coordinator} alt="" />
+                        </figure>
+                        <div className="card-body items-center text-center bg-indigo-200">
+                            <h2 className="card-title">Coordinator</h2>
+                            <div className="card-actions">
+                                <Link to="/coordinator_login">
+                                    <button className="btn btn-primary">Login</button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="max-w-screen-2xl bg-blue-100 container md:p-20 md:my-28 px-4 pt-10 flex flex-col-reverse md:flex-row justify-center">
                 <div className='text-center'>
                     <h1 className="text-4xl font-bold">The Maharaja Sayajirao University of Baroda</h1>

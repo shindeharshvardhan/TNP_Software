@@ -686,7 +686,7 @@ function StudentForm() {
 
   const validateForm = () => {
     let isValid = true;
-
+    console.log("KK")
     if (prn.length !== 10) {
       setPrnError("PRN must be exactly 10 digits");
       isValid = false;
@@ -996,7 +996,7 @@ function StudentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
-
+    // console.log("Holl")
     if (validateForm()) {
       const confirmation = window.confirm("Do you want to submit the form?");
       if (confirmation) {
@@ -1114,8 +1114,8 @@ function StudentForm() {
 
   return (
     <>
-      <NavbarStudent />
-      <div className='max-w-screen-2xl container md:px-20 md:p-10 p-5'>
+      {/* <NavbarStudent /> */}
+      <div className='max-w-screen-2xl container md:px-20 md:p-10 p-5 bg-gradient-to-r from-indigo-200 to-white'>
         <div className='text-center mb-10'>
           <h1 className='text-2xl md:text-4xl font-bold text-neutral-950 p-3'>Student Registration Form</h1>
           <p className="text-sm md:text-lg bg-neutral-950 text-white mt-1 py-1 rounded">Please fill out the form carefully to register.</p>
@@ -1125,8 +1125,8 @@ function StudentForm() {
 
           <div className='glassmorphism shadow-lg rounded-lg md:p-8'>
 
-            <div className="md:flex">
-              <label className="form-control bg-transparent border-0 m-2 md:md:w-1/2 w-full">
+            <div className="flex">
+              <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
                     Permanent Registration Number (PRN): <span className="text-red-700">*</span>
@@ -2009,9 +2009,9 @@ function StudentForm() {
             </div>
 
             <div className='text-center py-3'>
-              <Link to="/student_login">
-              <button className="btn bg-indigo-500 text-white btn-info px-2 py-1" disabled={!isAgreed}>Submit</button>
-              </Link>
+              <a href="/student_login">
+              <button type="submit" className="btn bg-indigo-500 text-white btn-info px-2 py-1" disabled={!isAgreed}>Submit</button>
+              </a>
             </div>
           </div>
         </form>
