@@ -6,6 +6,8 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
 
 
 const app = express();
@@ -49,6 +51,9 @@ app.use(passport.session()); // Session-based authentication
 app.use('/api/auth', authRoutes);
 
 app.use('/api/events', eventRoutes);
+
+app.use("/api/students", student_Registration_Routes);
+app.use("/api/students/", student_Login_Routes);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

@@ -1,73 +1,3 @@
-// // import React from "react";
-// // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// // import StudentForm from './components/StudentForm'; 
-// // import Content from './components/Content';
-// // import Navbar from './components/Navbar';
-// // import './App.css';
-
-// // function App() {
-// //   return (
-// //     <Router>
-// //     <div className="App">
-      
-// //       <Navbar /> 
-// //       <Routes>
-// //         <Route path="/" element={<StudentForm />} />  
-// //         <Route path="/events" element={<Content />} />  
-
-// //       </Routes>
-// //     </div>
-// //   </Router>
-// //   );
-// // }
-
-// // export default App;
-
-
-// import React from "react";
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Routes,
-//   Navigate,
-// } from "react-router-dom";
-// import Navbar from "./components/Navbar";
-// // import Dashboard from "./components/Dashboard";
-// import Companies from "./components/Companies";
-// import Login from './components/Login';
-// import Register from './components/Register';
-// import SetPassword from './components/SetPassword';
-// import Followup from "./components/Followup";
-// import StudentDetails from "./components/StudentDetails";
-// import "./App.css";
-// import Content from "./components/Content";
- 
-// const App = () => {
-//   return (
-//     <Router>
-//       <div className="flex flex-col h-screen w-full">
-//         <Navbar />
-//         <div className="flex-grow">
-//           <Routes>
-//           <Route path="/" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
-//           <Route path="/register" element={<Register />} />
-//           <Route path="/set-password" element={<SetPassword />} />
-//             <Route path="/cdashboard" element={<Content />} />
-//             <Route path="/events" element={<Content />} />
-//             <Route path="/students" element={<Followup />} />
-//             <Route path="/details" element={<StudentDetails />} />
-//             <Route path="/companies" element={<Companies />} />
-
-//             {/* <Route path="/events" element={<Content />} /> */}
-//           </Routes>
-//         </div>
-//       </div>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -89,6 +19,9 @@ import { Navigate } from "react-router-dom";
 import "./App.css"; // Import your CSS
 import { ImSpinner8 } from "react-icons/im";
 import { CgSpinner } from "react-icons/cg";
+import Landing from "./components/Landing";
+import StudentForm from "./components/student/StudentForm";
+import StudentLogin from "./components/student/StudentLogin";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
@@ -120,7 +53,10 @@ const App = () => {
         <div className="flex-grow">
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+            <Route path="/" element={<Landing/>}/>
+            <Route path="/student_registration" element={<StudentForm/>}/>
+            <Route path="/student_login" element={<StudentForm/>}/>
+            <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
             <Route path="/register" element={<Register />} />
             <Route path="/set-password" element={<SetPassword />} />
 
