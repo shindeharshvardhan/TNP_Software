@@ -77,6 +77,7 @@ import {
 } from "react-router-dom";
 import axios from "axios"; // For making API calls
 import Navbar from "./components/coordinator/Navbar";
+import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
 import Register from "./components/coordinator/Register";
