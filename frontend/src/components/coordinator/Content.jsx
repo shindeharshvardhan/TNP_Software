@@ -11,6 +11,7 @@ function Content() {
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date()); // Selected date from calendar
   const [loading, setLoading] = useState(true); // State for loading
+  
 
   // Fetch events from the server when the component mounts
   useEffect(() => {
