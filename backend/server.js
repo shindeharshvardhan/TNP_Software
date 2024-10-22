@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
+const path = require("path");
+const student_registration_Routes = require("./routes/student_registration_Routes");
+const student_login_Routes = require("./routes/student_login_Routes");
 
 const app = express(); // Initialize the Express app
 
@@ -18,8 +21,9 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-const studentRoutes = require("./routes/student"); // Import your student routes
-app.use("/api/students", studentRoutes); // Use student routes for /api/students endpoint
+
+app.use("/api/students",student_registration_Routes);
+app.use("/api/students",student_login_Routes);
 
 const eventRoutes = require("./routes/eventRoutes"); // Import your event routes
 app.use("/api/events", eventRoutes); // Use event routes for /api/events endpoint
