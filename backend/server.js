@@ -1,30 +1,54 @@
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session"); // Import express-session
+const passport = require("passport"); // Import passport
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
+const eventRoutes = require('./routes/eventRoutes');
+const helmet = require('helmet');
 
-const app = express(); // Initialize the Express app
 
-// Connect to the database
-const db = require("./config/dbConfig"); // Ensure this connects correctly to your database
+const app = express();
+const db = require("./config/dbConfig");
 
-// Middleware
-app.use(cors()); // Enable Cross-Origin Resource Sharing for frontend-backend communication
-app.use(express.json()); // To parse incoming JSON requests
+// Middleware setup
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization"
+}));
 
-// Basic Route to verify the server is running
-app.get("/", (req, res) => {
-  res.send("Backend is running!");
-});
+app.use(express.json()); 
+app.use(helmet());
+
+// Initialize express-session
+const MongoStore = require('connect-mongo');
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URL,
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    sameSite: 'lax',
+    secure: false // Set true in production if using HTTPS
+  }
+}));
+
+
+// Initialize passport and session
+app.use(passport.initialize());
+app.use(passport.session()); // Session-based authentication
 
 // Routes
-const studentRoutes = require("./routes/student"); // Import your student routes
-app.use("/api/students", studentRoutes); // Use student routes for /api/students endpoint
-
-const eventRoutes = require("./routes/eventRoutes"); // Import your event routes
-app.use("/api/events", eventRoutes); // Use event routes for /api/events endpoint
-
 app.use('/api/auth', authRoutes);
+
+app.use('/api/events', eventRoutes);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

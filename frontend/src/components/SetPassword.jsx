@@ -7,8 +7,6 @@ function SetPassword() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    
-    // Extract the email from URL query params
     const email = new URLSearchParams(location.search).get('email');
 
     const handleSetPassword = async (e) => {
@@ -19,18 +17,16 @@ function SetPassword() {
             return;
         }
 
-        if (!email) {
-            alert("Email is missing");
-            return;
-        }
-
         try {
             const res = await axios.post('http://localhost:5000/api/auth/register', { email, password });
             alert(res.data.msg);
-            navigate('/');
+            if (res.data.msg === "User already exists. Please login.") {
+                navigate('/login');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
-            console.error(err);  // Log error details for debugging
-            alert(err.response?.data?.msg || "Error setting password");
+            alert(err.response.data.msg);
         }
     };
 
