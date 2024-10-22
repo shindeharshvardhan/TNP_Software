@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import necessary routing components
 import "./App.css";
-import AdminDashboard from "./components/AdminDashboard";
-import FacultyLogin from "./components/FacultyLogin";
-import FacultyDashboard from "./components/FacultyDashboard";
-import AssignCoordinator from "./components/AssignCoordinator";
-import CompanyList from "./components/CompanyList";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import FacultyLogin from "./components/admin/FacultyLogin";
+import FacultyDashboard from "./components/admin/FacultyDashboard";
+import AssignCoordinator from "./components/admin/AssignCoordinator";
+import CompanyList from "./components/admin/CompanyList";
 
 function App() {
   return (
