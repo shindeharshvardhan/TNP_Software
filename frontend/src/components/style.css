@@ -28,13 +28,13 @@
   }
   
   h2 {
-    font-family: 'Arial', sans-serif;
+    /* font-family: 'Arial', sans-serif; */
     color: #007bff;
   }
   
   h3 {
     margin-top: 20px;
-    font-family: 'Arial', sans-serif;
+    /* font-family: 'Arial', sans-serif; */
   }
   
   .btn {

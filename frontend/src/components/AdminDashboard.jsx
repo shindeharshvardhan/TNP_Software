@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';  // Custom CSS for additional styling
-// import 'bootstrap/dist/css/bootstrap.min.css';  // Bootstrap for styling
+import Navbar from './Navbar';
 
 const AdminDashboard = () => {
   const [coordinators, setCoordinators] = useState([]);
@@ -31,7 +31,6 @@ const AdminDashboard = () => {
     const prefilledCoordinators = lastYearData.map(coordinator => ({
       ...coordinator,
       year: nextYear,
-       // Clear the email for the new year
     }));
 
     setNewCoordinators(prefilledCoordinators);
@@ -74,142 +73,109 @@ const AdminDashboard = () => {
   }, {});
 
   return (
-    <div className="admin-dashboard">
+    <div className="admin-dashboard w-full">
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand" href="#">Admin Dashboard</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Settings</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Logout</a>
-            </li>
-          </ul>
+      {/* <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
+        <div className="text-lg font-bold">Admin Dashboard</div>
+        <div>
+          <a className="px-4 py-2 hover:bg-gray-700 rounded" href="#">Home</a>
+          <a className="px-4 py-2 hover:bg-gray-700 rounded" href="#">Settings</a>
+          <a className="px-4 py-2 hover:bg-gray-700 rounded" href="#">Logout</a>
         </div>
-      </nav>
+      </nav> */}
+      <Navbar/>
 
       {/* Sidebar and Content */}
-      <div className="container-fluid">
-        <div className="row">
-          {/* Sidebar */}
-          <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-            <div className="position-sticky">
-              <ul className="nav flex-column">
-                <li className="nav-item">
-                  <a className="nav-link active" href="#">
-                    <span data-feather="home"></span>
-                    Dashboard
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <span data-feather="file"></span>
-                    Coordinators
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>
-                    Reports
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+      <div className="flex">
+        {/* Sidebar */}
+        {/* <nav className="bg-gray-100 w-1/6 min-h-screen p-4">
+          <ul className="space-y-4">
+            <li><a className="text-indigo-500 font-semibold" href="#">Dashboard</a></li>
+            <li><a className="hover:text-indigo-500" href="#">Coordinators</a></li>
+            <li><a className="hover:text-indigo-500" href="#">Reports</a></li>
+          </ul>
+        </nav> */}
 
-          {/* Main Content */}
-          <main className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 className="h2">Dashboard</h1>
-            </div>
+        {/* Main Content */}
+        <main className="w-full h-full p-8">
+          <div className="border-b-2 pb-4 mb-4">
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+          </div>
 
-            {/* List past years with coordinator details in a table */}
-            <h3>Past Years</h3>
-            {Object.keys(groupedByYear).map((year) => (
-              <div key={year} className="mb-4">
-                <h4>Year: {year}</h4>
-                <table className="table table-bordered">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Department</th>
+          {/* List past years with coordinator details in a table */}
+          <h3 className="text-xl font-semibold mb-4">Past Years</h3>
+          {Object.keys(groupedByYear).map((year) => (
+            <div key={year} className="mb-6">
+              <h4 className="text-lg font-medium mb-2">Year: {year}</h4>
+              <table className="table-auto w-full border-collapse border border-gray-300">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="border border-gray-300 p-2">Name</th>
+                    <th className="border border-gray-300 p-2">Email</th>
+                    <th className="border border-gray-300 p-2">Department</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groupedByYear[year].map((coordinator, index) => (
+                    <tr key={index} className="border-t border-gray-300">
+                      <td className="p-2">{coordinator.name}</td>
+                      <td className="p-2">{coordinator.email}</td>
+                      <td className="p-2">{coordinator.department}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {groupedByYear[year].map((coordinator, index) => (
-                      <tr key={index}>
-                        <td>{coordinator.name}</td>
-                        <td>{coordinator.email}</td>
-                        <td>{coordinator.department}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
-
-            {/* Add new year */}
-            <div className="card mb-4">
-              <div className="card-body">
-                <h3>Add Coordinators for Year {Math.max(...coordinators.map(c => c.year)) + 1}</h3>
-                <button className="btn btn-primary" onClick={handleAddNewYear}>Add Coordinators for Next Year</button>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          ))}
 
-            {/* Display editable coordinator fields if a new year is selected */}
-            {selectedYear && (
-              <div className="card">
-                <div className="card-body">
-                  <h3>Edit Coordinators for {selectedYear}</h3>
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Department</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {newCoordinators.map((coordinator, index) => (
-                        <tr key={index}>
-                          <td>
-                            <input 
-                              type="text" 
-                              className="form-control"
-                              value={coordinator.name} 
-                              onChange={(e) => handleCoordinatorChange(index, 'name', e.target.value)} 
-                            />
-                          </td>
-                          <td>
-                            <input 
-                              type="email" 
-                              className="form-control"
-                              value={coordinator.email} 
-                              onChange={(e) => handleCoordinatorChange(index, 'email', e.target.value)} 
-                            />
-                          </td>
-                          <td>{coordinator.department}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <button className="btn btn-success" onClick={handleSubmitNewYear} disabled={loading}>
-                    {loading ? 'Submitting...' : 'Submit New Year'}
-                  </button>
-                </div>
-              </div>
-            )}
-          </main>
-        </div>
+          {/* Add new year */}
+          <div className="card bg-white shadow-lg p-4 mb-6">
+            <h3 className="text-lg font-semibold mb-4">Add Coordinators for Year {Math.max(...coordinators.map(c => c.year)) + 1}</h3>
+            <button className="bg-indigo-500 text-white px-4 py-2 rounded" onClick={handleAddNewYear}>Add Coordinators for Next Year</button>
+          </div>
+
+          {/* Display editable coordinator fields if a new year is selected */}
+          {selectedYear && (
+            <div className="card bg-white shadow-lg p-4">
+              <h3 className="text-lg font-semibold mb-4">Edit Coordinators for {selectedYear}</h3>
+              <table className="table-auto w-full border-collapse border border-gray-300">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border border-gray-300 p-2">Name</th>
+                    <th className="border border-gray-300 p-2">Email</th>
+                    <th className="border border-gray-300 p-2">Department</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {newCoordinators.map((coordinator, index) => (
+                    <tr key={index} className="border-t border-gray-300">
+                      <td className="p-2">
+                        <input 
+                          type="text" 
+                          className="border border-gray-300 p-1 rounded w-full" 
+                          value={coordinator.name} 
+                          onChange={(e) => handleCoordinatorChange(index, 'name', e.target.value)} 
+                        />
+                      </td>
+                      <td className="p-2">
+                        <input 
+                          type="email" 
+                          className="border border-gray-300 p-1 rounded w-full" 
+                          value={coordinator.email} 
+                          onChange={(e) => handleCoordinatorChange(index, 'email', e.target.value)} 
+                        />
+                      </td>
+                      <td className="p-2">{coordinator.department}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button className="bg-green-500 text-white px-4 py-2 rounded mt-4" onClick={handleSubmitNewYear} disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit New Year'}
+              </button>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );

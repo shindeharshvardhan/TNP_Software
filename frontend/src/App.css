@@ -1,38 +1,38 @@
-.App {
-  text-align: center;
+body {
+  position: relative;
+  height:auto;
+  width: 100%;
+  /* overflow: hidden; */
+  background-color: #ffffff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/op4.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(10px); 
+  opacity: 0.15;
+  z-index: 0; 
+} */
+
+.underline-link {
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.underline-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* Controls the space between text and underline */
+  width: 100%;
+  height: 4px; /* Thickness of the underline */
+  background-color:#6366f1; /* Color of the underline */
+  border-radius: 3px; /* Optional: for smoother underline edges */
 }
