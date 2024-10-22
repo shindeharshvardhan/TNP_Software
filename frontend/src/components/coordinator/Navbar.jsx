@@ -29,7 +29,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/students"
-                activeClassName="underline"
+                activeclassname="underline"
                 className={({ isActive }) =>
                   isActive
                     ? "underline decoration-black text-underline-offset-4"
@@ -53,7 +53,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/companies"
-                activeClassName="underline"
+                activeclassname="underline"
                 className={({ isActive }) =>
                   isActive
                     ? "underline decoration-black text-underline-offset-4"
@@ -74,7 +74,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/events"
-              activeClassName="underline"
+              activeclassname="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
               Dashboard
@@ -83,7 +83,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/students"
-              activeClassName="underline"
+              activeclassname="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
               Follow Up
@@ -92,7 +92,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/details"
-              activeClassName="underline"
+              activeclassname="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
               Student Details
@@ -101,7 +101,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/companies"
-              activeClassName="underline"
+              activeclassname="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
               Companies
