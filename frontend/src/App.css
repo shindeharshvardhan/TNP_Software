@@ -12,7 +12,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background-color: #FDFDFD;
+  background-color: #ffffff;
 }
 
 body::before {
@@ -22,46 +22,13 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/op4.png'); /* Correct image path */
+  background-image: url('./assets/op4.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(10px); /* Adjust the blur level (higher value = more blur) */
-  opacity: 0.15;
-  z-index: 0; /* Adjust to 0 or 1 so it's visible but behind content */
-}
-
-
-.lottie-background {
-  position: fixed;
-  bottom: 0;
-  left: -20%;
-  width: 100%;
-  height: 50%;
-  z-index: 0; /* Push it behind the content */
-  pointer-events: none; /* Ensure it doesn’t block any interactions */
-  transform: scale(1.75);
-  filter: blur(10px); /* Add a blur effect if you want */
-  opacity: 0.75; /* Optional: Adjust opacity */
-}
-
-.background-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.background-lottie {
-  width: 100%;
-  height: 100%;
-  filter: blur(5px); /* Add a blur effect if you want */
-  opacity: 0.8; /* Optional: Adjust opacity */
-}
-
-.foreground-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 1; /* Keeps this content in the foreground */
+  filter: blur(10px); 
+  opacity: 0.27;
+  z-index: 0; 
 }
 
 .underline-link {
@@ -79,3 +46,7 @@ body::before {
   border-radius: 3px; /* Optional: for smoother underline edges */
 }
 
+
+#bg-tnp{
+  background-image: url('./assets/TRY2.png'); /* Correct image path */
+}

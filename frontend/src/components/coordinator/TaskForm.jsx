@@ -86,7 +86,7 @@ function TaskForm({ event, onSubmit }) {
   };
 
   return (
-    <form className="block mt-4 w-full bg-gray-100 p-4 rounded">
+    <form className="glassmorphism mt-4 w-full bg-gray-100 p-4 rounded">
       <h3 className="text-lg font-bold mb-1">Event: {event.name}</h3>
 
 
@@ -98,7 +98,7 @@ function TaskForm({ event, onSubmit }) {
         <select
           value={numberOfTasks}
           onChange={(e) => setNumberOfTasks(Number(e.target.value))}
-          className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+          className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
         >
           {[1, 2, 3, 4, 5].map((num) => (
             <option key={num} value={num}>
@@ -116,7 +116,7 @@ function TaskForm({ event, onSubmit }) {
           <input
             type="text"
             {...register("taskName", { required: true })}
-            className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+            className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
           />
           {errors.taskName && <p className="text-red-500">Task name is required</p>}
         </label>
@@ -126,7 +126,7 @@ function TaskForm({ event, onSubmit }) {
           <input
             type="text"
             {...register("taskDescription", { required: true })}
-            className="block border p-2 w-full rounded bg-slate-100 text-neutral-950"
+            className="glassmorphism border p-2 w-full rounded bg-slate-100 text-neutral-950"
           />
           {errors.taskDescription && <p className="text-red-500">Task description is required</p>}
         </label>

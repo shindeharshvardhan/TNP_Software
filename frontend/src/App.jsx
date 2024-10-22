@@ -73,18 +73,21 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
+  useLocation,
 } from "react-router-dom";
 import axios from "axios"; // For making API calls
-import Navbar from "./components/Navbar";
-import Companies from "./components/Companies";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import SetPassword from "./components/SetPassword";
-import Followup from "./components/Followup";
-import StudentDetails from "./components/StudentDetails";
-import Content from "./components/Content";
+import Navbar from "./components/coordinator/Navbar";
+import Companies from "./components/coordinator/Companies";
+import Login from "./components/coordinator/Login";
+import Register from "./components/coordinator/Register";
+import SetPassword from "./components/coordinator/SetPassword";
+import Followup from "./components/coordinator/Followup";
+import StudentDetails from "./components/coordinator/StudentDetails";
+import Content from "./components/coordinator/Content";
+import { Navigate } from "react-router-dom";
 import "./App.css"; // Import your CSS
+import { ImSpinner8 } from "react-icons/im";
+import { CgSpinner } from "react-icons/cg";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
@@ -104,9 +107,9 @@ const App = () => {
       });
   }, []);
   
-  // Show loading screen while waiting for auth status to load
+  // // Show loading screen while waiting for auth status to load
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
   }
 
   return (
