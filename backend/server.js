@@ -24,6 +24,11 @@ app.use(cors({
 
 app.use(express.json()); 
 app.use(helmet());
+app.use('/sc', sr);
+app.use('/fc', fr);
+app.use('/cc', cr);
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
 const MongoStore = require('connect-mongo');
