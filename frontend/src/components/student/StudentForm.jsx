@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import termsPdf from '../../../public/TNP Terms.pdf'
+import termsPdf from '../../assets/TNP Terms.pdf'
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import axios from 'axios';

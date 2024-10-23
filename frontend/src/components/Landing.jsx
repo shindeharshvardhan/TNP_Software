@@ -1,5 +1,5 @@
 import React from 'react'
-import techo from '../../public/techo.jpg'
+import techo from '../assets/techo.jpg';
 import Footer from './Footer'
 import Student from "../assets/student.png"
 import Coordinator from "../assets/coordinator.png"

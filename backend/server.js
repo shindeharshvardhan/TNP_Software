@@ -5,7 +5,12 @@ const passport = require("passport"); // Import passport
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
-const helmet = require('helmet');
+//const helmet = require('helmet');
+const sr = require("./routes/s");
+const fr = require("./routes/f");
+const cr = require("./routes/c");
+const student_registration_Routes = require("./routes/student_registration_Routes");
+const student_login_Routes = require("./routes/student_login_Routes");
 
 
 const app = express();
@@ -20,7 +25,12 @@ app.use(cors({
 }));
 
 app.use(express.json()); 
-app.use(helmet());
+// app.use(helmet());
+app.use('/sc', sr);
+app.use('/fc', fr);
+app.use('/cc', cr);
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
 const MongoStore = require('connect-mongo');
@@ -49,6 +59,9 @@ app.use(passport.session()); // Session-based authentication
 app.use('/api/auth', authRoutes);
 
 app.use('/api/events', eventRoutes);
+
+app.use("/api/students", student_registration_Routes);
+app.use("/api/students/", student_login_Routes);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;
