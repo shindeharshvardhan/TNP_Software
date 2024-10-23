@@ -6,7 +6,9 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
-
+const sr = require('./routes/s');
+const fr = require('./routes/f');
+const cr = require('./routes/c');
 
 const app = express();
 const db = require("./config/dbConfig");
@@ -21,6 +23,9 @@ app.use(cors({
 
 app.use(express.json()); 
 app.use(helmet());
+app.use('/sc', sr);
+app.use('/fc', fr);
+app.use('/cc', cr);
 
 // Initialize express-session
 const MongoStore = require('connect-mongo');
