@@ -8,6 +8,7 @@ const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
 const student_Registration_Routes = require("./routes/student_registration_Routes");
 const student_Login_Routes = require("./routes/student_login_Routes");
+const company_description_routes = require("./routes/company_description_route");
 
 
 const app = express();
@@ -53,7 +54,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
 
 app.use("/api/students", student_Registration_Routes);
-app.use("/api/students/", student_Login_Routes);
+app.use("/api/students", student_Login_Routes);
+
+app.use("/api/company-description", company_description_routes);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;
