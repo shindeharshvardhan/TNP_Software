@@ -39,12 +39,12 @@ router.get('/search', async (req, res) => {
         // Find companies matching the query
         const companies = await Company.find({
             $or: [
-                { name: regex }, 
+                { name: regex },
                 { department: regex },
                 { 'visits.hrContactName': regex },
                 { 'visits.job_loc': regex }
             ]
-        }).select('name department'); // Return only name and department for suggestions
+        }); // Return only name and department for suggestions
 
         res.status(200).json(companies); // Send company name and department
     } catch (err) {

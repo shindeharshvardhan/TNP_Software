@@ -77,7 +77,7 @@ const SearchBar = ({ suggestions, query, setQuery, onSearch, onSelectCompany }) 
     const regex = new RegExp(`(${query})`, 'gi'); // case-insensitive matching
     const parts = text.split(regex);
     return parts.map((part, index) =>
-      regex.test(part) ? <span className="font-bold" key={index}>{part}</span> : part
+      regex.test(part) ? <strong key={index}>{part}</strong> : part
     );
   };
 

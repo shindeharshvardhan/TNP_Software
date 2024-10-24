@@ -14,7 +14,7 @@ const CompanyCard = ({ company }) => {
       <p className="text-gray-700">{company.department}</p>
 
       <div className="mt-2">
-        <h3 className="font-semibold">Visits:</h3>
+       
         {company.visits && company.visits.length > 0 ? (
           company.visits.map((visit, index) => (
             <div key={index} className="mt-2">

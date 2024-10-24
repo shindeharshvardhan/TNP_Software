@@ -6,10 +6,13 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
+const company_description_routes = require("./routes/company_description_route");
+const companyRoutes = require('./routes/searchCompanies');
 const sr = require("./routes/s");
 const fr = require("./routes/f");
-const cr = require("./routes/c");
-const companyRoutes = require('./routes/searchCompanies');
+const cr = require("./routes/c")
 
 
 const app = express();
@@ -28,8 +31,6 @@ app.use(helmet());
 app.use('/sc', sr);
 app.use('/fc', fr);
 app.use('/cc', cr);
-const student_Registration_Routes = require("./routes/student_registration_Routes");
-const student_Login_Routes = require("./routes/student_login_Routes");
 // Initialize express-session
 const MongoStore = require('connect-mongo');
 
@@ -60,6 +61,8 @@ app.use('/api/events', eventRoutes);
 
 app.use("/api/students", student_Registration_Routes);
 app.use("/api/students", student_Login_Routes);
+
+app.use("/api/company-description", company_description_routes);
 
 app.use('/api/companies', companyRoutes);
 
