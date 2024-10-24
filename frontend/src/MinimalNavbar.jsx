@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 // Minimal Navbar Component (for login, register, set-password)
 const MinimalNavbar = () => (
-  <div
-    id="glass-navbar"
-    className="navbar pt-3 pl-16 pr-16 text-neutral-950 bg-white"
-  >
-    <div className="navbar-start font-semibold">
-      <NavLink to="/" className="btn btn-ghost text-3xl">
-        T&P FTE
-      </NavLink>
-    </div>
+  <nav className="glassmorphism">
+    <div className="container mx-auto flex justify-between items-center py-2 px-6">
+      {/* Logo / Brand */}
+      <div className="font-bold text-3xl text-gray-800">
+        <NavLink to="/">T&P FTE</NavLink>
+      </div>
 
-    <div className="navbar-end">
-      <NavLink to="/help" className="btn btn-ghost text-lg">
-        Need Help?
-      </NavLink>
+      {/* Help Link */}
+      <div>
+        <NavLink to="/help" className="text-lg font-medium text-gray-600 hover:text-gray-900">
+          Need Help?
+        </NavLink>
+      </div>
     </div>
-  </div>
+  </nav>
 );
 
 export default MinimalNavbar;

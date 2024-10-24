@@ -6,7 +6,6 @@
 //   const [authStatus, setAuthStatus] = useState(false);
 //   const [user, setUser] = useState(null);
 
-  
 //     // Check authentication status
 //     // axios.get('http://localhost:5000/api/auth/auth-status', { withCredentials: true })
 //     // .then((response) => {
@@ -20,7 +19,6 @@
 //     // .catch((error) => {
 //     //   console.error('Error checking auth status:', error);
 //     // });
-  
 
 //   return (
 //     <>
@@ -165,7 +163,6 @@
 
 // export default Navbar;
 
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -233,9 +230,9 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <NavLink to="/" className="btn btn-ghost text-2xl">
-          T&P FTE
-        </NavLink>
+        <div className="font-bold text-3xl text-gray-800">
+          <NavLink to="/">T&P FTE</NavLink>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-lg">
@@ -254,7 +251,7 @@ function Navbar() {
               activeClassName="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
-               Coordinator
+              Coordinator
             </NavLink>
           </li>
           <li>
@@ -266,7 +263,6 @@ function Navbar() {
               Admin
             </NavLink>
           </li>
-
         </ul>
       </div>
       <div className="navbar-end">

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import axios from "axios"; // For making API calls
 import Navbar from "./components/coordinator/Navbar";
+import MinimalNavbar from "./MinimalNavbar";
 import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
@@ -42,39 +43,48 @@ const App = () => {
         setLoading(false);
       });
   }, []);
-  
-  // // Show loading screen while waiting for auth status to load
+
+  // Show loading screen while waiting for auth status to load
   if (loading) {
     return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
   }
 
+  const location = useLocation(); // Get the current location
+
+  // Determine whether to show the MinimalNavbar or Navbar
+  const isPublicRoute = ["/", "/student_registration", "/student_login", "/coordinator_login", "/register", "/set-password"].includes(location.pathname);
+
   return (
-    <Router>
-      <div className="flex flex-col h-screen w-full">
-        <Navbar authStatus={authStatus} /> {/* Pass authStatus to Navbar */}
-        <div className="flex-grow">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Landing/>}/>
-            <Route path="/student_registration" element={<StudentForm/>}/>
-            <Route path="/student_login" element={<StudentLogin/>}/>
-            <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/set-password" element={<SetPassword />} />
+    <div className="flex flex-col h-screen w-full">
+      {isPublicRoute ? <MinimalNavbar /> : <Navbar authStatus={authStatus} />} {/* Conditionally render Navbar */}
+      <div className="flex-grow">
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/student_registration" element={<StudentForm />} />
+          <Route path="/student_login" element={<StudentLogin />} />
+          <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/set-password" element={<SetPassword />} />
 
-            {/* Protected Routes (Accessible only if logged in) */}
-            <Route path="/cdashboard" element={<Content /> } />
-            <Route path="/events" element={<Content /> } />
-            <Route path="/students" element={ <Followup /> } />
-            <Route path="/details" element={<StudentDetails /> } />
-            <Route path="/companies" element={<Companies /> } />
-            <Route path="/company_description_form" element={<Company_Description_Form/>}/>
-
-          </Routes>
-        </div>
+          {/* Protected Routes (Accessible only if logged in) */}
+          <Route path="/cdashboard" element={<Content />} />
+          <Route path="/events" element={<Content />} />
+          <Route path="/students" element={<Followup />} />
+          <Route path="/details" element={<StudentDetails />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/company_description_form" element={<Company_Description_Form />} />
+        </Routes>
       </div>
-    </Router>
+    </div>
   );
 };
 
-export default App;
+// Wrap the App component with Router for useLocation
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
