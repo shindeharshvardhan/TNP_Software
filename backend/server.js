@@ -9,6 +9,9 @@ const helmet = require('helmet');
 const student_Registration_Routes = require("./routes/student_registration_Routes");
 const student_Login_Routes = require("./routes/student_login_Routes");
 const company_description_routes = require("./routes/company_description_route");
+const sr = require("./routes/s");
+const fr = require("./routes/f");
+const cr = require("./routes/c");
 
 
 const app = express();
@@ -27,8 +30,6 @@ app.use(helmet());
 app.use('/sc', sr);
 app.use('/fc', fr);
 app.use('/cc', cr);
-const student_Registration_Routes = require("./routes/student_registration_Routes");
-const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
 const MongoStore = require('connect-mongo');
