@@ -52,7 +52,7 @@ function Navbar() {
             </li>
             <li>
               <NavLink
-                to="/events"
+                to="/cdashboard"
                 className={({ isActive }) =>
                   isActive
                     ? "underline-link font-semibold text-black"
