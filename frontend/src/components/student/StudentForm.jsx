@@ -1147,10 +1147,23 @@ function StudentForm() {
           await generatePDF(); // Ensure this is an async function
           alert("Form submitted and PDF generated!");
         } catch (error) {
-          console.error("Error submitting form:", error);
-          alert(
-            "There was an issue registering the student. Please try again."
-          );
+          if(error.response){
+            if(error.response.status === 409){
+              const errorMessage = error.response.data.message;
+              if(errorMessage === "Email already registered"){
+                alert("The email address is already registered. Please use a different email.");
+              } else if(errorMessage === "PRN already registered"){
+                alert("The PRN is already registered. Please use a different PRN");
+              } else {
+                alert("There was an issue registering the student: "+errorMessage);
+              }
+            } else {
+              alert("An unexpected error occurred. Please try again later");
+            }
+          } else {
+            console.error("Error submitting form : ", error);
+            alert("There was an issue connecting to the server. Please try again. ");
+          }
         }
       }
     } else {
