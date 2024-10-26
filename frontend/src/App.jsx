@@ -33,7 +33,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5173/api/auth/auth-status", {
+      .get("http://localhost:5000/api/auth/auth-status", {
         withCredentials: true,
       })
       .then((response) => {
