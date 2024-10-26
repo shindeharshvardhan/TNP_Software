@@ -5,7 +5,8 @@ const visitSchema = new mongoose.Schema({
     year: { type: Number, required: true },
     hrContactName: { type: String },
     hrContactEmail: { type: String },
-    coordinator: { type: mongoose.Schema.Types.ObjectId, ref: 'Coordinator' } // Reference to Coordinator
+    job_loc: [{ type: String }]
+    // coordinator: { type: mongoose.Schema.Types.ObjectId, ref: 'Coordinator' } // Reference to Coordinator
 });
 
 // Define the Company schema

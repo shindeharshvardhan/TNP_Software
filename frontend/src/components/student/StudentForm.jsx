@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import termsPdf from "../../assets/TNP Terms.pdf";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import NavbarStudent from "./NavbarStudent";
-import "./studentform.css";
 
 function StudentForm() {
   const [prn, setPrn] = useState("");
@@ -1165,9 +1161,9 @@ function StudentForm() {
   return (
     <>
       {/* <NavbarStudent /> */}
-      <div className="w-full h-full container md:px-20 md:p-10 p-5">
+      <div className="w-full h-full container bg-indigo-200 md:px-20 md:p-10 p-5">
         <div className="text-center mb-10">
-          <h1 className="text-2xl md:text-4xl font-bold text-neutral-950 p-3">
+          <h1 className="text-2xl md:text-4xl font-bold text-neutral-950 p-3 mt-20">
             Student Registration Form
           </h1>
           <p className="text-sm md:text-lg bg-neutral-950 text-white mt-1 py-1 rounded">
@@ -1176,7 +1172,7 @@ function StudentForm() {
         </div>
 
         <form action="" onSubmit={handleSubmit}>
-          <div className="glassmorphism shadow-lg rounded-lg md:p-8">
+          <div className="bg-white shadow-lg rounded-lg md:p-8">
             <div className="flex">
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">

@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Logo from "../../assets/Logo.png";
 
 function Navbar() {
   return (
-    <nav className="glassmorphism">
-      <div className="container mx-auto px-6 py-2 flex justify-between items-center">
+    <nav className="glassmorphism fixed top-0 w-full z-50">
+      <div className="container mx-auto px-6 py-1 flex justify-between items-center h-16">
         {/* Mobile Menu */}
         <div className="lg:hidden">
           <button className="text-gray-600 focus:outline-none">
@@ -29,7 +30,9 @@ function Navbar() {
               <NavLink
                 to="/students"
                 className={({ isActive }) =>
-                  isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+                  isActive
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
                 }
               >
                 Follow Up
@@ -39,7 +42,9 @@ function Navbar() {
               <NavLink
                 to="/companies"
                 className={({ isActive }) =>
-                  isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+                  isActive
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
                 }
               >
                 Companies
@@ -49,7 +54,9 @@ function Navbar() {
               <NavLink
                 to="/events"
                 className={({ isActive }) =>
-                  isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+                  isActive
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
                 }
               >
                 Dashboard
@@ -59,16 +66,19 @@ function Navbar() {
         </div>
 
         {/* Logo */}
-        <NavLink to="/" className="text-2xl font-bold text-gray-800">
-          T&P FTE
-        </NavLink>
+        <div className="flex items-center font-bold text-3xl text-gray-800">
+          <img src={Logo} alt="Logo" className="aspect-square w-14 mr-2" />
+          <NavLink to="/">T&P FTE</NavLink>
+        </div>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-8">
           <NavLink
-            to="/events"
+            to="/cdashboard"
             className={({ isActive }) =>
-              isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
             }
           >
             Dashboard
@@ -76,7 +86,9 @@ function Navbar() {
           <NavLink
             to="/students"
             className={({ isActive }) =>
-              isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
             }
           >
             Follow Up
@@ -84,7 +96,9 @@ function Navbar() {
           <NavLink
             to="/details"
             className={({ isActive }) =>
-              isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
             }
           >
             Student Details
@@ -92,7 +106,9 @@ function Navbar() {
           <NavLink
             to="/companies"
             className={({ isActive }) =>
-              isActive ? "underline-link font-semibold text-black" : "text-gray-700"
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
             }
           >
             Companies

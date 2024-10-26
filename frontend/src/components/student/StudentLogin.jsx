@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../Navbar'
 import { useState } from 'react';
 import AuthLayout from './AuthLayout';
 
