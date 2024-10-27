@@ -17,15 +17,15 @@ import StudentDetails from "./components/coordinator/StudentDetails";
 import Content from "./components/coordinator/Content";
 import { Navigate } from "react-router-dom";
 import "./App.css"; // Import your CSS
-import { ImSpinner8 } from "react-icons/im";
-import { CgSpinner } from "react-icons/cg";
 import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
 import StudentLogin from "./components/student/StudentLogin";
 import Company_Description_Form from "./components/coordinator/Company_Description_Form";
+import Dashboard from "./components/student/Dashboard";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
+  const [studentAuthStatus, setStudentAuthStatus] = useState(false);
   const [loading, setLoading] = useState(true); // To show a loading screen while fetching auth status
 
   // Check authentication status when the app loads
@@ -41,7 +41,25 @@ const App = () => {
         setLoading(false);
       });
   }, []);
-  
+
+  useEffect(() => {
+    const checkStudentAuthStatus = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/students/auth-status",
+          { withCredentials: true }
+        );
+        setStudentAuthStatus(response.data.isAuthenticated);
+      } catch (error) {
+        console.error("Error checking student auth status:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkStudentAuthStatus();
+  }, []);
+
   // // Show loading screen while waiting for auth status to load
   if (loading) {
     return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
@@ -54,20 +72,47 @@ const App = () => {
         <div className="flex-grow">
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Landing/>}/>
-            <Route path="/student_registration" element={<StudentForm/>}/>
-            <Route path="/student_login" element={<StudentLogin/>}/>
-            <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+            <Route path="/" element={<Landing />} />
+            <Route
+              path="/student_registration"
+              element={
+                studentAuthStatus ? (
+                  <Navigate to="/student_dashboard" />
+                ) : (
+                  <StudentForm />
+                )
+              }
+            />
+            <Route
+              path="/student_login"
+              element={
+                !studentAuthStatus ? (
+                  <StudentLogin setStudentAuthStatus={setStudentAuthStatus} />
+                ) : (
+                  <Navigate to="/student_dashboard" />
+                )
+              }
+            />
             <Route path="/register" element={<Register />} />
             <Route path="/set-password" element={<SetPassword />} />
+            <Route
+              path="/student_dashboard"
+              element={
+                studentAuthStatus ? (
+                  <Dashboard />
+                ) : (
+                  <Navigate to="/student_login" />
+                )
+              }
+            />
 
             {/* Protected Routes (Accessible only if logged in) */}
-            <Route path="/cdashboard" element={<Content /> } />
-            <Route path="/events" element={<Content /> } />
-            <Route path="/students" element={ <Followup /> } />
-            <Route path="/details" element={<StudentDetails /> } />
-            <Route path="/companies" element={<Companies /> } />
-            <Route path="/company_description_form" element={<Company_Description_Form/>}/>
+            <Route path="/cdashboard" element={<Content />} />
+            <Route path="/events" element={<Content />} />
+            <Route path="/students" element={<Followup />} />
+            <Route path="/details" element={<StudentDetails />} />
+            <Route path="/companies" element={<Companies />} />
+            <Route path="/company_description_form" element={<Company_Description_Form />} />
 
           </Routes>
         </div>

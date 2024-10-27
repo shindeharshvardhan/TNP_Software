@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session"); // Import express-session
-const passport = require("passport"); // Import passport
+const session = require("express-session");
+const passport = require("passport");
+const cookieParser = require("cookie-parser"); // Import cookie-parser
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
@@ -12,28 +13,31 @@ const company_description_routes = require("./routes/company_description_route")
 const companyRoutes = require('./routes/searchCompanies');
 const sr = require("./routes/s");
 const fr = require("./routes/f");
-const cr = require("./routes/c")
-
+const cr = require("./routes/c");
+const studentPassport = require("./config/passportConfig");
+const MongoStore = require('connect-mongo');
+const csrf = require("csurf");
 
 const app = express();
 const db = require("./config/dbConfig");
+const csrfProtection = csrf({ cookie: true });
 
 // Middleware setup
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
-   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type, Authorization"
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization, csrf-token"
 }));
 
+app.use(cookieParser()); // Add this line to parse cookies
 app.use(express.json()); 
 app.use(helmet());
 app.use('/sc', sr);
 app.use('/fc', fr);
 app.use('/cc', cr);
-// Initialize express-session
-const MongoStore = require('connect-mongo');
 
+// Initialize express-session
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -43,27 +47,32 @@ app.use(session({
     collectionName: 'sessions'
   }),
   cookie: {
+    httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     sameSite: 'lax',
     secure: false // Set true in production if using HTTPS
   }
 }));
 
-
-// Initialize passport and session
+// Initialize passport
 app.use(passport.initialize());
-app.use(passport.session()); // Session-based authentication
+app.use(passport.session()); 
+app.use(studentPassport.initialize());
+app.use(studentPassport.session());
 
-// Routes
-app.use('/api/auth', authRoutes);
+// CSRF Token Route
+app.get("/api/csrf-token", csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
-app.use('/api/events', eventRoutes);
-
+// Apply CSRF protection to specific routes
 app.use("/api/students", student_Registration_Routes);
-app.use("/api/students", student_Login_Routes);
+app.use("/api/students", csrfProtection, student_Login_Routes);
 
+// Other Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/events', eventRoutes);
 app.use("/api/company-description", company_description_routes);
-
 app.use('/api/companies', companyRoutes);
 
 // Define the port using environment variables or a default value
