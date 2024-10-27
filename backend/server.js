@@ -4,6 +4,7 @@ const session = require("express-session");
 const passport = require("passport");
 const cookieParser = require("cookie-parser"); // Import cookie-parser
 require('dotenv').config(); 
+const mongoose = require('mongoose'); // Import mongoose
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');

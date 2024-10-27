@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import axios from "axios"; // For making API calls
 import Navbar from "./components/coordinator/Navbar";
+import MinimalNavbar from "./MinimalNavbar";
 import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
@@ -15,7 +17,6 @@ import SetPassword from "./components/coordinator/SetPassword";
 import Followup from "./components/coordinator/Followup";
 import StudentDetails from "./components/coordinator/StudentDetails";
 import Content from "./components/coordinator/Content";
-import { Navigate } from "react-router-dom";
 import "./App.css"; // Import your CSS
 import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
@@ -28,14 +29,18 @@ const App = () => {
   const [studentAuthStatus, setStudentAuthStatus] = useState(false);
   const [loading, setLoading] = useState(true); // To show a loading screen while fetching auth status
 
-  // Check authentication status when the app loads
+  const location = useLocation(); // Moved outside any conditional rendering
+
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/auth-status', { withCredentials: true })
+    axios
+      .get("http://localhost:5000/api/auth/auth-status", {
+        withCredentials: true,
+      })
       .then((response) => {
         setAuthStatus(response.data.isAuthenticated);
       })
       .catch((error) => {
-        console.error('Error checking auth status:', error);
+        console.error("Error checking auth status:", error);
       })
       .finally(() => {
         setLoading(false);
@@ -62,8 +67,12 @@ const App = () => {
 
   // // Show loading screen while waiting for auth status to load
   if (loading) {
-    return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
+    return <Loading />; // Ensure you're returning the Loading component when loading is true
   }
+
+  // Apply red background only for /student_registration route
+  const backgroundClass =
+    location.pathname === "/student_registration" ? "red-background" : "";
 
   return (
     <Router>
@@ -121,4 +130,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default AppWrapper;

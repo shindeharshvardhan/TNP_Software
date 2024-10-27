@@ -1,21 +1,3 @@
-// import React from "react";
-// import SearchBar from "./SearchBar";
-
-// function Companies() {
-//   return (
-//     <div className="h-full w-full flex flex-col justify-start items-center text-neutral-950 gap-3 pt-16">
-//       <p className="font-semibold text-5xl">Explore</p>
-//       <p className="font-normal text-lg">
-//         "Search and explore company details to identify the best opportunities
-//         for student placements."
-//       </p>
-//       <SearchBar/>
-//     </div>
-//   );
-// }
-
-// export default Companies;
-
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import CompanyCard from "./CompanyCard";
@@ -54,7 +36,7 @@ function Companies() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col justify-start items-center text-neutral-950 gap-3 pt-16">
+    <div className="h-full w-full flex flex-col justify-start items-center text-neutral-950 gap-3 pt-24">
       {/* Search Mode */}
       {!selectedCompany ? (
         <>
@@ -76,18 +58,8 @@ function Companies() {
           />
         </>
       ) : (
-        <>
-          {/* Company view with back button */}
-          <button
-            className="font-bold bg-neutral-950 text-zinc-200 rounded focus:outline-none p-2"
-            onClick={handleBack}
-          >
-            Back to Search
-          </button>
-
-          {/* Show the selected company's details */}
-          <CompanyCard company={selectedCompany} />
-        </>
+        // Show the selected company's details with back functionality within the CompanyCard component
+        <CompanyCard company={selectedCompany} onBack={handleBack} />
       )}
     </div>
   );
