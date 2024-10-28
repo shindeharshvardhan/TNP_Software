@@ -4,7 +4,6 @@ import Footer from './Footer'
 import Student from "../assets/student.png"
 import Coordinator from "../assets/coordinator.png"
 import { Link } from "react-router-dom";
-import Navbar from './Navbar'
 
 function Landing() {
     return (
@@ -19,8 +18,8 @@ function Landing() {
                 </div>
             </div>
 
-            <div className='text-center'>
-                <h1 className='text-3xl font-bold mb-5'>Roles</h1>
+            <div className='text-center bg-gradient-to-r from-indigo-100 to-white p-14'>
+                <h1 className='text-3xl font-bold mb-10'>Roles</h1>
                 <div className='flex justify-around'>
                     <div className="card bg-base-100 w-96 shadow-xl">
                         <figure>
@@ -51,7 +50,7 @@ function Landing() {
                 </div>
             </div>
 
-            <div className="max-w-screen-2xl bg-blue-100 container md:p-20 md:my-28 px-4 pt-10 flex flex-col-reverse md:flex-row justify-center">
+            <div className="max-w-screen-2xl container md:p-20 md:my-8 px-4 pt-10 flex flex-col-reverse md:flex-row justify-center">
                 <div className='text-center'>
                     <h1 className="text-4xl font-bold">The Maharaja Sayajirao University of Baroda</h1>
                     <h1 className="text-3xl font-bold text-blue-500">Faculty of Technology and Engineering</h1>

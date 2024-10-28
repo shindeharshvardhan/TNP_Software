@@ -11,6 +11,11 @@
   z-index: 1;
 }
 
+.student-form-input-style {
+  border: 1px solid rgb(110, 140, 255);
+  width: 100%;
+}
+
 .glassmorphism {
   background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
   backdrop-filter: blur(10px); /* Blur effect */
@@ -40,7 +45,6 @@
 .glassmorphism-2:focus {
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
 }
-
 
 #glass-navbar {
   top: 0;

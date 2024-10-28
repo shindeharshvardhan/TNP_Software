@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../Navbar'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import termsPdf from '../../../public/TNP Terms.pdf'
@@ -7,7 +6,6 @@ import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-import NavbarStudent from './NavbarStudent'
 
 function StudentForm() {
 
@@ -1114,7 +1112,6 @@ function StudentForm() {
 
   return (
     <>
-      {/* <NavbarStudent /> */}
       <div className='max-w-screen-2xl container md:px-20 md:p-10 p-5 bg-gradient-to-r from-indigo-200 to-white'>
         <div className='text-center mb-10'>
           <h1 className='text-2xl md:text-4xl font-bold text-neutral-950 p-3'>Student Registration Form</h1>
@@ -1125,7 +1122,7 @@ function StudentForm() {
 
           <div className='glassmorphism shadow-lg rounded-lg md:p-8'>
 
-            <div className="flex">
+            <div className="md:flex">
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1147,7 +1144,7 @@ function StudentForm() {
                 {prnerror && <p className="text-red-500">{prnerror}</p>}
               </label>
 
-              <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
+              <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
                     Upload Photo: <span className="text-red-700">*</span>
@@ -1171,7 +1168,7 @@ function StudentForm() {
               <div className="label">
                 <span className="label-text text-xl">Name: <span className="text-red-700">*</span></span>
               </div>
-              <div className='flex gap-4'>
+              <div className='md:flex gap-4'>
                 <input type="text" placeholder="Enter First Name" className="glassmorphism input input-info student-form-input-style" required value={fname} onChange={(e) => handleName(e, 'Firstname')} name='fname' />
                 <input type="text" placeholder="Enter Middle Name" className="glassmorphism input input-info student-form-input-style" required value={mname} onChange={(e) => handleName(e, 'Middlename')} name='mname' />
                 <input type="text" placeholder="Enter Surame" className="glassmorphism input input-info student-form-input-style" required value={lname} onChange={(e) => handleName(e, "Lastname")} name='lname' />
@@ -1179,8 +1176,8 @@ function StudentForm() {
               {nameerror && <p className="text-red-500">{nameerror}</p>}
             </label>
 
-            <div className='flex'>
-              <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
+            <div className='md:flex'>
+              <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">Email: <span className="text-red-700">*</span></span>
                 </div>
@@ -1201,7 +1198,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Parent Mobile Number: <span className="text-red-700">*</span></span>
@@ -1222,7 +1219,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Gender: <span className="text-red-700">*</span></span>
@@ -1253,7 +1250,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
 
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
@@ -1284,7 +1281,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Height (cm): <span className="text-red-700">*</span></span>
@@ -1308,7 +1305,7 @@ function StudentForm() {
 
             <h4 className='text-2xl font-bold mx-3 mt-3'>Permanent Address: <span className="text-red-700">*</span></h4>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Street:</span>
@@ -1328,7 +1325,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">State:</span>
@@ -1354,7 +1351,7 @@ function StudentForm() {
 
             <h4 className='text-2xl font-bold mx-3 mt-3'>Current Address: <span className="text-red-700">*</span></h4>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Street:</span>
@@ -1374,7 +1371,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">State:</span>
@@ -1397,7 +1394,7 @@ function StudentForm() {
 
             <h4 className='text-2xl font-bold mx-3 mt-3'>SSC Details: <span className="text-red-700">*</span></h4>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Passing Year:</span>
@@ -1418,7 +1415,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Total Marks:</span>
@@ -1440,7 +1437,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Percentage:</span>
@@ -1699,7 +1696,7 @@ function StudentForm() {
               <div id='ug'>
 
                 <h4 className='text-2xl font-bold mx-3 mt-4'>UG Details:</h4>
-                <div className='flex'>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Department:</span>
@@ -1735,7 +1732,7 @@ function StudentForm() {
                   </label>
                 </div>
 
-                <div className='flex'>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Number of ATKT:</span>
@@ -1761,7 +1758,7 @@ function StudentForm() {
 
                 {ugData.semesters.map((sem, index) => (
                   <div key={index} className='glassmorphism m-4 p-4'>
-                    <div className="flex">
+                    <div className="md:flex">
                       <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                         <span className="label-text text-xl">Sem-{index + 1} Year:</span>
                         <input
@@ -1789,7 +1786,7 @@ function StudentForm() {
                       </label>
                       </div>
 
-                    <div className="flex">
+                    <div className="md:flex">
                       <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                         <span className="label-text text-xl">Sem-{index + 1} Attempts:</span>
                         <input
@@ -1826,7 +1823,7 @@ function StudentForm() {
               <div id='pg'>
 
                 <h4 className='text-2xl font-bold mx-3 mt-4'>PG Details:</h4>
-                <div className='flex'>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Department:</span>
@@ -1883,7 +1880,7 @@ function StudentForm() {
                   </label>
                 </div>
 
-                <div className='flex'>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Number of ATKT:</span>
@@ -1900,7 +1897,7 @@ function StudentForm() {
 
                   <div className='glassmorphism m-4 p-4'>
                     <div key={index}>
-                      <div className='flex'>
+                      <div className='md:flex'>
                         <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                           <div className="label">
                             <span className="label-text text-xl">Sem-{index + 1} Passing Year:</span>
@@ -1937,10 +1934,10 @@ function StudentForm() {
                         </label>
                       </div>
 
-                      <div className='flex'>
+                      <div className='md:flex'>
                         <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                           <div className="label">
-                            <span className="label-text text-xl">Number of attempts:</span>
+                            <span className="label-text text-xl">Sem-{index + 1} Attempts:</span>
                           </div>
                           <div className='flex gap-4'>
                             <input
@@ -1977,7 +1974,7 @@ function StudentForm() {
               </div>
             )}
 
-            <div className='flex'>
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Password: <span className="text-red-700">*</span></span>

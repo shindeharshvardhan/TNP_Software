@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../Navbar'
 import { useState } from 'react';
 import AuthLayout from './AuthLayout';
 
@@ -41,8 +40,8 @@ function StudentLogin() {
   return (
     <>
       <AuthLayout>
-        <div className="container w-full h-full md:px-20 ">
-          <div className="glassmorphism rounded-2xl p-10  mx-auto mt-10 shadow-2xl">
+        <div className="container w-full h-full md:px-20">
+          <div className="glassmorphism rounded-2xl p-20 mx-auto mt-10 shadow-2xl bg-gradient-to-r from-indigo-100 to-white">
             <h1 className="text-4xl font-bold text-neutral-950 p-3">Login</h1>
 
             <form onSubmit={handleSubmit}>
