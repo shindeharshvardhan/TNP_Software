@@ -7,19 +7,20 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
-      alert(res.data.msg);
-      // Handle success: Save token, redirect, etc.
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5000/api/auth/login', {
+                email,
+                password,
+            }, { withCredentials: true }); // Ensure credentials are included in request
+    
+            console.log(res.data);
+            navigate('/cdashboard');
+        } catch (err) {
+            alert(err.response?.data?.msg || 'Something went wrong');
+        }
+    };
 
   return (
     <AuthLayout>

@@ -11,6 +11,7 @@ function Content() {
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date()); // Selected date from calendar
   const [loading, setLoading] = useState(true); // State for loading
+  
 
   // Fetch events from the server when the component mounts
   useEffect(() => {
@@ -76,7 +77,7 @@ const getEventsForSelectedDate = () => {
   };
 
   return (
-    <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32'>
+    <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32 pt-20'>
       {/* Calendar Section */}
       <div className='flex flex-col items-center'>
         <MyCalendar
