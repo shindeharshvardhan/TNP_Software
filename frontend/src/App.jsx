@@ -4,12 +4,12 @@ import {
   Route,
   Routes,
   useLocation,
-  Navigate,
+  Navigate
 } from "react-router-dom";
-import axios from "axios"; // For making API calls
+import axios from "axios";
 import Navbar from "./components/coordinator/Navbar";
 import MinimalNavbar from "./MinimalNavbar";
-import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
+import StudentNavbar from "./components/student/NavbarStudent";
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
 import Register from "./components/coordinator/Register";
@@ -17,19 +17,21 @@ import SetPassword from "./components/coordinator/SetPassword";
 import Followup from "./components/coordinator/Followup";
 import StudentDetails from "./components/coordinator/StudentDetails";
 import Content from "./components/coordinator/Content";
-import "./App.css"; // Import your CSS
+import "./App.css";
 import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
 import StudentLogin from "./components/student/StudentLogin";
 import Company_Description_Form from "./components/coordinator/Company_Description_Form";
+import FacultyDashboard from "./components/admin/FacultyDashboard";
 import Dashboard from "./components/student/Dashboard";
+import Loading from "./Loading";
 
 const App = () => {
-  const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
+  const [authStatus, setAuthStatus] = useState(false);
   const [studentAuthStatus, setStudentAuthStatus] = useState(false);
-  const [loading, setLoading] = useState(true); // To show a loading screen while fetching auth status
+  const [loading, setLoading] = useState(true);
 
-  const location = useLocation(); // Moved outside any conditional rendering
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -65,69 +67,77 @@ const App = () => {
     checkStudentAuthStatus();
   }, []);
 
-  // // Show loading screen while waiting for auth status to load
+  const isPublicRoute = [
+    "/",
+    "/student_registration",
+    "/student_login",
+    "/coordinator_login",
+    "/register",
+    "/set-password",
+  ].includes(location.pathname);
+
   if (loading) {
-    return <Loading />; // Ensure you're returning the Loading component when loading is true
+    return <Loading />;
   }
 
-  // Apply red background only for /student_registration route
   const backgroundClass =
     location.pathname === "/student_registration" ? "red-background" : "";
 
   return (
-    <Router>
-      <div className="flex flex-col h-screen w-full">
-        <Navbar authStatus={authStatus} /> {/* Pass authStatus to Navbar */}
-        <div className="flex-grow">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Landing />} />
-            <Route
-              path="/student_registration"
-              element={
-                studentAuthStatus ? (
-                  <Navigate to="/student_dashboard" />
-                ) : (
-                  <StudentForm />
-                )
-              }
-            />
-            <Route
-              path="/student_login"
-              element={
-                !studentAuthStatus ? (
-                  <StudentLogin setStudentAuthStatus={setStudentAuthStatus} />
-                ) : (
-                  <Navigate to="/student_dashboard" />
-                )
-              }
-            />
-            <Route path="/register" element={<Register />} />
-            <Route path="/set-password" element={<SetPassword />} />
-            <Route
-              path="/student_dashboard"
-              element={
-                studentAuthStatus ? (
-                  <Dashboard />
-                ) : (
-                  <Navigate to="/student_login" />
-                )
-              }
-            />
+    <div className={`flex flex-col h-screen w-full ${backgroundClass}`}>
+      {isPublicRoute ? <MinimalNavbar /> : <Navbar authStatus={authStatus} />}
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/student_registration"
+            element={
+              studentAuthStatus ? (
+                <Navigate to="/student_dashboard" />
+              ) : (
+                <StudentForm />
+              )
+            }
+          />
+          <Route
+            path="/student_login"
+            element={
+              !studentAuthStatus ? (
+                <StudentLogin setStudentAuthStatus={setStudentAuthStatus} />
+              ) : (
+                <Navigate to="/student_dashboard" />
+              )
+            }
+          />
+          <Route path="/coordinator_login" element={!authStatus ? <Login /> : <Navigate to="/cdashboard" />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/set-password" element={<SetPassword />} />
+          <Route
+            path="/student_dashboard"
+            element={
+              studentAuthStatus ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/student_login" />
+              )
+            }
+          />
 
-            {/* Protected Routes (Accessible only if logged in) */}
-            <Route path="/cdashboard" element={<Content />} />
-            <Route path="/events" element={<Content />} />
-            <Route path="/students" element={<Followup />} />
-            <Route path="/details" element={<StudentDetails />} />
-            <Route path="/companies" element={<Companies />} />
-            <Route path="/company_description_form" element={<Company_Description_Form />} />
-
-          </Routes>
-        </div>
+          <Route path="/cdashboard" element={<Content />} />
+          <Route path="/students" element={<Followup />} />
+          <Route path="/details" element={<StudentDetails />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/company_description_form" element={<Company_Description_Form />} />
+        </Routes>
       </div>
-    </Router>
+    </div>
   );
 };
+
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
 
 export default AppWrapper;
