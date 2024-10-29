@@ -51,7 +51,7 @@ function Login() {
 
   return (
     <AuthLayout>
-      <div className="glassmorphism p-8 shadow-lg rounded-lg w-full">
+      <div className="glassmorphism p-8 shadow-lg rounded-lg w-full bg-gradient-to-r from-indigo-100 to-white p-14">
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Error message */}
         <form onSubmit={handleLogin} className="p-2 space-y-4">

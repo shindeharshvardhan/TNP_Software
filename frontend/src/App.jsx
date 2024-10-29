@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
+  Navigate
 } from "react-router-dom";
-import axios from "axios"; // For making API calls
+import axios from "axios";
 import Navbar from "./components/coordinator/Navbar";
-import StudentNavbar from "./components/student/NavbarStudent"; // Import StudentNavbar
+import MinimalNavbar from "./MinimalNavbar";
+import StudentNavbar from "./components/student/NavbarStudent";
 import Companies from "./components/coordinator/Companies";
 import Login from "./components/coordinator/Login";
 import Register from "./components/coordinator/Register";
@@ -15,10 +17,7 @@ import SetPassword from "./components/coordinator/SetPassword";
 import Followup from "./components/coordinator/Followup";
 import StudentDetails from "./components/coordinator/StudentDetails";
 import Content from "./components/coordinator/Content";
-import { Navigate } from "react-router-dom";
-import "./App.css"; // Import your CSS
-import { ImSpinner8 } from "react-icons/im";
-import { CgSpinner } from "react-icons/cg";
+import "./App.css";
 import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
 import StudentLogin from "./components/student/StudentLogin";
@@ -33,8 +32,9 @@ import LoginPage from "./components/admin/LoginPage";
 import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from './components/Contexts/Studentcoordinatorauth'; 
 const App = () => {
-  const [authStatus, setAuthStatus] = useState(false); // To track if user is authenticated
-  const [loading, setLoading] = useState(true); // To show a loading screen while fetching auth status
+  const [authStatus, setAuthStatus] = useState(false);
+  const [studentAuthStatus, setStudentAuthStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Check authentication status when the app loads
   // useEffect(() => {
@@ -54,6 +54,9 @@ const App = () => {
   // if (loading) {
   //   return <div className="w-full h-screen flex items-center justify-center">Loading</div>;
   // }
+
+  const backgroundClass =
+    location.pathname === "/student_registration" ? "red-background" : "";
 
   return (
     <Router>
@@ -102,4 +105,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default AppWrapper;

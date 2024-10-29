@@ -1,15 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Logo from "../../assets/Logo.png";
 
 function Navbar() {
   return (
-    <div id="glass-navbar" className="navbar pt-3 pl-16 pr-16 text-neutral-950">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+    <nav className="glassmorphism fixed top-0 w-full z-50">
+      <div className="container mx-auto px-6 py-1 flex justify-between items-center h-16">
+        {/* Mobile Menu */}
+        <div className="lg:hidden">
+          <button className="text-gray-600 focus:outline-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -21,100 +23,104 @@ function Navbar() {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-lg"
-          >
+          </button>
+          {/* Dropdown for mobile */}
+          <ul className="absolute mt-2 bg-white shadow-lg rounded-lg w-48 text-lg">
             <li>
               <NavLink
                 to="/students"
-                activeClassName="underline"
                 className={({ isActive }) =>
                   isActive
-                    ? "underline decoration-black text-underline-offset-4"
-                    : ""
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
                 }
               >
                 Follow Up
               </NavLink>
             </li>
             <li>
-              <a>Parent</a>
-              <ul className="p-2 text-lg">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
+              <NavLink
+                to="/companies"
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
+                }
+              >
+                Companies
+              </NavLink>
             </li>
             <li>
               <NavLink
-                to="/companies"
-                activeClassName="underline"
+                to="/cdashboard"
                 className={({ isActive }) =>
                   isActive
-                    ? "underline decoration-black text-underline-offset-4"
-                    : ""
+                    ? "underline-link font-semibold text-black"
+                    : "text-gray-700"
                 }
               >
-                Item 3
+                Dashboard
               </NavLink>
             </li>
           </ul>
         </div>
-        <NavLink to="/" className="btn btn-ghost text-2xl">
-          T&P FTE
-        </NavLink>
-      </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-lg">
-          <li>
-            <NavLink
-              to="/events"
-              activeClassName="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
-            >
-              Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/students"
-              activeClassName="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
-            >
-              Follow Up
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/details"
-              activeClassName="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
-            >
-              Student Details
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/companies"
-              activeClassName="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
-            >
-              Companies
-            </NavLink>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle mx-2">
-          <div className="indicator">
+
+        {/* Logo */}
+        <div className="flex items-center font-bold text-3xl text-gray-800">
+          <img src={Logo} alt="Logo" className="aspect-square w-14 mr-2" />
+          <NavLink to="/">T&P FTE</NavLink>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex space-x-8">
+          <NavLink
+            to="/cdashboard"
+            className={({ isActive }) =>
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
+            }
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/students"
+            className={({ isActive }) =>
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
+            }
+          >
+            Follow Up
+          </NavLink>
+          <NavLink
+            to="/details"
+            className={({ isActive }) =>
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
+            }
+          >
+            Student Details
+          </NavLink>
+          <NavLink
+            to="/companies"
+            className={({ isActive }) =>
+              isActive
+                ? "underline-link font-semibold text-black"
+                : "text-gray-700"
+            }
+          >
+            Companies
+          </NavLink>
+        </div>
+
+        {/* Right side buttons */}
+        <div className="flex items-center space-x-4">
+          <button className="relative focus:outline-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-6 w-6 text-gray-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

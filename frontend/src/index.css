@@ -11,6 +11,11 @@
   z-index: 1;
 }
 
+.student-form-input-style {
+  border: 1px solid rgb(110, 140, 255);
+  width: 100%;
+}
+
 .glassmorphism {
   background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
   backdrop-filter: blur(10px); /* Blur effect */
@@ -41,13 +46,18 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
 }
 
+.suggestions-dropdown {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-#glass-navbar {
-  top: 0;
-  background: rgba(255, 255, 255, 1); /* Semi-transparent white */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  backdrop-filter: blur(10px); /* Blurring effect */
-  -webkit-backdrop-filter: blur(10px); /* Support for Safari */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Border to add depth */
-  z-index: 1000;
+.suggestions-dropdown div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions-dropdown div:hover {
+  background-color: #f1f1f1;
 }
