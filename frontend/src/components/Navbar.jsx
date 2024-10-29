@@ -254,7 +254,7 @@ function Navbar() {
               activeClassName="underline"
               className={({ isActive }) => (isActive ? "underline-link" : "")}
             >
-               Coordinator
+              Coordinator
             </NavLink>
           </li>
           <li>
@@ -266,7 +266,6 @@ function Navbar() {
               Admin
             </NavLink>
           </li>
-
         </ul>
       </div>
       <div className="navbar-end">
@@ -290,10 +289,19 @@ function Navbar() {
           </div>
         </button>
         <NavLink
-          className="btn rounded-full text-lg text-slate-100 bg-neutral-950"
+          className="btn rounded-full text-lg text-slate-100 bg-neutral-950 mx-2"
           to="/login"
         >
           Sign up / Log in
+        </NavLink>
+        
+        {/* Admin Sign-In Icon */}
+        <NavLink to="/admin-login" className="ml-2">
+          <img
+            src="path_to_admin_icon_image"
+            alt="Admin Login"
+            className="h-10 w-10 rounded-full"
+          />
         </NavLink>
       </div>
     </div>

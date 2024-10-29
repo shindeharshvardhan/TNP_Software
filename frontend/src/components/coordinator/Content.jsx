@@ -5,6 +5,7 @@ import MyCalendar from './MyCalendar';
 import EventForm  from './EventForm';
 import EventList  from './EventList';
 import '../../Content.css';
+import AssignedCompanies from './AssignedCompanies';
 
 function Content() {
   const [showForm, setShowForm] = useState(false);
@@ -77,6 +78,7 @@ const getEventsForSelectedDate = () => {
   };
 
   return (
+    <>
     <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32'>
       {/* Calendar Section */}
       <div className='flex flex-col items-center'>
@@ -105,11 +107,18 @@ const getEventsForSelectedDate = () => {
         ) : (
           <EventList content="Events" events={getEventsForSelectedDate()} /> // Show events for selected date
         )}
+
+        
       </div>
+    
     </div>
+      <AssignedCompanies />
+      </>
   );
 }
 
 export default Content;
+
+
 
 

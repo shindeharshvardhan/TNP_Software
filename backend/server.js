@@ -6,7 +6,9 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
-
+const sr = require('./routes/s');
+const fr = require('./routes/f');
+const cr = require('./routes/c');
 
 const app = express();
 const db = require("./config/dbConfig");
@@ -29,6 +31,7 @@ const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
 const MongoStore = require('connect-mongo');
+console.log("Session Secret:", process.env.SESSION_SECRET);
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

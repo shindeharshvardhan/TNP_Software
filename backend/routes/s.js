@@ -34,25 +34,21 @@ const bcrypt = require('bcryptjs');
 
 // Save new coordinators with hashed passwords
 router.post('/', async (req, res) => {
-    const { email, department, year,name } = req.body;
+    const { email, department, year, name } = req.body;
 
     try {
-        const password = generatePassword();
-        const hashedPassword = await bcrypt.hash(password, 10);  // Hash the generated password
-
         const coordinator = new StudentCoordinator({
             email: email,
-            password: hashedPassword,  // Store hashed password in the database
             department: department,
             year: year,
-            name:name
+            name: name
         });
 
-        // Save the new coordinator to the database
+        // Save the new coordinator to the database without a password
         await coordinator.save();
 
-        // Send email with credentials (sending raw password, not hashed, in the email)
-        sendEmail(email, password);
+        // Optionally, you can still send an email notifying them that they were added as a coordinator
+        // sendEmail(email, "You've been added as a coordinator! Please set your password.");
 
         // Return success response
         res.status(201).json({ message: `Coordinator for year ${year} added successfully!` });
@@ -61,6 +57,7 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Error adding coordinator' });
     }
 });
+
 
 
 
