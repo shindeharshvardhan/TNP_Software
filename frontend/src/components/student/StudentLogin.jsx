@@ -6,45 +6,18 @@ import AuthLayout from './AuthLayout';
 function StudentLogin({ setStudentAuthStatus }) {
   const [prn, setPrn] = useState('');
   const [password, setPassword] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/csrf-token", {
-          credentials: 'include'
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch CSRF token");
-
-        const data = await response.json();
-        console.log("Fetched CSRF Token:", data.csrfToken);
-        setCsrfToken(data.csrfToken);
-      } catch (err) {
-        console.error("Error fetching CSRF token:", err);
-      }
-    };
-
-    fetchCsrfToken();
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!csrfToken) {
-      setErrorMessage("CSRF token missing. Please try again later.");
-      return;
-    }
 
     try {
       const response = await fetch('http://localhost:5000/api/students/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'csrf-token': csrfToken
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ prn, password }),
         credentials: 'include'

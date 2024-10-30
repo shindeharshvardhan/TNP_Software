@@ -50,21 +50,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const checkStudentAuthStatus = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/students/auth-status",
-          { withCredentials: true }
-        );
+    // Check if the student is authenticated
+    axios.get("http://localhost:5000/api/students/auth-status", { withCredentials: true })
+      .then(response => {
         setStudentAuthStatus(response.data.isAuthenticated);
-      } catch (error) {
+      })
+      .catch(error => {
         console.error("Error checking student auth status:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkStudentAuthStatus();
+      });
   }, []);
 
   const isPublicRoute = [

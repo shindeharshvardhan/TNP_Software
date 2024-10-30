@@ -17,18 +17,16 @@ const fr = require("./routes/f");
 const cr = require("./routes/c");
 const studentPassport = require("./config/passportConfig");
 const MongoStore = require('connect-mongo');
-const csrf = require("csurf");
 
 const app = express();
 const db = require("./config/dbConfig");
-const csrfProtection = csrf({ cookie: true });
 
 // Middleware setup
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type, Authorization, csrf-token"
+  allowedHeaders: "Content-Type, Authorization"
 }));
 
 app.use(cookieParser()); // Add this line to parse cookies
@@ -61,14 +59,10 @@ app.use(passport.session());
 app.use(studentPassport.initialize());
 app.use(studentPassport.session());
 
-// CSRF Token Route
-app.get("/api/csrf-token", csrfProtection, (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
 
 // Apply CSRF protection to specific routes
 app.use("/api/students", student_Registration_Routes);
-app.use("/api/students", csrfProtection, student_Login_Routes);
+app.use("/api/students", student_Login_Routes);
 
 // Other Routes
 app.use('/api/auth', authRoutes);

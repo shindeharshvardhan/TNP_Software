@@ -1,14 +1,10 @@
 const express = require('express');
 const passport = require('passport');
-const csrf = require('csurf');
 
 const router = express.Router();
-const csrfProtection = csrf({ cookie: true });
 
 // Apply CSRF protection to login route
-router.post('/login', csrfProtection, (req, res, next) => {
-  // Log received CSRF token for debugging
-  console.log('Received CSRF Token:', req.headers['csrf-token']);
+router.post('/login', (req, res, next) => {
   
   // Authenticate the user with Passport
   passport.authenticate('local', (err, student, info) => {
@@ -21,31 +17,29 @@ router.post('/login', csrfProtection, (req, res, next) => {
 
     // Log the user in
     req.login(student, (err) => {
-      if (err) {
-        return res.status(500).json({ message: 'Error logging in' });
-      }
-
-      // Successful login, respond with student data
+      if (err) return res.status(500).json({ message: 'Error logging in' });
       res.status(200).json({ message: 'Login successful', student });
     });
   })(req, res, next);
 });
 
-// New endpoint to check if the student is authenticated
+// Endpoint to check if the student is authenticated
 router.get('/auth-status', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.status(200).json({ isAuthenticated: true, student: req.user });
-  }
-  return res.status(200).json({ isAuthenticated: false });
+  res.json({  // Use res.json here instead of res.join
+    isAuthenticated: req.isAuthenticated(),
+  });
 });
 
-// Error handler for CSRF token mismatch
-router.use((err, req, res, next) => {
-  if (err.code === 'EBADCSRFTOKEN') {
-    res.status(403).json({ message: 'Form tampered with' });
-  } else {
-    next(err);
+const ensureAuthenticated = (req, res, next) => {
+  if(req.isAuthenticated()){
+    return next();
   }
+  res.status(401).json({ message: "Unauthorized Access "});
+};
+
+router.get("/protected-data", ensureAuthenticated, (req, res) => {
+  res.json({ message: "This is protected data, accessible only if logged in." });
 });
+
 
 module.exports = router;
