@@ -24,7 +24,7 @@ const FacultyDashboard = () => {
 
   useEffect(() => {
     if (department) {
-      fetch(`http://localhost:8080/sc?department=${department}`)
+      fetch(`http://localhost:5000/sc?department=${department}`)
         .then((res) => res.json())
         .then((data) => {
           console.log("this is data");
@@ -39,7 +39,7 @@ const FacultyDashboard = () => {
 
   const handleAddCoordinator = () => {
     setLoading(true);
-    fetch("http://localhost:8080/sc", {
+    fetch("http://localhost:5000/sc", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newStudentCoordinator),
@@ -74,7 +74,7 @@ const FacultyDashboard = () => {
       "Are you sure you want to remove this coordinator?"
     );
     if (confirmDelete) {
-      fetch(`http://localhost:8080/sc/${email}`, {
+      fetch(`http://localhost:5000/sc/${email}`, {
         method: "DELETE",
       })
         .then((res) => {

@@ -12,10 +12,10 @@ const AssignCoordinator = () => {
     name: "",
     faculty: "",
   });
-  const currentYear = 2025;
+  const currentYear = 2024;
 
   const fetchData = () => {
-    fetch(`http://localhost:8080/cc/companies/dept/CSE`)
+    fetch(`http://localhost:5000/cc/companies/dept/CSE`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -27,7 +27,7 @@ const AssignCoordinator = () => {
         setLoading(false);
       });
 
-    fetch(`http://localhost:8080/sc?department=CSE&year=${currentYear}`)
+    fetch(`http://localhost:5000/sc?department=CSE&year=${currentYear}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -55,7 +55,7 @@ const AssignCoordinator = () => {
       return;
     }
 
-    fetch(`http://localhost:8080/cc/companies/${companyId}/visits`, {
+    fetch(`http://localhost:5000/cc/companies/${companyId}/visits`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const AssignCoordinator = () => {
       return;
     }
 
-    fetch(`http://localhost:8080/cc/companies`, {
+    fetch(`http://localhost:5000/cc/companies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

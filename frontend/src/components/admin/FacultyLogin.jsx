@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import AuthLayout from './AuthLayout'; // Assuming you have a shared layout for auth pages
 import './style.css';
 
 const FacultyLogin = () => {
@@ -15,7 +16,7 @@ const FacultyLogin = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:8080/fc/login', {
+      const response = await fetch('http://localhost:5000/fc/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -39,57 +40,52 @@ const FacultyLogin = () => {
   };
 
   return (
-    <div className="container mx-auto mt-20">
-      <h2 className="text-center mb-8 text-2xl font-semibold">Faculty Login</h2>
-      <div className="flex justify-center">
-        <div className="w-full max-w-md">
-          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            {errorMessage && (
-              <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-4">
-                {errorMessage}
-              </div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Enter email"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-6">
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Enter password"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className={`bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={loading}
-              >
-                {loading ? 'Logging in...' : 'Login'}
-              </button>
-            </form>
+    <AuthLayout>
+      <div className="glassmorphism p-8 shadow-lg rounded-lg w-full">
+        <h2 className="text-2xl font-semibold mb-6 text-center">Faculty Login</h2>
+        {errorMessage && (
+          <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-4">
+            {errorMessage}
           </div>
+        )}
+        <form onSubmit={handleSubmit} className="p-2 space-y-4">
+          <div className="mb-4">
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              className="w-full glassmorphism px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              className="w-full glassmorphism px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className={`w-full bg-neutral-950 text-white py-2 rounded-lg transform hover:scale-95 transition duration-300 ease-in-out mt-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+        <div className="w-full flex items-center justify-between mt-4">
+          <Link to="/admin/login" className="text-indigo-500 hover:underline">
+            Switch to Admin Login
+          </Link>
         </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

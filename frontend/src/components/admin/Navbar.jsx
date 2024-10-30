@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className="navbar pt-3 pl-16 pr-16 text-neutral-950">
+    <div className="navbar pt-3 pl-16 pr-16 text-neutral-950 shadow">
       <div className="navbar-start">
         <NavLink to="/" className="btn btn-ghost text-2xl">
           T&P FTE
