@@ -1,8 +1,9 @@
 import React from "react";
+import { IoIosArrowBack } from "react-icons/io";
 
 const CompanyCard = ({ company, onBack }) => {
   // Log the company prop to verify the visits data
-  console.log('Company data:', company);
+  console.log("Company data:", company);
 
   if (!company) {
     return <p className="text-center mt-8">No company selected.</p>;
@@ -11,14 +12,12 @@ const CompanyCard = ({ company, onBack }) => {
   return (
     <div className="relative flex justify-center items-center w-full h-full p-6">
       <div className="w-full bg-white border p-6 rounded-lg shadow-xl relative">
-        {/* Back to Search button positioned at the top right */}
         <button
-          className="absolute top-4 right-4 font-normal bg-neutral-950 text-white rounded focus:outline-none p-2"
+          className="absolute top-4 right-4 rounded-full p-2 border-2 border-black hover:bg-black hover:text-white"
           onClick={onBack}
         >
-          Back to Search
+          <IoIosArrowBack/>
         </button>
-        
         {/* Company Info with Logo Placeholder */}
         <div className="flex items-center mb-4">
           {/* Logo placeholder */}
@@ -39,9 +38,16 @@ const CompanyCard = ({ company, onBack }) => {
           {company.visits && company.visits.length > 0 ? (
             [...company.visits].reverse().map((visit, index) => (
               <div key={index} className="mt-4 p-4 border-t">
-                <p className="text-gray-700"><strong>Year:</strong> {visit.year}</p>
-                <p className="text-gray-700"><strong>HR Contact:</strong> {visit.hrContactName} ({visit.hrContactEmail})</p>
-                <p className="text-gray-700"><strong>Job Locations:</strong> {visit.job_loc.join(', ')}</p>
+                <p className="text-gray-700">
+                  <strong>Year:</strong> {visit.year}
+                </p>
+                <p className="text-gray-700">
+                  <strong>HR Contact:</strong> {visit.hrContactName} (
+                  {visit.hrContactEmail})
+                </p>
+                <p className="text-gray-700">
+                  <strong>Job Locations:</strong> {visit.job_loc.join(", ")}
+                </p>
               </div>
             ))
           ) : (

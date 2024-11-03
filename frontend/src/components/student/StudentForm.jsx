@@ -5,6 +5,8 @@ import termsPdf from "../../assets/TNP Terms.pdf";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import axios from "axios";
+import { VscArrowDown } from "react-icons/vsc";
+import ScrollButton from "../../ScrollButton";
 
 function StudentForm() {
   const [prn, setPrn] = useState("");
@@ -117,6 +119,8 @@ function StudentForm() {
     attempts: ["", "", "", ""],
   });
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const [rotationDegree, setRotationDegree] = useState(0);
 
   const handlePrnChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -493,6 +497,38 @@ function StudentForm() {
   useEffect(() => {
     calHSCsciPer();
   }, [hscscimarksobt, hscscitotmarks]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.body.scrollHeight;
+
+      // Calculate rotation degree
+      const rotation = (scrollPosition / (documentHeight - windowHeight)) * 180;
+      setRotationDegree(rotation);
+
+      // Check if we're near the bottom of the page
+      setIsAtBottom(scrollPosition + windowHeight >= documentHeight - 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleButtonClick = () => {
+    const scrollPosition = window.scrollY;
+    const documentHeight = document.body.scrollHeight;
+    const halfwayPoint = documentHeight / 2;
+
+    if (scrollPosition < halfwayPoint) {
+      // Scroll to last div if closer to top
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    } else {
+      // Scroll to top if closer to bottom
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const handleHscOrDiplomaChange = (e) => {
     setHscOrDiploma(e.target.value);
@@ -1147,22 +1183,30 @@ function StudentForm() {
           await generatePDF(); // Ensure this is an async function
           alert("Form submitted and PDF generated!");
         } catch (error) {
-          if(error.response){
-            if(error.response.status === 409){
+          if (error.response) {
+            if (error.response.status === 409) {
               const errorMessage = error.response.data.message;
-              if(errorMessage === "Email already registered"){
-                alert("The email address is already registered. Please use a different email.");
-              } else if(errorMessage === "PRN already registered"){
-                alert("The PRN is already registered. Please use a different PRN");
+              if (errorMessage === "Email already registered") {
+                alert(
+                  "The email address is already registered. Please use a different email."
+                );
+              } else if (errorMessage === "PRN already registered") {
+                alert(
+                  "The PRN is already registered. Please use a different PRN"
+                );
               } else {
-                alert("There was an issue registering the student: "+errorMessage);
+                alert(
+                  "There was an issue registering the student: " + errorMessage
+                );
               }
             } else {
               alert("An unexpected error occurred. Please try again later");
             }
           } else {
             console.error("Error submitting form : ", error);
-            alert("There was an issue connecting to the server. Please try again. ");
+            alert(
+              "There was an issue connecting to the server. Please try again. "
+            );
           }
         }
       }
@@ -1175,6 +1219,7 @@ function StudentForm() {
     <>
       {/* <NavbarStudent /> */}
       <div className="w-full h-full container bg-indigo-200 md:px-20 md:p-10 p-5">
+        <ScrollButton handleButtonClick={handleButtonClick} rotationDegree={rotationDegree}/>
         <div className="text-center mb-10">
           <h1 className="text-2xl md:text-4xl font-bold text-neutral-950 p-3 mt-20">
             Student Registration Form

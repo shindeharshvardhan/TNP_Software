@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,14 +27,11 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Emphasize shadow on focus */
 }
 
-.glassmorphism-2 {
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+.glassmorphism-circle {
+  background-color: rgba(53, 53, 53, 0.09); /* Slightly transparent white */
   backdrop-filter: blur(10px); /* Blur effect */
-  /* border: 1px solid rgba(255, 255, 255, 0.3); */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  /* border-radius: 12px;  */
-  padding: 10px 15px; /* Add some padding */
-  margin-bottom: 16px; /* Spacing between fields */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Soft shadow */
   transition: box-shadow 0.3s ease; /* Smooth transition */
 }
 
@@ -55,4 +53,62 @@
 
 .suggestions-dropdown div:hover {
   background-color: #f1f1f1;
+}
+
+.circle-bg-shine {
+  overflow: hidden;
+}
+
+.circle-bg-shine:after {
+  content: "";
+  position: absolute;
+  top: -110%;
+  left: -210%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.8; 
+  transform: rotate(30deg);
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.8) 0%,       
+    rgba(255, 255, 255, 0.75) 77%,     
+    rgba(255, 255, 255, 0.9) 92%,      
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shineEffect 2s cubic-bezier(0.19, 1, 0.22, 1) 3s forwards;
+}
+
+
+@keyframes shineEffect {
+  0% {
+    top: -110%;
+    left: -210%;
+    opacity: 0.85;
+  }
+  100% {
+    top: -30%;
+    left: -30%;
+    opacity: 0;
+  }
+}
+
+.bg_purple_image{
+  position: relative;
+}
+
+.bg_purple_image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/op4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-color: rgba(0, 0, 0, 0.7); Dark overlay */
+  filter: blur(5px); /* Reduced blur */
+  opacity: 0.27; /* Slightly lower opacity */
+  z-index: 0;
 }
