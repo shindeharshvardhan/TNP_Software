@@ -10,7 +10,7 @@ const CompanyList = () => {
     const fetchCompanies = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/cc/companies/dept/CSE"
+          "http://localhost:5000/cc/companies/dept/CSE"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

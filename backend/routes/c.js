@@ -156,4 +156,84 @@ router.post('/companies', async (req, res) => {
         res.status(500).json({ error: 'Error adding company' });
     }
 });
+
+// Fetch companies handled by a specific coordinator
+router.get('/companies/coordinator/:coordinatorId', async (req, res) => {
+    const { coordinatorId } = req.params; // Get coordinator ID from URL parameters
+    console.log("here"+coordinatorId)
+    console.log('Coordinator ID:', coordinatorId); // Log the coordinator ID for debugging
+
+    try {
+        // Fetch companies where the specified coordinator is assigned to any visit
+        const companies = await Company.find({ 'visits.coordinator': coordinatorId })
+            .populate('visits.coordinator', 'name email') // Populate coordinator name and email within visits
+            .lean(); // Use lean to get plain JavaScript objects
+        console.log("hii here")
+        // If no companies are found for the specified coordinator
+        if (companies.length === 0) {
+            return res.status(404).json({ message: 'No companies found for the specified coordinator' });
+        }
+
+        // Filter visits to only include those that are not completed
+        const companyList = companies.map(company => ({
+            name: company.name,
+            faculty: company.department,
+            visits: company.visits
+                .filter(visit => !visit.completed) // Only include incomplete visits
+                .map(visit => ({
+                    year: visit.year,
+                    hrContactName: visit.hrContactName,
+                    hrContactEmail: visit.hrContactEmail,
+                    coordinatedBy: visit.coordinator ? visit.coordinator.name : 'Not Assigned',
+                    coordinatorEmail: visit.coordinator ? visit.coordinator.email : 'Not Assigned'
+                }))
+        }));
+
+        // Send the filtered company list
+        res.status(200).json(companyList);
+    } catch (error) {
+        console.error('Error fetching companies for coordinator:', error);
+        res.status(500).json({ error: error.message || 'Error fetching companies for coordinator' });
+    }
+});
+
+// Add a new route to fetch all companies by a specific coordinator ID
+router.get('/companies/:coordinatorId', async (req, res) => {
+    const { coordinatorId } = req.params;
+
+    try {
+        // Fetch companies with populated visits
+        const companies = await Company.find({ 'visits.coordinator': coordinatorId })
+            .populate('visits.coordinator', 'name email') // Populate only name and email of the coordinator
+            .lean();
+
+        console.log('Fetched Companies:', companies);
+
+        // Log the coordinator ID to match
+        console.log('Coordinator ID to match:', coordinatorId);
+
+        // Filter visits to only include those that match the coordinatorId
+        const filteredCompanies = companies.map(company => {
+            const visits = company.visits.filter(visit => 
+                visit.coordinator && visit.coordinator._id.toString() === coordinatorId
+            );
+            return { ...company, visits };
+        });
+
+        if (filteredCompanies.length === 0) {
+            return res.status(404).json({ message: 'No companies found for the specified coordinator' });
+        }
+
+        res.status(200).json(filteredCompanies);
+    } catch (error) {
+        console.error('Error fetching companies by coordinator:', error);
+        res.status(500).json({ error: 'Error fetching companies by coordinator' });
+    }
+});
+
+
+
+
+
+
 module.exports = router;

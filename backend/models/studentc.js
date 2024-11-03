@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const coordinatorSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true }, // Unique email for each coordinator
     name: { type: String, required: true }, // Unique email for each coordinator
-    password: { type: String, required: true }, // Hashed password
+    password: { type: String }, // Hashed password
     department: { type: String, required: true }, // Fixed the typo here
     year: { type: Number, required: true }, // Year of the coordinator
 });

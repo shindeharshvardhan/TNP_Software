@@ -1230,8 +1230,10 @@ function StudentForm() {
         </div>
 
         <form action="" onSubmit={handleSubmit}>
-          <div className="bg-white shadow-lg rounded-lg md:p-8">
-            <div className="flex">
+
+          <div className='glassmorphism shadow-lg rounded-lg md:p-8'>
+
+            <div className="md:flex">
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1254,7 +1256,7 @@ function StudentForm() {
                 {prnerror && <p className="text-red-500">{prnerror}</p>}
               </label>
 
-              <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
+              <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
                     Upload Photo: <span className="text-red-700">*</span>
@@ -1279,40 +1281,16 @@ function StudentForm() {
                   Name: <span className="text-red-700">*</span>
                 </span>
               </div>
-              <div className="flex gap-4">
-                <input
-                  type="text"
-                  placeholder="Enter First Name"
-                  className="glassmorphism input input-info student-form-input-style"
-                  required
-                  value={fname}
-                  onChange={(e) => handleName(e, "Firstname")}
-                  name="fname"
-                />
-                <input
-                  type="text"
-                  placeholder="Enter Middle Name"
-                  className="glassmorphism input input-info student-form-input-style"
-                  required
-                  value={mname}
-                  onChange={(e) => handleName(e, "Middlename")}
-                  name="mname"
-                />
-                <input
-                  type="text"
-                  placeholder="Enter Surame"
-                  className="glassmorphism input input-info student-form-input-style"
-                  required
-                  value={lname}
-                  onChange={(e) => handleName(e, "Lastname")}
-                  name="lname"
-                />
+              <div className='md:flex gap-4'>
+                <input type="text" placeholder="Enter First Name" className="glassmorphism input input-info student-form-input-style" required value={fname} onChange={(e) => handleName(e, 'Firstname')} name='fname' />
+                <input type="text" placeholder="Enter Middle Name" className="glassmorphism input input-info student-form-input-style" required value={mname} onChange={(e) => handleName(e, 'Middlename')} name='mname' />
+                <input type="text" placeholder="Enter Surame" className="glassmorphism input input-info student-form-input-style" required value={lname} onChange={(e) => handleName(e, "Lastname")} name='lname' />
               </div>
               {nameerror && <p className="text-red-500">{nameerror}</p>}
             </label>
 
-            <div className="flex">
-              <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
+            <div className='md:flex'>
+              <label className="form-control bg-transparent border-0 m-2 md:w-1/2 w-full">
                 <div className="label">
                   <span className="label-text text-xl">
                     Email: <span className="text-red-700">*</span>
@@ -1354,7 +1332,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1397,7 +1375,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1448,7 +1426,8 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
+
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1498,7 +1477,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">
@@ -1544,7 +1523,7 @@ function StudentForm() {
               Permanent Address: <span className="text-red-700">*</span>
             </h4>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Street:</span>
@@ -1580,7 +1559,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">State:</span>
@@ -1635,7 +1614,7 @@ function StudentForm() {
               Current Address: <span className="text-red-700">*</span>
             </h4>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Street:</span>
@@ -1673,7 +1652,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">State:</span>
@@ -1718,7 +1697,7 @@ function StudentForm() {
               SSC Details: <span className="text-red-700">*</span>
             </h4>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Passing Year:</span>
@@ -1755,7 +1734,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Total Marks:</span>
@@ -1797,7 +1776,7 @@ function StudentForm() {
               </label>
             </div>
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">Percentage:</span>
@@ -2244,10 +2223,12 @@ function StudentForm() {
               </div>
             </label>
 
-            {(educationLevel === "UG" || educationLevel === "PG") && (
-              <div id="ug">
-                <h4 className="text-2xl font-bold mx-3 mt-4">UG Details:</h4>
-                <div className="flex">
+
+            {(educationLevel === 'UG' || educationLevel === "PG") && (
+              <div id='ug'>
+
+                <h4 className='text-2xl font-bold mx-3 mt-4'>UG Details:</h4>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Department:</span>
@@ -2321,7 +2302,7 @@ function StudentForm() {
                   </label>
                 </div>
 
-                <div className="flex">
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">
@@ -2349,8 +2330,8 @@ function StudentForm() {
                 <br />
 
                 {ugData.semesters.map((sem, index) => (
-                  <div key={index} className="glassmorphism m-4 p-4">
-                    <div className="flex">
+                  <div key={index} className='glassmorphism m-4 p-4'>
+                    <div className="md:flex">
                       <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                         <span className="label-text text-xl">
                           Sem-{index + 1} Year:
@@ -2386,7 +2367,7 @@ function StudentForm() {
                       </label>
                     </div>
 
-                    <div className="flex">
+                    <div className="md:flex">
                       <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                         <span className="label-text text-xl">
                           Sem-{index + 1} Attempts:
@@ -2426,9 +2407,10 @@ function StudentForm() {
             )}
 
             {educationLevel === "PG" && (
-              <div id="pg">
-                <h4 className="text-2xl font-bold mx-3 mt-4">PG Details:</h4>
-                <div className="flex">
+              <div id='pg'>
+
+                <h4 className='text-2xl font-bold mx-3 mt-4'>PG Details:</h4>
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">Department:</span>
@@ -2549,7 +2531,7 @@ function StudentForm() {
                   </label>
                 </div>
 
-                <div className="flex">
+                <div className='md:flex'>
                   <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                     <div className="label">
                       <span className="label-text text-xl">
@@ -2579,7 +2561,7 @@ function StudentForm() {
                 {pgData.semesters.map((sem, index) => (
                   <div className="glassmorphism m-4 p-4">
                     <div key={index}>
-                      <div className="flex">
+                      <div className='md:flex'>
                         <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                           <div className="label">
                             <span className="label-text text-xl">
@@ -2624,12 +2606,10 @@ function StudentForm() {
                         </label>
                       </div>
 
-                      <div className="flex">
+                      <div className='md:flex'>
                         <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                           <div className="label">
-                            <span className="label-text text-xl">
-                              Number of attempts:
-                            </span>
+                            <span className="label-text text-xl">Sem-{index + 1} Attempts:</span>
                           </div>
                           <div className="flex gap-4">
                             <input
@@ -2672,7 +2652,7 @@ function StudentForm() {
               </div>
             )}
 
-            <div className="flex">
+            <div className='md:flex'>
               <label className="form-control bg-transparent border-0 m-2 md:w-1/2">
                 <div className="label">
                   <span className="label-text text-xl">
