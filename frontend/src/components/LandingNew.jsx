@@ -215,7 +215,7 @@ function LandingNew() {
           className="w-full mt-[100vh] h-screen pt-20 text-center bg_purple_image bg-white text-black flex flex-col items-center justify-center"
           ref={lightDivRef}
         >
-          <h2 className="text-4xl tracking-tight font-bold">
+          <h2 className="text-4xl tracking-tight font-bold text-black">
             <span className="text-9xl font-bold text-indigo-500 inline-block align-base">
               W
             </span>

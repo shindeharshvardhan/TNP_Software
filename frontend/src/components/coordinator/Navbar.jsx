@@ -5,7 +5,7 @@ import Logo from "../../assets/Logo.png";
 function Navbar() {
   return (
     <nav className="glassmorphism fixed top-0 w-full z-50">
-      <div className="container mx-auto px-6 py-1 flex justify-between items-center h-16">
+      <div className="mx-auto px-6 py-1 flex justify-between items-center h-16">
         {/* Mobile Menu */}
         <div className="lg:hidden">
           <button className="text-gray-600 focus:outline-none">
@@ -133,11 +133,11 @@ function Navbar() {
               />
             </svg>
             <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
+          {/* </div> */}
         </button>
         <NavLink
           className="btn rounded-full text-lg text-slate-100 bg-neutral-950"
-          to="/login"
+          to="/coordinator_login"
         >
           Sign up / Log in
         </NavLink>
@@ -163,6 +163,7 @@ function Navbar() {
         </NavLink>
       </div>
     </div>
+    </nav>
   );
 }
 

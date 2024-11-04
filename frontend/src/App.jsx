@@ -18,7 +18,6 @@ import Followup from "./components/coordinator/Followup";
 import StudentDetails from "./components/coordinator/StudentDetails";
 import Content from "./components/coordinator/Content";
 import "./App.css";
-import Landing from "./components/Landing";
 import StudentForm from "./components/student/StudentForm";
 import StudentLogin from "./components/student/StudentLogin";
 import Company_Description_Form from "./components/coordinator/Company_Description_Form";
@@ -91,7 +90,6 @@ const App = () => {
   }
 
   return (
-    <Router>
       <div className="flex flex-col h-screen w-full">
         {isPublicRoute ? (
           isLanding ? (
@@ -107,7 +105,7 @@ const App = () => {
           <AuthProvider>
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={<LandingNew/>} />
               <Route path="/student_registration" element={<StudentForm />} />
               <Route path="/student_login" element={<StudentLogin />} />
               <Route
@@ -169,8 +167,16 @@ const App = () => {
           </AuthProvider>
         </div>
       </div>
+  );
+};
+
+const AppWrapper = () => {
+  return (
+    <Router>
+      <App />
     </Router>
   );
 };
+
 
 export default AppWrapper;
