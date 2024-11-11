@@ -32,6 +32,7 @@ import CompanyList from "./components/admin/CompanyList";
 import LoginPage from "./components/admin/LoginPage";
 import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
+import Dashboard from "./components/student/Dashboard";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -106,8 +107,28 @@ const App = () => {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<LandingNew/>} />
-              <Route path="/student_registration" element={<StudentForm />} />
-              <Route path="/student_login" element={<StudentLogin />} />
+              <Route
+                path="/student_registration"
+                element={
+                  studentAuthStatus ? ( <Navigate to="/student_dashboard" />) : (<StudentForm/>)
+                }
+                />
+              <Route
+                path="/student_login"
+                element={
+                  !studentAuthStatus ? ( <StudentLogin setStudentAuthStatus={setStudentAuthStatus} />) : (< Navigate to="/student_dashboard" />)
+                }
+                />
+                <Route
+                  path="/student_dashboard"
+                  element={
+                    studentAuthStatus ? (
+                      <Dashboard/>
+                    ) : (
+                      <Navigate to="/student_login" />
+                    )
+                  }
+                />
               <Route
                 path="/coordinator_login"
                 element={
