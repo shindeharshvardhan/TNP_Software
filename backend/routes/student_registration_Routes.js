@@ -43,16 +43,6 @@ router.post('/register', upload.fields([
     console.log('Received body:', req.body);
     console.log('Received files:', req.files);
 
-    const existingPRN = await Student.findOne({ prn: req.body.prn });
-    if (existingPRN) {
-      return res.status(400).json({ message: 'PRN already registered' });
-    }
-
-    const existingStudent = await Student.findOne({ email: req.body.email });
-    if (existingStudent) {
-      return res.status(400).json({ message: 'Email already registered' });
-    }
-
     // Validate required fields for UG or PG
     if (!req.body.prn || !req.body.fname || !req.body.lname) {
       console.log('Missing required fields: prn, fname, or lname');

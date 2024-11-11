@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid'); // If you want to use UUID
 
 // Define a sub-schema for storing semesters data
 const semesterSchema = new mongoose.Schema({
@@ -15,7 +14,6 @@ const semesterSchema = new mongoose.Schema({
 
 // Define the main Student schema
 const studentSchema = new mongoose.Schema({
-  studentId: { type: String, unique: true, default: uuidv4 }, // Generate UUID as studentId
   prn: { type: String, required: true, unique: true },
   photo: {
     data: String, // File path
@@ -24,7 +22,7 @@ const studentSchema = new mongoose.Schema({
   fname: { type: String, required: true },
   mname: { type: String, required: true },
   lname: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   mob: { type: String, required: true },
   pmob: { type: String, required: true },
   nationality: { type: String, required: true },
@@ -99,12 +97,13 @@ const studentSchema = new mongoose.Schema({
 
 studentSchema.pre("save", async function (next) {
   const student = this;
-  if (!student.isModified("password")) return next();
-  try {
+  if(!student.isModified("password")) return next();
+  try{
     const salt = await bcrypt.genSalt(10);
     student.password = await bcrypt.hash(student.password, salt);
     next();
-  } catch (error) {
+  }
+  catch(error){
     return next(error);
   }
 });

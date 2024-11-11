@@ -2,24 +2,16 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session"); // Import express-session
 const passport = require("passport"); // Import passport
+require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
 const helmet = require('helmet');
 const sr = require('./routes/s');
 const fr = require('./routes/f');
 const cr = require('./routes/c');
-const db = require("./config/dbConfig");
-const student_Registration_Routes = require("./routes/student_registration_Routes");
-const student_Login_Routes = require("./routes/student_login_Routes");
-const cookieParser = require("cookie-parser"); // Import cookie-parser
-const mongoose = require('mongoose'); // Import mongoose
-const company_description_routes = require("./routes/company_description_route");
-const companyRoutes = require('./routes/searchCompanies');
-const studentPassport = require("./config/passportConfig");
-const MongoStore = require('connect-mongo');
-require('dotenv').config(); 
-
+const searchCompanies=require('./routes/searchCompanies')
 const app = express();
+const db = require("./config/dbConfig");
 
 // Middleware setup
 app.use(cors({
@@ -31,9 +23,15 @@ app.use(cors({
 
 app.use(express.json()); 
 app.use(helmet());
-app.use(cookieParser()); // Add this line to parse cookies
+app.use('/sc', sr);
+app.use('/fc', fr);
+app.use('/cc', cr);
+app.use('/api/companies',searchCompanies)
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
+const MongoStore = require('connect-mongo');
 console.log("Session Secret:", process.env.SESSION_SECRET);
 
 app.use(session({
@@ -55,19 +53,14 @@ app.use(session({
 // Initialize passport and session
 app.use(passport.initialize());
 app.use(passport.session()); // Session-based authentication
-app.use(studentPassport.initialize());
-app.use(studentPassport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
+
 app.use('/api/events', eventRoutes);
+
 app.use("/api/students", student_Registration_Routes);
 app.use("/api/students/", student_Login_Routes);
-app.use("/api/company-description", company_description_routes);
-app.use('/api/companies', companyRoutes);
-app.use('/sc', sr);
-app.use('/fc', fr);
-app.use('/cc', cr);
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

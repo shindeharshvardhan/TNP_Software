@@ -129,10 +129,10 @@ const App = () => {
                 path="/cdashboard"
                 element={<ProtectedRoute element={Content} />}
               />
-              <Route
+              {/* <Route
                 path="/events"
                 element={<ProtectedRoute element={Content} />}
-              />
+              /> */}
               <Route
                 path="/students"
                 element={<ProtectedRoute element={Followup} />}

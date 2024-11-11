@@ -1,59 +1,56 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import AuthLayout from "./AuthLayout"; // Import the shared layout
-import { useAuth } from "../Contexts/Studentcoordinatorauth"; // Adjust the path based on your context location
+import { Link, useNavigate } from "react-router-dom";
+import AuthLayout from "./AuthLayout";
+import { useAuth } from "../Contexts/Studentcoordinatorauth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State for handling errors
-  const navigate = useNavigate(); // Define navigate using useNavigate
-  const { setStudentCoordinatorId, setIsAuthenticated } = useAuth(); // Use context for auth management
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { setStudentCoordinatorId, setIsAuthenticated } = useAuth();
+
+  const setCookie = (name, value, days) => {
+    const expires = new Date(Date.now() + days * 86400e3).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=None; Secure`;
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset any previous error messages
-  
+    setError("");
+
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Specify the content type
+          'Content-Type': 'application/json',
         },
-        credentials: 'include', // Ensure credentials are included in the request
-        body: JSON.stringify({ email, password }), // Convert the data to JSON
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
       });
-  
-      const data = await response.json(); // Parse the JSON response
-      console.log(data);
-  
-      if (response.ok) { // Check if response is OK (status 200-299)
-        console.log(data); // Log the response data
-  
-        // Store the student coordinator ID and authentication status in context
-        setStudentCoordinatorId(data.user._id); 
-        setIsAuthenticated(true); 
-  
-        // Set a cookie
-        const expires = new Date(Date.now() + 86400e3).toUTCString(); // 1 day expiry
-        document.cookie = `studentCoordinatorId=${data.user._id}; expires=${expires}; path=/; SameSite=None; Secure`;
-  
-        navigate('/cdashboard'); // Navigate to dashboard on successful login
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStudentCoordinatorId(data.user._id);
+        setIsAuthenticated(true);
+        setCookie('studentCoordinatorId', data.user._id, 1); // 1 day expiry
+
+        navigate('/cdashboard');
       } else {
-        setError(data.msg || 'Something went wrong'); // Display error message
+        setError(data.msg || 'Login failed. Please try again.');
       }
     } catch (err) {
-      console.error(err); // Log the error for debugging
-      setError('Something went wrong. Please try again.'); // Display generic error
+      console.error("Login error:", err);
+      setError('Something went wrong. Please try again.');
     }
   };
-  
 
   return (
     <AuthLayout>
-      <div className="glassmorphism p-8 shadow-lg rounded-lg w-full bg-gradient-to-r from-indigo-100 to-white p-14">
+      <div className="glassmorphism p-8 shadow-lg rounded-lg w-full">
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Error message */}
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <form onSubmit={handleLogin} className="p-2 space-y-4">
           <input
             type="email"

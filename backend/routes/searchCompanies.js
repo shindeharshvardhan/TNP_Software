@@ -33,6 +33,7 @@ const Company = require('../models/companyc');
 // Search companies by name, department, or HR contact
 router.get('/search', async (req, res) => {
     try {
+        console.log("Achaa pochi gyu etle")
         const searchQuery = req.query.q;
         const regex = new RegExp(searchQuery, 'i'); // 'i' makes it case-insensitive
 
@@ -45,7 +46,7 @@ router.get('/search', async (req, res) => {
                 { 'visits.job_loc': regex }
             ]
         }); // Return only name and department for suggestions
-
+    
         res.status(200).json(companies); // Send company name and department
     } catch (err) {
         res.status(500).json({ message: 'Error fetching companies', error: err });

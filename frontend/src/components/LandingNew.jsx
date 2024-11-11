@@ -251,7 +251,7 @@ function LandingNew() {
 
             {/* Coordinator Card */}
             <ThreeDCardDemo
-              link="/coordinator_dashboard"
+              link="/cdashboard"
               title="Coordinator"
               image={CoordinatorImg}
             />
