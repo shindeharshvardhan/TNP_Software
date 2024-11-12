@@ -1,0 +1,68 @@
+.progress-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tracker {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.tracker-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.active .circle {
+  background-color: #4CAF50; /* Green for active stages */
+}
+
+.label {
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.buttons button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.buttons button:not(:disabled) {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.buttons button:not(:disabled):hover {
+  background-color: #45a049;
+}

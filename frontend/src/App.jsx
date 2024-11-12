@@ -32,7 +32,8 @@ import CompanyList from "./components/admin/CompanyList";
 import LoginPage from "./components/admin/LoginPage";
 import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
-import Dashboard from "./components/student/Dashboard";
+import Dashboard from "./components/student/StudentDashboard";
+import StudentDashboard from "./components/student/StudentDashboard";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -184,6 +185,7 @@ const App = () => {
                 path="/faculty-dashboard/companylist"
                 element={<CompanyList />}
               />
+              <Route path="sdashboard" element={<StudentDashboard />}/>
             </Routes>
           </AuthProvider>
         </div>
