@@ -24,6 +24,7 @@ const Company_Description_Form = () => {
   const [trainingDuration, setTrainingDuration] = useState("");
   const [trainingStipend, setTrainingStipend] = useState("");
   const [otherDetails, setOtherDetails] = useState("");
+  const [fieldsRequired, setFieldsRequired] = useState([]);
 
   const ugDepts = [
     "BSC Applied Physics", "B.Arch", "BE Chemical Engineering", "BE Civil Engineering",
@@ -45,6 +46,23 @@ const Company_Description_Form = () => {
     "ME Textile Processing", "Master of Urban and Regional Planning"
   ];
 
+  const fieldsOptions = [
+    "First Name", "Middle Name", "Last Name", "10th Percentage", "12th/Diploma Percentage",
+    "UG Sem 1 Percentage", "UG Sem 2 Percentage", "UG Sem 3 Percentage", "UG Sem 4 Percentage",
+    "UG Sem 5 Percentage", "UG Sem 6 Percentage", "UG Sem 7 Percentage", "UG Sem 8 Percentage",
+    "PG Sem 1 Percentage", "PG Sem 2 Percentage", "PG Sem 3 Percentage", "PG Sem 4 Percentage",
+    "UG Aggregate", "PG Aggregate", "Domicile State", "10th Result PDF", "12th/Diploma Result PDF",
+    "UG All Sems Result PDF", "PG All Sems Result PDF"
+  ];
+
+  const handleFieldRequirementChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setFieldsRequired([...fieldsRequired, value]);
+    } else {
+      setFieldsRequired(fieldsRequired.filter((field) => field !== value));
+    }
+  };
 
   const handleProgramChange = (event) => {
     const { name, checked } = event.target;
@@ -126,6 +144,7 @@ const Company_Description_Form = () => {
         stipend: trainingStipend,
       },
       otherDetails,
+      fieldsRequired,
     };
 
     try {
@@ -463,6 +482,24 @@ const Company_Description_Form = () => {
               className="w-full px-4 py-2 border rounded-md focus:outline-none"
               rows="4" value={otherDetails} onChange={(e) => setOtherDetails(e.target.value)}
             ></textarea>
+          </div>
+
+          {/* Fields Required by Company */}
+          <div className="mb-4">
+            <label className="block font-medium mb-2">Fields Required by Company</label>
+            <div className="grid grid-cols-2 gap-4">
+              {fieldsOptions.map((field) => (
+                <label key={field} className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    value={field}
+                    onChange={handleFieldRequirementChange}
+                    className="mr-2"
+                  />
+                  {field}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Buttons */}

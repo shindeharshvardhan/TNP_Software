@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Define a sub-schema for storing semesters data
+// Define a sub-schema for storing semester data
 const semesterSchema = new mongoose.Schema({
   year: { type: Date },
   percentage: { type: Number },
   attempts: { type: Number },
   marksheet: {
-    data: String, // We'll store the file path as a string
-    contentType: String, // For MIME type
+    data: String, // Store the file path
+    contentType: String, // MIME type
   },
 }, { _id: false });
 
@@ -92,20 +92,42 @@ const studentSchema = new mongoose.Schema({
     atkt: { type: Number },
     semesters: [semesterSchema], // For storing Sem 1 to Sem 4
   },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  ugAggregate: { type: Number }, // New field to store UG aggregate
+  pgAggregate: { type: Number } // New field to store PG aggregate
 });
 
-studentSchema.pre("save", async function (next) {
+// Method to calculate the aggregate percentage for UG or PG data
+studentSchema.methods.calculateAggregate = function (semesters) {
+  const validSemesters = semesters.filter(sem => sem.percentage != null);
+  const totalPercentage = validSemesters.reduce((acc, sem) => acc + sem.percentage, 0);
+  return validSemesters.length > 0 ? totalPercentage / validSemesters.length : null;
+};
+
+// Pre-save hook to calculate aggregates before saving
+studentSchema.pre("save", function (next) {
   const student = this;
-  if(!student.isModified("password")) return next();
-  try{
-    const salt = await bcrypt.genSalt(10);
-    student.password = await bcrypt.hash(student.password, salt);
-    next();
+
+  // Calculate UG aggregate
+  if (student.ugData && student.ugData.semesters) {
+    student.ugAggregate = student.calculateAggregate(student.ugData.semesters);
   }
-  catch(error){
-    return next(error);
+
+  // Calculate PG aggregate
+  if (student.pgData && student.pgData.semesters) {
+    student.pgAggregate = student.calculateAggregate(student.pgData.semesters);
   }
+
+  // Hash password if modified
+  if (!student.isModified("password")) return next();
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+    bcrypt.hash(student.password, salt, (err, hash) => {
+      if (err) return next(err);
+      student.password = hash;
+      next();
+    });
+  });
 });
 
 const Student = mongoose.model('Student', studentSchema);

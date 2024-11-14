@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types'; // For prop validation
 import AuthLayout from './AuthLayout';
 
@@ -89,6 +89,16 @@ function StudentLogin({ setStudentAuthStatus }) {
               <button className="btn bg-neutral-950 text-white btn-info">Login</button>
             </div>
           </form>
+
+          {/* Register Link */}
+          <div className="text-center mt-4">
+            <p className="text-neutral-950">
+              Don't have an account?{' '}
+              <Link to="/student_registration" className="text-blue-500 hover:underline">
+                Register
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </AuthLayout>

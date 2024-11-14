@@ -241,7 +241,7 @@ function LandingNew() {
           <div className="w-full flex items-center justify-center space-x-8">
             {/* Student Card */}
             <ThreeDCardDemo
-              link="/student_registration"
+              link="/student_login"
               title="Student"
               image={StudentImg}
             />
