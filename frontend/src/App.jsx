@@ -42,39 +42,39 @@ const App = () => {
 
   const location = useLocation();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/auth/auth-status", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setAuthStatus(response.data.isAuthenticated);
-      })
-      .catch((error) => {
-        console.error("Error checking auth status:", error);
-      })
-      .finally(() => {
-        // Set a timeout for loading based on the route
-        const timeoutDuration = location.pathname === "/" ? 3500 : 1500;
-        setTimeout(() => {
-          setLoading(false);
-        }, timeoutDuration);
-      });
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/api/auth/auth-status", {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setAuthStatus(response.data.isAuthenticated);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking auth status:", error);
+  //     })
+  //     .finally(() => {
+  //       // Set a timeout for loading based on the route
+  //       const timeoutDuration = location.pathname === "/" ? 3500 : 1500;
+  //       setTimeout(() => {
+  //         setLoading(false);
+  //       }, timeoutDuration);
+  //     });
+  // }, [location.pathname]);
 
-  useEffect(() => {
-    // Check if the student is authenticated
-    axios
-      .get("http://localhost:5000/api/students/auth-status", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setStudentAuthStatus(response.data.isAuthenticated);
-      })
-      .catch((error) => {
-        console.error("Error checking student auth status:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Check if the student is authenticated
+  //   axios
+  //     .get("http://localhost:5000/api/students/auth-status", {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setStudentAuthStatus(response.data.isAuthenticated);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking student auth status:", error);
+  //     });
+  // }, []);
 
   const isPublicRoute = [
     "/",
@@ -87,13 +87,13 @@ const App = () => {
 
   const isLanding = location.pathname === "/";
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
       <div className="flex flex-col h-screen w-full">
-        {isPublicRoute ? (
+        {/* {isPublicRoute ? (
           isLanding ? (
             ""
           ) : (
@@ -101,7 +101,7 @@ const App = () => {
           )
         ) : (
           <Navbar authStatus={authStatus} />
-        )}
+        )} */}
         {/* Pass authStatus to Navbar */}
         <div className="flex-grow">
           <AuthProvider>
@@ -151,10 +151,6 @@ const App = () => {
                 path="/cdashboard"
                 element={<ProtectedRoute element={Content} />}
               />
-              {/* <Route
-                path="/events"
-                element={<ProtectedRoute element={Content} />}
-              /> */}
               <Route
                 path="/students"
                 element={<ProtectedRoute element={Followup} />}

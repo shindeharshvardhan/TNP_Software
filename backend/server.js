@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session"); // Import express-session
-const passport = require("passport"); // Import passport
+// const passport = require("passport"); // Import passport
+const passport=require('./config/passportConfig')
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
@@ -9,6 +10,7 @@ const helmet = require('helmet');
 const sr = require('./routes/s');
 const fr = require('./routes/f');
 const cr = require('./routes/c');
+const searchCompanies=require('./routes/searchCompanies')
 
 const app = express();
 const db = require("./config/dbConfig");
@@ -54,12 +56,14 @@ app.use(passport.initialize());
 app.use(passport.session()); // Session-based authentication
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes,passport.authenticate("coordinator-login"));
 
 app.use('/api/events', eventRoutes);
 
-app.use("/api/students", student_Registration_Routes);
-app.use("/api/students/", student_Login_Routes);
+// app.use("/api/students", student_Registration_Routes);
+app.use("/api/students/", student_Login_Routes,passport.authenticate("student-login"));
+// (http://localhost:5000/api/companies/search?q=${query});
+app.use('/api/companies',searchCompanies)
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

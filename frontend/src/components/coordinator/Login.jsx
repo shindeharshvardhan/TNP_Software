@@ -12,7 +12,7 @@ function Login() {
 
   const setCookie = (name, value, days) => {
     const expires = new Date(Date.now() + days * 86400e3).toUTCString();
-    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=None; Secure`;
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; Secure`;
   };
 
   const handleLogin = async (e) => {
@@ -34,7 +34,10 @@ function Login() {
       if (response.ok) {
         setStudentCoordinatorId(data.user._id);
         setIsAuthenticated(true);
-        setCookie('studentCoordinatorId', data.user._id, 1); // 1 day expiry
+
+        // Set only the necessary cookies and remove duplicates if needed
+        setCookie('studentCoordinatorId', data.user._id, 1); // 1-day expiry
+        setCookie('isAuthenticated', true, 1);
 
         navigate('/cdashboard');
       } else {

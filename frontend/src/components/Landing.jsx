@@ -4,11 +4,13 @@ import Footer from "./Footer";
 import Student from "../assets/student.png";
 import Coordinator from "../assets/coordinator.png";
 import { Link } from "react-router-dom";
+import MinimalNavbar from "../MinimalNavbar";
 
 
 function Landing() {
   return (
     <>
+    <MinimalNavbar/>
       <div className="max-w-screen-2xl container md:px-20 px-4 pt-20 h-screen flex flex-col-reverse md:flex-row">
         <div className="md:w-1/2 space-y-12 my-12 md:my-20 p-3">
           <h1 className="text-4xl font-bold">
