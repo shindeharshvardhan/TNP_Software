@@ -1,9 +1,44 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
+const { ObjectId } = require("mongodb");
 const Student = require("../models/Student");
+const Coordinator = require("../models/studentc"); // Assuming the coordinator model exists
 
+// Coordinator login strategy
 passport.use(
+    'coordinator-login',
+    new LocalStrategy(
+        { usernameField: 'email', passwordField: 'password' },
+        async (email, password, done) => {
+            try {
+                // Check if coordinator exists in DB
+                const coordinator = await Coordinator.findOne({ email });
+                if (!coordinator) {
+                    console.log("Authentication failed: Email not found.");
+                    return done(null, false, { message: "Email not found" });
+                }
+
+                // Verify password
+                const isMatch = await bcrypt.compare(password, coordinator.password);
+                if (!isMatch) {
+                    console.log("Authentication failed: Incorrect password.");
+                    return done(null, false, { message: "Invalid password" });
+                }
+
+                // Successfully authenticated
+                return done(null, { id: coordinator.id, type: 'coordinator' });
+            } catch (error) {
+                console.error("Error in coordinator LocalStrategy:", error);
+                return done(error);
+            }
+        }
+    )
+);
+
+// Student login strategy
+passport.use(
+    'student-login',
     new LocalStrategy(
         { usernameField: 'prn' },
         async (prn, password, done) => {
@@ -23,27 +58,36 @@ passport.use(
                 }
 
                 // Successfully authenticated
-                return done(null, student);
+                return done(null, { id: student.id, type: 'student' });
             } catch (error) {
-                console.error("Error in LocalStrategy:", error);
+                console.error("Error in student LocalStrategy:", error);
                 return done(error);
             }
         }
     )
 );
 
-// Serialize user ID to store in session
-passport.serializeUser((student, done) => done(null, student.id));
+// Serialize user ID and user type (student or coordinator) into session
+passport.serializeUser((user, done) => {
+    done(null, { id: user.id, type: user.type });
+});
 
-// Deserialize user from session by ID
-passport.deserializeUser(async (id, done) => {
+// Deserialize user from session by ID and type
+passport.deserializeUser(async (data, done) => {
     try {
-        const student = await Student.findById(id);
-        if (!student) {
-            console.log("Deserialization failed: Student not found.");
+        let user;
+        if (data.type === 'student') {
+            user = await Student.findById(data.id);
+        } else if (data.type === 'coordinator') {
+            user = await Coordinator.findById(data.id);
+        }
+
+        if (!user) {
+            console.log("Deserialization failed: User not found.");
             return done(null, false);
         }
-        done(null, student);
+
+        done(null, user);
     } catch (error) {
         console.error("Error in deserialization:", error);
         done(error);

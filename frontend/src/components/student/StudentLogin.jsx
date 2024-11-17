@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types'; // For prop validation
+import PropTypes from 'prop-types';
 import AuthLayout from './AuthLayout';
 
 function StudentLogin({ setStudentAuthStatus }) {
@@ -10,6 +10,12 @@ function StudentLogin({ setStudentAuthStatus }) {
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
+  // Function to set cookies
+  const setCookie = (name, value, days) => {
+    const expires = new Date(Date.now() + days * 86400e3).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; Secure`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -17,24 +23,28 @@ function StudentLogin({ setStudentAuthStatus }) {
       const response = await fetch('http://localhost:5000/api/students/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ prn, password }),
-        credentials: 'include'
+        credentials: 'include',
       });
 
       const data = await response.json();
-
       if (response.ok) {
         setSuccessMessage('Login successful');
         setErrorMessage('');
-        setStudentAuthStatus(true); // Update student auth status
+        setStudentAuthStatus(true);
+        console.log(data)
+        // Set cookies upon successful login
+        setCookie('studentPrn', prn, 1); // Store PRN for 1 day
+        setCookie('isAuthenticated', true, 1); // Store auth status for 1 day
+
         navigate("/student_dashboard");
       } else {
         setErrorMessage(data.message || "Login failed. Please check your credentials.");
         setSuccessMessage('');
-        setPrn(''); // Clear PRN field on error
-        setPassword(''); // Clear Password field on error
+        setPrn('');
+        setPassword('');
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -96,7 +106,7 @@ function StudentLogin({ setStudentAuthStatus }) {
 }
 
 StudentLogin.propTypes = {
-  setStudentAuthStatus: PropTypes.func.isRequired
+  setStudentAuthStatus: PropTypes.func.isRequired,
 };
 
 export default StudentLogin;

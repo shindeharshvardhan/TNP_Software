@@ -4,7 +4,7 @@ import DriveCard from "./DriveCard";
 import ProgressTracker from "./ProgressTracker";
 
 
-export default function AssignedCompanies() {
+export default function ContentNew() {
   const { studentCoordinatorId } = useAuth();
   const [assignedCompanies, setAssignedCompanies] = useState([]);
   const [loading, setLoading] = useState(true);

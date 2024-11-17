@@ -1,13 +1,14 @@
-const express = require('express');
-const passport = require('passport');
 
+const express = require('express');
+const passport = require('../config/passportConfig');
+require('dotenv').config();
 const router = express.Router();
 
 // Apply CSRF protection to login route
-router.post('/login', (req, res, next) => {
+router.post('/login',passport.authenticate("student-login"), (req, res, next) => {
   
   // Authenticate the user with Passport
-  passport.authenticate('local', (err, student, info) => {
+  passport.authenticate('student-login', (err, student, info) => {
     if (err) {
       return res.status(500).json({ message: 'Server error' });
     }

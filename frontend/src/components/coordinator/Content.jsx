@@ -6,6 +6,7 @@ import EventForm  from './EventForm';
 import EventList  from './EventList';
 import '../../Content.css';
 import AssignedCompanies from './AssignedCompanies';
+import Navbar from './Navbar';
 
 function Content() {
   const [showForm, setShowForm] = useState(false);

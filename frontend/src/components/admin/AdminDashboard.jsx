@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './style.css'; // Custom CSS for additional styling
+import './style.css'; 
+// Custom CSS for additional styling
 import Navbar from './Navbar';
 
 const AdminDashboard = () => {
