@@ -30,22 +30,23 @@ function ProgressTracker() {
     };
 
     return (
-        <div className="progress-tracker-container">
+        <div className="progress-tracker-container mb-10">
+            <h2 className='text-4xl text-center text-black font-bold mb-10'>Companies Activities</h2>
             {companyProgress.map((company, index) => (
-                <div key={index} className="progress-tracker glassmorphism ">
+                <div key={index} className="progress-tracker bg-indigo-200 p-4 md:px-32 mb-4 rounded-lg shadow-md">
                     <h2 className="company-name text-black text-2xl mb-5">{company.name}</h2>
                     <div className="tracker gap-10">
                         {company.stages.map((stage, stageIndex) => (
                             <div key={stageIndex} className={`tracker-stage ${stageIndex <= company.currentStage ? 'active' : ''}`}>
-                                <div className="circle">{stageIndex + 1}</div>
+                                <div className="circle"></div>
                                 <div className="label">{stage}</div>
                             </div>
                         ))}
                     </div>
-                    <div className="buttons">
+                    {/* <div className="buttons">
                         <button onClick={() => handlePrevStage(index)} disabled={company.currentStage === 0}>Previous</button>
                         <button onClick={() => handleNextStage(index)} disabled={company.currentStage === company.stages.length - 1}>Next</button>
-                    </div>
+                    </div> */}
                 </div>
             ))}
         </div>

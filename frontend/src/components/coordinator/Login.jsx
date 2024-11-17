@@ -32,11 +32,12 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        setStudentCoordinatorId(data.user._id);
+        console.log(data)
+        setStudentCoordinatorId(data.user.id);
         setIsAuthenticated(true);
 
         // Set only the necessary cookies and remove duplicates if needed
-        setCookie('studentCoordinatorId', data.user._id, 1); // 1-day expiry
+        setCookie('studentCoordinatorId', data.user.id, 1); // 1-day expiry
         setCookie('isAuthenticated', true, 1);
 
         navigate('/cdashboard');

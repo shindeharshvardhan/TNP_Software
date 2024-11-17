@@ -7,7 +7,6 @@
 .tracker {
   display: flex;
   justify-content: space-between;
-  width: 80%;
   margin-bottom: 20px;
 }
 
@@ -22,8 +21,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: lightgray;
-  color: white;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
