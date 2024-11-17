@@ -1,7 +1,7 @@
-const express = require('express');
-const Event = require('../models/eventModel');
-const EventController = require('../controllers/eventController'); 
-const router = express.Router();
+// const express = require('express');
+// const Event = require('../models/eventModel');
+// const EventController = require('../controllers/eventController'); 
+// const router = express.Router();
 
 // Create a new event
 // router.post('/', EventController.createEvent);
@@ -55,12 +55,39 @@ const router = express.Router();
 //   }
 // });
 
-router.post('/', EventController.createEvent);
-router.get('/', EventController.getAllEvents);
-router.get('/:id', EventController.getEventById);
-router.put('/:id', EventController.updateEvent);
-router.delete('/:id', EventController.deleteEvent);
+// router.post('/', EventController.createEvent);
+// router.get('/', EventController.getAllEvents);
+// router.get('/:id', EventController.getEventById);
+// router.put('/:id', EventController.updateEvent);
+// router.delete('/:id', EventController.deleteEvent);
 
 
+
+// module.exports = router;
+
+const express = require("express");
+const router = express.Router();
+const {
+    createOrUpdateEvent,
+    getEventsByCompany,
+    getTasksByDate,
+    deleteEvent,
+    createTaskForEvent,  // Import the new createTaskForEvent function
+} = require("../controllers/eventController");
+
+// Route to create or update an event
+router.post("/", createOrUpdateEvent);
+
+// Route to get events for a company
+router.get("/:companyId", getEventsByCompany);
+
+// Route to get tasks by date
+router.get("/tasks", getTasksByDate);
+
+// Route to delete an event by ID
+router.delete("/:eventId", deleteEvent);
+
+// Route to create a task for an event
+router.post("/create-task", createTaskForEvent);
 
 module.exports = router;

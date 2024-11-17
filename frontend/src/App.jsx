@@ -34,6 +34,7 @@ import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
 import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
+import ContentNew from "./components/coordinator/ContentNew";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -149,7 +150,7 @@ const App = () => {
 
               <Route
                 path="/cdashboard"
-                element={<ProtectedRoute element={Content} />}
+                element={<ProtectedRoute element={ContentNew} />}
               />
               {/* <Route
                 path="/events"

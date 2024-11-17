@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session"); // Import express-session
-const passport = require("passport"); // Import passport
+// const passport = require("passport"); // Import passport
+const passport=require('./config/passportConfig')
 require('dotenv').config(); 
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/eventRoutes');
@@ -10,16 +11,9 @@ const sr = require('./routes/s');
 const fr = require('./routes/f');
 const cr = require('./routes/c');
 const searchCompanies=require('./routes/searchCompanies')
-const db = require("./config/dbConfig");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const student_Registration_Routes = require("./routes/student_registration_Routes");
-const student_Login_Routes = require("./routes/student_login_Routes");
-const company_description_routes = require("./routes/company_description_route");
-const studentPassport = require("./config/passportConfig");
-const MongoStore = require('connect-mongo');
 
 const app = express();
+const db = require("./config/dbConfig");
 
 // Middleware setup
 app.use(cors({
@@ -29,15 +23,16 @@ app.use(cors({
   allowedHeaders: "Content-Type, Authorization"
 }));
 
-app.use(cookieParser());
 app.use(express.json()); 
 app.use(helmet());
 app.use('/sc', sr);
 app.use('/fc', fr);
 app.use('/cc', cr);
-app.use('/api/companies',searchCompanies)
+const student_Registration_Routes = require("./routes/student_registration_Routes");
+const student_Login_Routes = require("./routes/student_login_Routes");
 
 // Initialize express-session
+const MongoStore = require('connect-mongo');
 console.log("Session Secret:", process.env.SESSION_SECRET);
 
 app.use(session({
@@ -49,7 +44,6 @@ app.use(session({
     collectionName: 'sessions'
   }),
   cookie: {
-    httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     sameSite: 'lax',
     secure: false // Set true in production if using HTTPS
@@ -60,17 +54,16 @@ app.use(session({
 // Initialize passport and session
 app.use(passport.initialize());
 app.use(passport.session()); // Session-based authentication
-app.use(studentPassport.initialize());
-app.use(studentPassport.session());
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes,passport.authenticate("coordinator-login"));
 
 app.use('/api/events', eventRoutes);
-app.use("/api/company-description", company_description_routes);
 
-app.use("/api/students", student_Registration_Routes);
-app.use("/api/students/", student_Login_Routes);
+// app.use("/api/students", student_Registration_Routes);
+app.use("/api/students/", student_Login_Routes,passport.authenticate("student-login"));
+// (http://localhost:5000/api/companies/search?q=${query});
+app.use('/api/companies',searchCompanies)
 
 // Define the port using environment variables or a default value
 const port = process.env.PORT || 5000;

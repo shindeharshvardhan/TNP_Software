@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
 
 const Company_Description_Form = () => {
   const [selectedPrograms, setSelectedPrograms] = useState([]);
@@ -26,25 +27,48 @@ const Company_Description_Form = () => {
   const [otherDetails, setOtherDetails] = useState("");
 
   const ugDepts = [
-    "BSC Applied Physics", "B.Arch", "BE Chemical Engineering", "BE Civil Engineering",
-    "BE Computer Science and Engineering", "BE Electrical Engineering", "BE Electronics Engineering",
-    "BE Mechanical Engineering", "BE Metallurgical and Materials Engineering",
-    "BE Textile Engineering", "Water Resources Engineering and Management (WREM)"
+    "BSC Applied Physics",
+    "B.Arch",
+    "BE Chemical Engineering",
+    "BE Civil Engineering",
+    "BE Computer Science and Engineering",
+    "BE Electrical Engineering",
+    "BE Electronics Engineering",
+    "BE Mechanical Engineering",
+    "BE Metallurgical and Materials Engineering",
+    "BE Textile Engineering",
+    "Water Resources Engineering and Management (WREM)",
   ];
 
   const pgDepts = [
-    "MSC Applied Maths", "MSC Applied Chemistry", "MSC Applied Physics",
-    "MSC Industrial Mathematics", "MSC Financial Mathematics", "Master of Computer Applications",
-    "ME Civil Environmental Engineering", "ME Civil Fracture Mechanics", "ME Civil Geotechnical Engineering",
-    "ME Civil Highway and Transportation Engineering", "ME Civil Integrated Water Management",
-    "ME Civil Structural Engineering", "ME Civil Water Resources Engineering", "ME Electrical Automatic Control and Robotics",
-    "ME Electrical Power Engineering", "ME Electrical Industrial Engineering", "ME Electrical Microprocessor System Application",
-    "ME Mechanical Jet Propulsion and Gas Turbine Plant", "ME Mechanical Production Engineering",
-    "ME Mechanical Thermal Science", "ME Metallurgy Industrial Metallurgy", "ME Metallurgy Material Science and Engineering",
-    "ME Metallurgy Welding Technology", "ME Textile Engineering", "ME Textile Man Made Engineering",
-    "ME Textile Processing", "Master of Urban and Regional Planning"
+    "MSC Applied Maths",
+    "MSC Applied Chemistry",
+    "MSC Applied Physics",
+    "MSC Industrial Mathematics",
+    "MSC Financial Mathematics",
+    "Master of Computer Applications",
+    "ME Civil Environmental Engineering",
+    "ME Civil Fracture Mechanics",
+    "ME Civil Geotechnical Engineering",
+    "ME Civil Highway and Transportation Engineering",
+    "ME Civil Integrated Water Management",
+    "ME Civil Structural Engineering",
+    "ME Civil Water Resources Engineering",
+    "ME Electrical Automatic Control and Robotics",
+    "ME Electrical Power Engineering",
+    "ME Electrical Industrial Engineering",
+    "ME Electrical Microprocessor System Application",
+    "ME Mechanical Jet Propulsion and Gas Turbine Plant",
+    "ME Mechanical Production Engineering",
+    "ME Mechanical Thermal Science",
+    "ME Metallurgy Industrial Metallurgy",
+    "ME Metallurgy Material Science and Engineering",
+    "ME Metallurgy Welding Technology",
+    "ME Textile Engineering",
+    "ME Textile Man Made Engineering",
+    "ME Textile Processing",
+    "Master of Urban and Regional Planning",
   ];
-
 
   const handleProgramChange = (event) => {
     const { name, checked } = event.target;
@@ -52,7 +76,7 @@ const Company_Description_Form = () => {
       checked ? [...prev, name] : prev.filter((p) => p !== name)
     );
     if (!checked) {
-      setSelectedDepartments([]);  // Clear departments if the program is unchecked
+      setSelectedDepartments([]); // Clear departments if the program is unchecked
     }
   };
 
@@ -61,7 +85,9 @@ const Company_Description_Form = () => {
     if (checked) {
       setSelectedDepartments([...selectedDepartments, value]);
     } else {
-      setSelectedDepartments(selectedDepartments.filter((dep) => dep !== value));
+      setSelectedDepartments(
+        selectedDepartments.filter((dep) => dep !== value)
+      );
     }
   };
 
@@ -82,10 +108,15 @@ const Company_Description_Form = () => {
   };
 
   const isSaveDisabled =
-    eligibilityUG === "" || (eligibilityUG === "Custom" && customEligibilityUG === "") ||
-    eligibility10th === "" || (eligibility10th === "Custom" && customEligibility10th === "") ||
-    eligibility12th === "" || (eligibility12th === "Custom" && customEligibility12th === "") ||
-    (selectedPrograms.includes("PG") && (eligibilityPG === "" || (eligibilityPG === "Custom" && customEligibilityPG === "")));
+    eligibilityUG === "" ||
+    (eligibilityUG === "Custom" && customEligibilityUG === "") ||
+    eligibility10th === "" ||
+    (eligibility10th === "Custom" && customEligibility10th === "") ||
+    eligibility12th === "" ||
+    (eligibility12th === "Custom" && customEligibility12th === "") ||
+    (selectedPrograms.includes("PG") &&
+      (eligibilityPG === "" ||
+        (eligibilityPG === "Custom" && customEligibilityPG === "")));
 
   const departments = [
     ...(selectedPrograms.includes("UG") ? ugDepts : []),
@@ -140,13 +171,30 @@ const Company_Description_Form = () => {
     }
   };
 
+  const loc = useLocation();
+  const { companyName } = loc.state || {};
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="w-full px-4 sm:px-6 lg:px-8 mt-12">
         {/* Full-width and margin from navbar */}
         <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-8">
           {/* Max-width container for centering */}
-          <h1 className="text-3xl font-semibold mb-8 text-center">Company Description Form</h1>
+          <h1 className="text-3xl font-semibold mb-8 text-center">
+            Company Description Form
+          </h1>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Company Name
+            </label>
+            <input
+              type="text"
+              value={companyName || ""}
+              readOnly
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
 
           {/* Program Selection */}
           <div className="mb-4">
@@ -176,7 +224,9 @@ const Company_Description_Form = () => {
           {/* Departments */}
           {departments.length > 0 && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Choose Departments</label>
+              <label className="block font-medium mb-2">
+                Choose Departments
+              </label>
               <div className="grid grid-cols-2 gap-4">
                 {departments.map((dept) => (
                   <label key={dept} className="inline-flex items-center mr-4">
@@ -207,7 +257,9 @@ const Company_Description_Form = () => {
 
           {/* Application Deadline */}
           <div className="mb-4">
-            <label className="block font-medium mb-2">Application Deadline</label>
+            <label className="block font-medium mb-2">
+              Application Deadline
+            </label>
             <input
               type="date"
               value={applicationDeadline}
@@ -248,9 +300,12 @@ const Company_Description_Form = () => {
           </div>
 
           {/* Eligibility Criteria for UG (shown if UG or PG is selected) */}
-          {(selectedPrograms.includes("UG") || selectedPrograms.includes("PG")) && (
+          {(selectedPrograms.includes("UG") ||
+            selectedPrograms.includes("PG")) && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Eligibility Criteria (UG)</label>
+              <label className="block font-medium mb-2">
+                Eligibility Criteria (UG)
+              </label>
               <select
                 value={eligibilityUG}
                 onChange={handleEligibilityChangeUG}
@@ -279,7 +334,9 @@ const Company_Description_Form = () => {
           {/* Eligibility Criteria for PG (shown if PG is selected) */}
           {selectedPrograms.includes("PG") && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Eligibility Criteria (PG)</label>
+              <label className="block font-medium mb-2">
+                Eligibility Criteria (PG)
+              </label>
               <select
                 value={eligibilityPG}
                 onChange={handleEligibilityChangePG}
@@ -306,9 +363,12 @@ const Company_Description_Form = () => {
           )}
 
           {/* Eligibility Criteria for 10th (shown if UG or PG is selected) */}
-          {(selectedPrograms.includes("UG") || selectedPrograms.includes("PG")) && (
+          {(selectedPrograms.includes("UG") ||
+            selectedPrograms.includes("PG")) && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Eligibility Criteria (10th)</label>
+              <label className="block font-medium mb-2">
+                Eligibility Criteria (10th)
+              </label>
               <select
                 value={eligibility10th}
                 onChange={handleEligibilityChange10th}
@@ -335,9 +395,12 @@ const Company_Description_Form = () => {
           )}
 
           {/* Eligibility Criteria for 12th (shown if UG or PG is selected) */}
-          {(selectedPrograms.includes("UG") || selectedPrograms.includes("PG")) && (
+          {(selectedPrograms.includes("UG") ||
+            selectedPrograms.includes("PG")) && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Eligibility Criteria (12th)</label>
+              <label className="block font-medium mb-2">
+                Eligibility Criteria (12th)
+              </label>
               <select
                 value={eligibility12th}
                 onChange={handleEligibilityChange12th}
@@ -365,7 +428,9 @@ const Company_Description_Form = () => {
 
           {/* Internship Section */}
           <div className="mb-4">
-            <label className="block font-medium mb-2">Is Internship Offered?</label>
+            <label className="block font-medium mb-2">
+              Is Internship Offered?
+            </label>
             <div className="space-x-4">
               <label className="inline-flex items-center">
                 <input
@@ -392,7 +457,9 @@ const Company_Description_Form = () => {
 
           {showInternshipDetails && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Internship Duration (months)</label>
+              <label className="block font-medium mb-2">
+                Internship Duration (months)
+              </label>
               <input
                 type="number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none"
@@ -400,7 +467,9 @@ const Company_Description_Form = () => {
                 onChange={(e) => setInternshipDuration(e.target.value)}
               />
 
-              <label className="block font-medium mb-2 mt-4">Internship Stipend</label>
+              <label className="block font-medium mb-2 mt-4">
+                Internship Stipend
+              </label>
               <input
                 type="number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none"
@@ -412,7 +481,9 @@ const Company_Description_Form = () => {
 
           {/* Training Section */}
           <div className="mb-4">
-            <label className="block font-medium mb-2">Is Training Offered?</label>
+            <label className="block font-medium mb-2">
+              Is Training Offered?
+            </label>
             <div className="space-x-4">
               <label className="inline-flex items-center">
                 <input
@@ -439,7 +510,9 @@ const Company_Description_Form = () => {
 
           {showTrainingDetails && (
             <div className="mb-4">
-              <label className="block font-medium mb-2">Training Duration (months)</label>
+              <label className="block font-medium mb-2">
+                Training Duration (months)
+              </label>
               <input
                 type="number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none"
@@ -447,10 +520,13 @@ const Company_Description_Form = () => {
                 onChange={(e) => setTrainingDuration(e.target.value)}
               />
 
-              <label className="block font-medium mb-2 mt-4">Training Stipend</label>
+              <label className="block font-medium mb-2 mt-4">
+                Training Stipend
+              </label>
               <input
                 type="number"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none" value={trainingStipend}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none"
+                value={trainingStipend}
                 onChange={(e) => setTrainingStipend(e.target.value)}
               />
             </div>
@@ -461,15 +537,19 @@ const Company_Description_Form = () => {
             <label className="block font-medium mb-2">Other Details</label>
             <textarea
               className="w-full px-4 py-2 border rounded-md focus:outline-none"
-              rows="4" value={otherDetails} onChange={(e) => setOtherDetails(e.target.value)}
+              rows="4"
+              value={otherDetails}
+              onChange={(e) => setOtherDetails(e.target.value)}
             ></textarea>
           </div>
 
           {/* Buttons */}
           <div className="flex space-x-4">
-            <button type="submit"
-              className={`px-4 py-2 rounded-md text-white ${isSaveDisabled ? "bg-gray-400" : "bg-blue-500"
-                }`}
+            <button
+              type="submit"
+              className={`px-4 py-2 rounded-md text-white ${
+                isSaveDisabled ? "bg-gray-400" : "bg-blue-500"
+              }`}
               disabled={isSaveDisabled}
             >
               Save
@@ -477,6 +557,11 @@ const Company_Description_Form = () => {
             <button className="px-4 py-2 rounded-md bg-green-500 text-white">
               Eligible Students List
             </button>
+            <Link
+              className="px-4 py-2 rounded-md bg-black text-white" to="/cdashboard"
+            >
+              Back to Dashboard
+            </Link>
           </div>
         </div>
       </div>
