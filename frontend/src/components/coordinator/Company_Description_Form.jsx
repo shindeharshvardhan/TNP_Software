@@ -126,54 +126,62 @@ const Company_Description_Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const eligibilityCriteria = {
+        tenthEligibility: eligibility10th === "Custom" ? customEligibility10th : eligibility10th,
+        twelfthEligibility: eligibility12th === "Custom" ? customEligibility12th : eligibility12th,
+        beAggregate: eligibilityUG,  // Assuming `beAggregate` is part of your form
+    };
+
+    const internshipDetails = showInternshipDetails
+        ? {
+              internshipMonths: internshipDuration,
+              stipend: internshipStipend,
+          }
+        : null;
+
+    const trainingDetails = showTrainingDetails
+        ? {
+              trainingDuration,
+              trainingStipend,
+          }
+        : null;
+
     const companyDescriptionData = {
-      programs: selectedPrograms,
-      selectedDepartments: selectedDepartments, // Only the selected departments are sent
-      eligibilityCriteria: {
-        UG: eligibilityUG,
-        customUGEligibility: customEligibilityUG,
-        PG: eligibilityPG,
-        customPGEligibility: customEligibilityPG,
-        tenthEligibility: eligibility10th,
-        customTenthEligibility: customEligibility10th,
-        twelfthEligibility: eligibility12th,
-        customTwelfthEligibility: customEligibility12th,
-      },
-      jobDetails: {
-        jobRole,
-        applicationDeadline,
-        ctc,
-        bond,
-        location,
-      },
-      internshipDetails: {
-        isOffered: showInternshipDetails,
-        duration: internshipDuration,
-        stipend: internshipStipend,
-      },
-      trainingDetails: {
-        isOffered: showTrainingDetails,
-        duration: trainingDuration,
-        stipend: trainingStipend,
-      },
-      otherDetails,
+        // hrContactName: hrContactName || "",  // Assuming this is available in your form state
+        // hrContactEmail: hrContactEmail || "",
+        // coordinator: coordinatorId || "",  // Assuming this is the selected coordinator's _id
+        // completed: completed,  // Assuming `completed` is a checkbox or boolean field
+        eligibleDepartments: selectedDepartments,  // Departments selected in the form
+        ctc: ctc || 0,  // Assuming this is the CTC field in your form
+        jobrole: jobRole || "",  // Assuming this is the job role field in your form
+        location: location || "",  // Assuming this is the location field in your form
+        isInternshipOffered: showInternshipDetails || false,
+        internshipDetails: internshipDetails,
+        internshipStipend:internshipStipend,
+        internshipDuration:internshipDuration,
+        trainingDetails: trainingDetails,
+        extraDetails: otherDetails || "",  // Assuming `otherDetails` is an optional field
+        ...eligibilityCriteria,  // Spread the eligibility criteria
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/company-description",
-        companyDescriptionData
-      );
-      alert(response.data);
+        const response = await axios.put(
+            `http://localhost:5000/cc/companies/${company._id}/visits/${company.visits[0]._id}`,
+            companyDescriptionData
+        );
+        alert("Form submitted successfully!");
     } catch (err) {
-      console.error("Error submitting form data", err);
-      alert("Failed to submit data");
+        console.error("Error submitting form data:", err);
+        alert("Failed to submit data");
     }
-  };
+};
+
 
   const loc = useLocation();
   const { companyName } = loc.state || {};
-
+  const {company} =loc.state||{}
+  console.log(company)
+ 
   return (
     <form onSubmit={handleSubmit}>
       <div className="w-full px-4 sm:px-6 lg:px-8 mt-12">

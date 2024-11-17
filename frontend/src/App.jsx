@@ -35,6 +35,7 @@ import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
 import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
 import ContentNew from "./components/coordinator/ContentNew";
+import MessageToStudent from "./components/coordinator/MessageToStudent";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -43,39 +44,39 @@ const App = () => {
 
   const location = useLocation();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/auth/auth-status", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setAuthStatus(response.data.isAuthenticated);
-      })
-      .catch((error) => {
-        console.error("Error checking auth status:", error);
-      })
-      .finally(() => {
-        // Set a timeout for loading based on the route
-        const timeoutDuration = location.pathname === "/" ? 3500 : 1500;
-        setTimeout(() => {
-          setLoading(false);
-        }, timeoutDuration);
-      });
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/api/auth/auth-status", {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setAuthStatus(response.data.isAuthenticated);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking auth status:", error);
+  //     })
+  //     .finally(() => {
+  //       // Set a timeout for loading based on the route
+  //       const timeoutDuration = location.pathname === "/" ? 3500 : 1500;
+  //       setTimeout(() => {
+  //         setLoading(false);
+  //       }, timeoutDuration);
+  //     });
+  // }, [location.pathname]);
 
-  useEffect(() => {
-    // Check if the student is authenticated
-    axios
-      .get("http://localhost:5000/api/students/auth-status", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setStudentAuthStatus(response.data.isAuthenticated);
-      })
-      .catch((error) => {
-        console.error("Error checking student auth status:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Check if the student is authenticated
+  //   axios
+  //     .get("http://localhost:5000/api/students/auth-status", {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setStudentAuthStatus(response.data.isAuthenticated);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking student auth status:", error);
+  //     });
+  // }, []);
 
   const isPublicRoute = [
     "/",
@@ -88,9 +89,9 @@ const App = () => {
 
   const isLanding = location.pathname === "/";
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
       <div className="flex flex-col h-screen w-full">
@@ -139,6 +140,7 @@ const App = () => {
               />
               <Route path="/register" element={<Register />} />
               <Route path="/set-password" element={<SetPassword />} />
+              <Route path="/update_student" element={<MessageToStudent />} />
 
               {/* Protected Routes (Accessible only if logged in) */}
               {/* <Route path="/cdashboard" element={<Content /> } />

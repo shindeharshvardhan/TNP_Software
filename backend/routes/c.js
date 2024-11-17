@@ -230,6 +230,33 @@ router.get('/companies/:coordinatorId', async (req, res) => {
         res.status(500).json({ error: 'Error fetching companies by coordinator' });
     }
 });
+router.put('/companies/:companyId/visits/:visitId', async (req, res) => {
+    const { companyId, visitId } = req.params;
+    const updateData = req.body; // Data to update the visit
+
+    try {
+        const company = await Company.findById(companyId);
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found' });
+        }
+
+        const visit = company.visits.id(visitId);
+        if (!visit) {
+            return res.status(404).json({ message: 'Visit not found' });
+        }
+
+        // Update the visit with the new data
+        Object.assign(visit, updateData);
+
+        // Save the updated company document
+        await company.save();
+
+        res.status(200).json({ message: 'Visit updated successfully', updatedVisit: visit });
+    } catch (error) {
+        console.error('Error updating visit:', error);
+        res.status(500).json({ error: 'Error updating visit' });
+    }
+});
 
 
 

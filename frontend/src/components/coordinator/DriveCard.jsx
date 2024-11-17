@@ -20,17 +20,26 @@ function DriveCard({ company, status, onTaskClick }) {
   const toggleActivityForm = () => {
     setIsActivityFormVisible(!isActivityFormVisible);
   };
+  const handleMsgStudent=()=>{
+    navigate("/update_student", { state: { company : company} });
+  }
 
   const handleCompanyDescriptionClick = () => {
-    navigate("/company_description_form", { state: { companyName: company.name } });
+    navigate("/company_description_form", { state: { companyName: company.name ,company : company} });
   };
-
+  // console.log(company._id)
   return (
     <div
       key={company._id}
       className="bg-white rounded-lg shadow-md p-6 mb-4 border border-gray-200"
     >
+
       <h5 className="text-lg font-semibold mb-2">{company.name}</h5>
+      <button onClick={handleMsgStudent}
+          className="py-2 px-4 bg-blue-100 text-blue-700 font-semibold rounded-lg shadow-sm hover:bg-blue-200"
+        >
+        Update Students
+      </button>
       <p className="mt-2 text-gray-600">
         <strong>Status:</strong> {status}
       </p>
