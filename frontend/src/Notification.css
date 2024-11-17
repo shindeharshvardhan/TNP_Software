@@ -1,0 +1,40 @@
+.notification-container {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 50%;
+  margin: 10px auto;
+  background-color: #f9f9f9;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.accept-button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reject-button {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.text-green {
+  color: green;
+}
+
+.text-red {
+  color: red;
+}

@@ -34,6 +34,7 @@ import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
 import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
+import StudentNotificationPage from "./components/student/StudentNotificationPage";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -186,6 +187,7 @@ const App = () => {
                 element={<CompanyList />}
               />
               <Route path="sdashboard" element={<StudentDashboard />}/>
+              <Route path="snotification" element={<StudentNotificationPage />}/>
             </Routes>
           </AuthProvider>
         </div>
