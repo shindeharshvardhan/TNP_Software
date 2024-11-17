@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   return (
-    <div className="navbar pt-3 pl-16 pr-16 text-neutral-950 shadow">
+    <div className="navbar flex justify-between items-center pt-3 px-16 text-neutral-950 shadow">
       <div className="navbar-start">
         <NavLink to="/" className="btn btn-ghost text-2xl">
           T&P FTE
         </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-lg">
+        <ul className="menu menu-horizontal px-1 text-lg flex space-x-6">
           <li>
             <NavLink
               to="/"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              className={({ isActive }) => (isActive ? "underline underline-offset-4" : "")}
             >
               Dashboard
             </NavLink>
@@ -23,8 +28,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/students"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              className={({ isActive }) => (isActive ? "underline underline-offset-4" : "")}
             >
               Coordinators
             </NavLink>
@@ -32,16 +36,15 @@ function Navbar() {
           <li>
             <NavLink
               to="/details"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              className={({ isActive }) => (isActive ? "underline underline-offset-4" : "")}
             >
               Reports
             </NavLink>
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle mx-2">
+      <div className="navbar-end flex items-center space-x-4">
+        <button className="btn btn-ghost btn-circle">
           <div className="indicator">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,42 +63,39 @@ function Navbar() {
             <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
         </button>
-        {/* <NavLink
-          className="btn rounded-full text-lg text-slate-100 bg-neutral-950"
-          to="/login"
-        >
-          Sign up / Log in
-        </NavLink> */}
-        <div className="dropdown dropdown-end">
+
+        {/* Profile Dropdown */}
+        <div className="relative">
           <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost avatar hover:bg-transparent"
+            onClick={toggleDropdown}
+            className="btn btn-ghost avatar cursor-pointer hover:bg-transparent"
           >
-            <div className="w-14 rounded-full transition-transform duration-200 hover:scale-110">
+            <div className="w-10 rounded-full transition-transform duration-200 hover:scale-110">
               <img
-                alt="Tailwind CSS Navbar component"
+                alt="Profile"
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
               />
             </div>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-white text-neutral-950 rounded-box z-[100] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
+          {dropdownOpen && (
+            <ul
+              className="menu menu-sm absolute right-0 bg-white text-neutral-950 rounded-box z-[1000] mt-3 w-52 p-2 shadow"
+              onMouseLeave={() => setDropdownOpen(false)} // Close dropdown on mouse leave
+            >
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <a>Logout</a>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </div>

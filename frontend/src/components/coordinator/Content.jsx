@@ -6,6 +6,7 @@ import EventForm  from './EventForm';
 import EventList  from './EventList';
 import '../../Content.css';
 import AssignedCompanies from './AssignedCompanies';
+import Navbar from './Navbar';
 
 function Content() {
   const [showForm, setShowForm] = useState(false);
@@ -79,6 +80,7 @@ const getEventsForSelectedDate = () => {
 
   return (
     <>
+    <Navbar/>
     <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32'>
       {/* Calendar Section */}
       <div className='flex flex-col items-center'>
