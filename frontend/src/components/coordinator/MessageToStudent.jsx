@@ -26,7 +26,9 @@ export default function MessageToStudent() {
       const response = await axios.post('http://localhost:5000/sdr/send-message', {
         eligibleDepartments: company?.visits?.[0]?.eligibleDepartments,
         tenthEligibility: Number(tenthEligibility), // Convert to number after removing last char
-        twelfthEligibility: Number(twelfthEligibility) // Convert to number after removing last char
+        twelfthEligibility: Number(twelfthEligibility) ,// Convert to number after removing last char
+        companyId : company._id,
+        visitYear : company.visits[0].year
       });
 
       // Handle response and update UI (you could also log this data if needed)

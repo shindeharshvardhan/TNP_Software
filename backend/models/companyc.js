@@ -40,16 +40,7 @@ const visitSchema = new mongoose.Schema({
         ref: 'Student' // Reference to the Student schema
     }] 
 });
-// jobRole,
-//       ctc,
-//       location,
-//       isInternshipOffered,
-//       internshipMonths,
-//       internshipStipend,
-//       extraDetails,
-//       tenthEligibility,
-//       twelfthEligibility,
-//       beAggregate,
+
 
 // Define the Company schema
 const companySchema = new mongoose.Schema({
