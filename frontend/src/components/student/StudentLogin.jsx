@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { AuthContext } from './../Contexts/StudentAuthContext';
 import AuthLayout from './AuthLayout';
 import { Link } from 'react-router-dom';
 
-function StudentLogin({ setStudentAuthStatus }) {
+function StudentLogin() {
+  const { login, isStudentAuthenticated, loading } = useContext(AuthContext); // Use login function from context
   const [prn, setPrn] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  // Function to set cookies
-  const setCookie = (name, value, days) => {
-    const expires = new Date(Date.now() + days * 86400e3).toUTCString();
-    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; Secure`;
-  };
+  if (isStudentAuthenticated) {
+    navigate("/student_dashboard");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,19 +26,17 @@ function StudentLogin({ setStudentAuthStatus }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ prn, password }),
-        credentials: 'include',
+        credentials: 'include', // This allows cookies to be included
       });
+
+      console.log("Response headers:", response.headers); // Debug response headers
 
       const data = await response.json();
       if (response.ok) {
+        console.log("Cookies after login:", document.cookie); // Check if cookies are set
         setSuccessMessage('Login successful');
         setErrorMessage('');
-        setStudentAuthStatus(true);
-        console.log(data)
-        // Set cookies upon successful login
-        setCookie('studentPrn', prn, 1); // Store PRN for 1 day
-        setCookie('isAuthenticated', true, 1); // Store auth status for 1 day
-
+        login(prn); // Set login state in context
         navigate("/student_dashboard");
       } else {
         setErrorMessage(data.message || "Login failed. Please check your credentials.");
@@ -97,7 +94,9 @@ function StudentLogin({ setStudentAuthStatus }) {
             {successMessage && <p className="text-green-500">{successMessage}</p>}
 
             <div className="text-center py-3">
-              <button className="btn bg-neutral-950 text-white btn-info">Login</button>
+              <button className="btn bg-neutral-950 text-white btn-info" disabled={loading}>
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
             </div>
           </form>
 
@@ -115,9 +114,5 @@ function StudentLogin({ setStudentAuthStatus }) {
     </AuthLayout>
   );
 }
-
-StudentLogin.propTypes = {
-  setStudentAuthStatus: PropTypes.func.isRequired,
-};
 
 export default StudentLogin;

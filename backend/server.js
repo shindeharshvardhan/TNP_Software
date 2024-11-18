@@ -62,7 +62,7 @@ app.use('/api/auth', authRoutes,passport.authenticate("coordinator-login"));
 app.use('/api/events', eventRoutes);
 
 app.use("/api/students", student_Registration_Routes);
-app.use("/api/students/", student_Login_Routes,passport.authenticate("student-login"));
+app.use("/api/students", student_Login_Routes);
 // (http://localhost:5000/api/companies/search?q=${query});
 app.use('/api/companies',searchCompanies)
 

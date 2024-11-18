@@ -32,15 +32,19 @@ import CompanyList from "./components/admin/CompanyList";
 import LoginPage from "./components/admin/LoginPage";
 import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
+import { StudentAuthProvider } from "./components/Contexts/StudentAuthContext";
 import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
 import ContentNew from "./components/coordinator/ContentNew";
 import MessageToStudent from "./components/coordinator/MessageToStudent";
 import StudentNotificationPage from "./components/student/StudentNotificationPage";
+import { AuthContext } from "./components/Contexts/StudentAuthContext";
 
 const App = () => {
+
+  const { isStudentAuthenticated: studentAuthStatus } = useContext(AuthContext);
   const [authStatus, setAuthStatus] = useState(false);
-  const [studentAuthStatus, setStudentAuthStatus] = useState(false);
+  // const [studentAuthStatus, setStudentAuthStatus] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
@@ -95,113 +99,115 @@ const App = () => {
   // }
 
   return (
-      <div className="flex flex-col h-screen w-full">
-        {isPublicRoute ? (
-          isLanding ? (
-            ""
-          ) : (
-            <MinimalNavbar />
-          )
+    <div className="flex flex-col h-screen w-full">
+      {isPublicRoute ? (
+        isLanding ? (
+          ""
         ) : (
-          <Navbar authStatus={authStatus} />
-        )}
-        {/* Pass authStatus to Navbar */}
-        <div className="flex-grow">
-          <AuthProvider>
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingNew/>} />
-              <Route
-                path="/student_registration"
-                element={
-                  studentAuthStatus ? ( <Navigate to="/student_dashboard" />) : (<StudentForm/>)
-                }
-                />
-              <Route
-                path="/student_login"
-                element={
-                  !studentAuthStatus ? ( <StudentLogin setStudentAuthStatus={setStudentAuthStatus} />) : (< Navigate to="/student_dashboard" />)
-                }
-                />
-                <Route
-                  path="/student_dashboard"
-                  element={
-                    studentAuthStatus ? (
-                      <Dashboard/>
-                    ) : (
-                      <Navigate to="/student_login" />
-                    )
-                  }
-                />
-              <Route
-                path="/coordinator_login"
-                element={
-                  !authStatus ? <Login /> : <Navigate to="/cdashboard" />
-                }
-              />
-              <Route path="/register" element={<Register />} />
-              <Route path="/set-password" element={<SetPassword />} />
-              <Route path="/update_student" element={<MessageToStudent />} />
+          <MinimalNavbar />
+        )
+      ) : (
+        <Navbar authStatus={authStatus} />
+      )}
+      {/* Pass authStatus to Navbar */}
+      <div className="flex-grow">
+        <AuthProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<LandingNew />} />
+            <Route
+              path="/student_registration"
+              element={
+                studentAuthStatus ? (<Navigate to="/student_dashboard" />) : (<StudentForm />)
+              }
+            />
+            <Route
+              path="/student_login"
+              element={
+                !studentAuthStatus ? (<StudentLogin />) : (< Navigate to="/student_dashboard" />)
+              }
+            />
+            <Route
+              path="/student_dashboard"
+              element={
+                studentAuthStatus ? (
+                  <Dashboard />
+                ) : (
+                  <Navigate to="/student_login" />
+                )
+              }
+            />
+            <Route
+              path="/coordinator_login"
+              element={
+                !authStatus ? <Login /> : <Navigate to="/cdashboard" />
+              }
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/set-password" element={<SetPassword />} />
+            <Route path="/update_student" element={<MessageToStudent />} />
 
-              {/* Protected Routes (Accessible only if logged in) */}
-              {/* <Route path="/cdashboard" element={<Content /> } />
+            {/* Protected Routes (Accessible only if logged in) */}
+            {/* <Route path="/cdashboard" element={<Content /> } />
             <Route path="/events" element={<Content /> } />
             <Route path="/students" element={ <Followup /> } />
             <Route path="/details" element={<StudentDetails /> } />
             <Route path="/companies" element={<Companies /> } />
             <Route path="/company_description_form" element={<Company_Description_Form/>}/> */}
 
-              <Route
-                path="/cdashboard"
-                element={<ProtectedRoute element={ContentNew} />}
-              />
-              {/* <Route
+            <Route
+              path="/cdashboard"
+              element={<ProtectedRoute element={ContentNew} />}
+            />
+            {/* <Route
                 path="/events"
                 element={<ProtectedRoute element={Content} />}
               /> */}
-              <Route
-                path="/students"
-                element={<ProtectedRoute element={Followup} />}
-              />
-              <Route
-                path="/details"
-                element={<ProtectedRoute element={StudentDetails} />}
-              />
-              <Route
-                path="/companies"
-                element={<ProtectedRoute element={Companies} />}
-              />
-              <Route
-                path="/company_description_form"
-                element={<ProtectedRoute element={Company_Description_Form} />}
-              />
+            <Route
+              path="/students"
+              element={<ProtectedRoute element={Followup} />}
+            />
+            <Route
+              path="/details"
+              element={<ProtectedRoute element={StudentDetails} />}
+            />
+            <Route
+              path="/companies"
+              element={<ProtectedRoute element={Companies} />}
+            />
+            <Route
+              path="/company_description_form"
+              element={<ProtectedRoute element={Company_Description_Form} />}
+            />
 
-              <Route path="/admin/login" element={<AdminLoginPage />} />
-              {/* <Route path="/admin/login" element={<LoginPage /> } /> */}
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/faculty/login" element={<FacultyLogin />} />
-              <Route path="/faculty-dashboard" element={<FacultyDashBoard />} />
-              <Route
-                path="/faculty-dashboard/assigncompanies"
-                element={<AssignCoordinator />}
-              />
-              <Route
-                path="/faculty-dashboard/companylist"
-                element={<CompanyList />}
-              />
-              <Route path="/student_dashboard" element={<StudentDashboard />}/>
-              <Route path="/student_notification" element={<StudentNotificationPage />}/>
-            </Routes>
-          </AuthProvider>
-        </div>
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            {/* <Route path="/admin/login" element={<LoginPage /> } /> */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/faculty/login" element={<FacultyLogin />} />
+            <Route path="/faculty-dashboard" element={<FacultyDashBoard />} />
+            <Route
+              path="/faculty-dashboard/assigncompanies"
+              element={<AssignCoordinator />}
+            />
+            <Route
+              path="/faculty-dashboard/companylist"
+              element={<CompanyList />}
+            />
+            <Route path="/student_dashboard" element={<StudentDashboard />} />
+            <Route path="/student_notification" element={<StudentNotificationPage />} />
+          </Routes>
+        </AuthProvider>
       </div>
+    </div>
   );
 };
 
 const AppWrapper = () => {
   return (
     <Router>
-      <App />
+      <StudentAuthProvider>
+        <App />
+      </StudentAuthProvider>
     </Router>
   );
 };
