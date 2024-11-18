@@ -182,8 +182,8 @@ const App = () => {
                 path="/faculty-dashboard/companylist"
                 element={<CompanyList />}
               />
-              <Route path="sdashboard" element={<StudentDashboard />}/>
-              <Route path="snotification" element={<StudentNotificationPage />}/>
+              <Route path="/student_dashboard" element={<StudentDashboard />}/>
+              <Route path="/student_notification" element={<StudentNotificationPage />}/>
             </Routes>
           </AuthProvider>
         </div>
