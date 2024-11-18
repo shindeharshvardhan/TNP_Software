@@ -36,6 +36,7 @@ import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
 import ContentNew from "./components/coordinator/ContentNew";
 import MessageToStudent from "./components/coordinator/MessageToStudent";
+import StudentNotificationPage from "./components/student/StudentNotificationPage";
 
 const App = () => {
   const [authStatus, setAuthStatus] = useState(false);
@@ -189,6 +190,7 @@ const App = () => {
                 element={<CompanyList />}
               />
               <Route path="sdashboard" element={<StudentDashboard />}/>
+              <Route path="student_notification" element={<StudentNotificationPage />} />
             </Routes>
           </AuthProvider>
         </div>
