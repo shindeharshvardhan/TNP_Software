@@ -70,9 +70,18 @@ function StudentNotification({ companies, fetchStudentDetails, onSubmitForm, onA
                     className="notification-container bg-indigo-200 p-4 mb-4 rounded-lg shadow-md"
                 >
                     <h2 className="font-semibold mb-2 text-xl text-black">Placement Opportunity!</h2>
-                    <p><strong>Company:</strong> {company.name}</p>
+                    <p><strong>Company Name:</strong> {company.name}</p>
+                    <p><strong>Program:</strong> {company.program}</p>
                     <p><strong>Eligibility:</strong> {company.eligibilityCriteria}</p>
-                    <p><strong>Description:</strong> {company.description}</p>
+                    <p><strong>Job Role:</strong> {company.jobRole}</p>
+                    <p><strong>Application Deadline:</strong> {company.applicationDeadline}</p>
+                    <p><strong>CTC:</strong> {company.ctc}</p>
+                    <p><strong>Bond:</strong> {company.bond}</p>
+                    <p><strong>Location:</strong> {company.location}</p>
+                    <p><strong>Internship Offered:</strong> {company.isInternshipOffered}</p>
+                    <p><strong>Training Offered:</strong> {company.isTrainingOffered}</p>
+                    <p><strong>Other Details:</strong> {company.otherDetails}</p>
+
                     {responses[company.id] ? (
                         <>
                             <p

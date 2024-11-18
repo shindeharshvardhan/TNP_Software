@@ -11,7 +11,7 @@ const sr = require('./routes/s');
 const fr = require('./routes/f');
 const cr = require('./routes/c');
 const searchCompanies=require('./routes/searchCompanies')
-
+const sdr=require('./routes/studentdatasend')
 const app = express();
 const db = require("./config/dbConfig");
 
@@ -28,6 +28,7 @@ app.use(helmet());
 app.use('/sc', sr);
 app.use('/fc', fr);
 app.use('/cc', cr);
+app.use('/sdr',sdr)
 const student_Registration_Routes = require("./routes/student_registration_Routes");
 const student_Login_Routes = require("./routes/student_login_Routes");
 
@@ -60,7 +61,7 @@ app.use('/api/auth', authRoutes,passport.authenticate("coordinator-login"));
 
 app.use('/api/events', eventRoutes);
 
-// app.use("/api/students", student_Registration_Routes);
+app.use("/api/students", student_Registration_Routes);
 app.use("/api/students/", student_Login_Routes,passport.authenticate("student-login"));
 // (http://localhost:5000/api/companies/search?q=${query});
 app.use('/api/companies',searchCompanies)

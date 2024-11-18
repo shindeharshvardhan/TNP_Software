@@ -80,8 +80,7 @@ const getEventsForSelectedDate = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32'>
+    <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32 pt-14'>
       {/* Calendar Section */}
       <div className='flex flex-col items-center'>
         <MyCalendar

@@ -21,7 +21,7 @@ export default function AssignedCompanies() {
           throw new Error('Failed to fetch assigned companies');
         }
         const data = await response.json();
-        console.log(data);
+        console.log("this is data"+data);
         setAssignedCompanies(data); // Assume the response data is an array of companies
       } catch (err) {
         setError(err.message);

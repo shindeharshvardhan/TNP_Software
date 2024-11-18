@@ -34,6 +34,8 @@ import ProtectedRoute from "./components/coordinator/ProtectedRoute";
 import { AuthProvider } from "./components/Contexts/Studentcoordinatorauth";
 import Dashboard from "./components/student/StudentDashboard";
 import StudentDashboard from "./components/student/StudentDashboard";
+import ContentNew from "./components/coordinator/ContentNew";
+import MessageToStudent from "./components/coordinator/MessageToStudent";
 import StudentNotificationPage from "./components/student/StudentNotificationPage";
 
 const App = () => {
@@ -94,7 +96,7 @@ const App = () => {
 
   return (
       <div className="flex flex-col h-screen w-full">
-        {/* {isPublicRoute ? (
+        {isPublicRoute ? (
           isLanding ? (
             ""
           ) : (
@@ -102,7 +104,7 @@ const App = () => {
           )
         ) : (
           <Navbar authStatus={authStatus} />
-        )} */}
+        )}
         {/* Pass authStatus to Navbar */}
         <div className="flex-grow">
           <AuthProvider>
@@ -139,6 +141,7 @@ const App = () => {
               />
               <Route path="/register" element={<Register />} />
               <Route path="/set-password" element={<SetPassword />} />
+              <Route path="/update_student" element={<MessageToStudent />} />
 
               {/* Protected Routes (Accessible only if logged in) */}
               {/* <Route path="/cdashboard" element={<Content /> } />
@@ -150,8 +153,12 @@ const App = () => {
 
               <Route
                 path="/cdashboard"
-                element={<ProtectedRoute element={Content} />}
+                element={<ProtectedRoute element={ContentNew} />}
               />
+              {/* <Route
+                path="/events"
+                element={<ProtectedRoute element={Content} />}
+              /> */}
               <Route
                 path="/students"
                 element={<ProtectedRoute element={Followup} />}
