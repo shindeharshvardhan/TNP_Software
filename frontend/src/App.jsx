@@ -39,6 +39,7 @@ import ContentNew from "./components/coordinator/ContentNew";
 import MessageToStudent from "./components/coordinator/MessageToStudent";
 import StudentNotificationPage from "./components/student/StudentNotificationPage";
 import { AuthContext } from "./components/Contexts/StudentAuthContext";
+import ProgressTracker from "./components/student/ProgressTracker";
 
 const App = () => {
 
@@ -195,6 +196,7 @@ const App = () => {
             />
             <Route path="/student_dashboard" element={<StudentDashboard />} />
             <Route path="/student_notification" element={<StudentNotificationPage />} />
+            <Route path="/my_applications" element={<ProgressTracker />} />
           </Routes>
         </AuthProvider>
       </div>
