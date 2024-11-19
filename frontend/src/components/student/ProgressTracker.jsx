@@ -30,12 +30,12 @@ function ProgressTracker() {
     };
 
     return (
-        <div className="progress-tracker-container mb-10">
+        <div className="progress-tracker-container mt-28">
             <h2 className='text-4xl text-center text-black font-bold mb-10'>Companies Activities</h2>
             {companyProgress.map((company, index) => (
-                <div key={index} className="progress-tracker bg-indigo-200 p-4 md:px-32 mb-4 rounded-lg shadow-md">
+                <div key={index} className="progress-tracker bg-indigo-200 p-4  md:mx-32 m-4 rounded-lg shadow-md">
                     <h2 className="company-name text-black text-2xl mb-5">{company.name}</h2>
-                    <div className="tracker gap-10">
+                    <div className="tracker gap-24">
                         {company.stages.map((stage, stageIndex) => (
                             <div key={stageIndex} className={`tracker-stage ${stageIndex <= company.currentStage ? 'active' : ''}`}>
                                 <div className="circle"></div>

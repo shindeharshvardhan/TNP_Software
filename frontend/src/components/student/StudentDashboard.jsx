@@ -36,6 +36,7 @@ import EventForm from '../coordinator/EventForm';
 import EventList from '../coordinator/EventList';
 import '../../Content.css';
 import ProgressTracker from './ProgressTracker';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function StudentDashboard() {
   const [showForm, setShowForm] = useState(false);
@@ -107,7 +108,19 @@ function StudentDashboard() {
 
   return (
     <>
-      <div className='flex flex-row items-center w-full h-4/5 justify-center gap-32'>
+      <div className='text-center mt-32'>
+        <Link to="/student_notification">
+          <button className="not-btn p-3 m-3 bg-indigo-600 text-white rounded">
+            Notification
+          </button>
+        </Link>
+        <Link to="/my_applications">
+          <button className="app-btn p-3 m-3 bg-indigo-600 text-white rounded">
+            My Applications
+          </button>
+        </Link>
+      </div>
+      <div className='flex flex-row items-center w-full h-3/5 justify-center gap-32'>
         {/* Calendar Section */}
         <div className='flex flex-col items-center'>
           <MyCalendar
@@ -131,9 +144,9 @@ function StudentDashboard() {
           )}
         </div>
       </div>
-      <div className='flex justify-center'>
+      {/* <div className='flex justify-center'>
         <ProgressTracker />
-      </div>
+      </div> */}
     </>
   );
 }
