@@ -194,8 +194,17 @@ const App = () => {
               path="/faculty-dashboard/companylist"
               element={<CompanyList />}
             />
-            <Route path="/student_dashboard" element={<StudentDashboard />} />
-            <Route path="/student_notification" element={<StudentNotificationPage />} />
+            {/* <Route path="/student_dashboard" element={<StudentDashboard />} /> */}
+            <Route
+              path="/student_notification"
+              element={
+                studentAuthStatus ? (
+                  <StudentNotificationPage />
+                ) : (
+                  <Navigate to="/student_login" />
+                )
+              }
+            />
             <Route path="/my_applications" element={<ProgressTracker />} />
           </Routes>
         </AuthProvider>

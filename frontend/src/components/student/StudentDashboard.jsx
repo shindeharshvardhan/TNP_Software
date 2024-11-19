@@ -1,34 +1,3 @@
-// import React, { useState } from 'react';
-// import MyCalendar from '../coordinator/MyCalendar';
-// import ProgressTracker from './ProgressTracker';
-
-// function StudentDashboard() {
-//   const [selectedDate, setSelectedDate] = useState(null);
-//   const [showForm, setShowForm] = useState(false);
-//   const [events, setEvents] = useState([]); // Initialize events as an empty array
-
-//   return (
-//     <div className='mt-48 flex flex-row justify-evenly'>
-//       <div className=''>
-//         <MyCalendar
-//           onDateChange={(date) => {
-//             setSelectedDate(date);
-//           }}
-//           events={events} 
-//         />
-//       </div>
-//       <div className=''>
-//         <ProgressTracker />
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default StudentDashboard;
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyCalendar from '../coordinator/MyCalendar';
@@ -108,14 +77,14 @@ function StudentDashboard() {
 
   return (
     <>
-      <div className='text-center mt-32'>
+      <div className='text-center mt-32 flex justify-between items-center px-16'>
         <Link to="/student_notification">
-          <button className="not-btn p-3 m-3 bg-indigo-600 text-white rounded">
-            Notification
+          <button className="not-btn p-4 m-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transform hover:scale-105 transition-all duration-300">
+            Notifications
           </button>
         </Link>
         <Link to="/my_applications">
-          <button className="app-btn p-3 m-3 bg-indigo-600 text-white rounded">
+          <button className="app-btn p-4 m-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transform hover:scale-105 transition-all duration-300">
             My Applications
           </button>
         </Link>
