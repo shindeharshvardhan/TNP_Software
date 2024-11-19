@@ -56,6 +56,7 @@ const companyDescriptionSchema = new Schema({
     },
     ugAggregate: { type: Boolean, default: false },
     pgAggregate: { type: Boolean, default: false },
+    pgugAggregate: {type: Boolean, default: false},
     domicileState: { type: Boolean, default: false },
     tenthResultPdf: { type: Boolean, default: false },
     twelfthResultPdf: { type: Boolean, default: false },
