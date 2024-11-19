@@ -14,20 +14,31 @@ const FacultyLogin = () => {
     event.preventDefault();
     setLoading(true);
     setErrorMessage('');
-
+  
     try {
       const response = await fetch('http://localhost:5000/fc/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
       setLoading(false);
-
+  
       if (response.ok) {
-        localStorage.setItem('token', data.token);
+        // Store the coordinator data in the cookie (in JSON format)
+        const coordinatorData = JSON.stringify({
+          email: data.coordinator.email,
+          department: data.coordinator.department,
+          year: data.coordinator.year
+        });
+    
+        // Set the cookie with coordinator data (1 day expiration time)
+        document.cookie = `FcoordinatorData=${coordinatorData}; path=/; max-age=86400;`; 
+    
+        // Optionally store the department in localStorage
         localStorage.setItem('department', data.coordinator.department);
+  
         navigate('/faculty-dashboard');
       } else {
         setErrorMessage(data.message || 'Invalid credentials');
@@ -38,6 +49,7 @@ const FacultyLogin = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <AuthLayout>

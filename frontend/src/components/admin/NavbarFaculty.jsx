@@ -1,113 +1,140 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function NavbarFaculty() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className="navbar pt-3 pl-16 pr-16 text-neutral-950">
-      <div className="navbar-start">
-        <NavLink to="/" className="btn btn-ghost text-2xl">
+    <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+      {/* Navbar Start */}
+      <div className="navbar-start flex items-center">
+        <NavLink
+          to="/"
+          className="text-2xl font-bold text-neutral-950 hover:text-blue-500"
+        >
           T&P FTE
         </NavLink>
       </div>
+
+      {/* Navbar Center */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-lg">
+        <ul className="flex space-x-8 text-lg">
           <li>
             <NavLink
               to="/faculty-dashboard"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-semibold border-b-2 border-blue-500"
+                  : "hover:text-blue-500"
+              }
             >
               Dashboard
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/students"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              to="/faculty-dashboard/assigncompanies"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-semibold border-b-2 border-blue-500"
+                  : "hover:text-blue-500"
+              }
             >
-              Manage Coordinators
+              Assign Coordinators
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/students"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              to="/faculty-dashboard/companylist"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-semibold border-b-2 border-blue-500"
+                  : "hover:text-blue-500"
+              }
             >
               Company Details
             </NavLink>
           </li>
           <li>
             <NavLink
+              to="/faculty-dashboard/past"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-semibold border-b-2 border-blue-500"
+                  : "hover:text-blue-500"
+              }
+            >
+              Past year Company
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/details"
-              activeclassname="underline"
-              className={({ isActive }) => (isActive ? "underline-link" : "")}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-semibold border-b-2 border-blue-500"
+                  : "hover:text-blue-500"
+              }
             >
               Reports
             </NavLink>
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle mx-1">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
+
+      {/* Navbar End */}
+      <div className="navbar-end flex items-center space-x-4">
+        {/* Notification Icon */}
+        <button className="relative">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-neutral-700 hover:text-blue-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            />
+          </svg>
+          <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500"></span>
         </button>
-        {/* <NavLink
-          className="btn rounded-full text-lg text-slate-100 bg-neutral-950"
-          to="/login"
-        >
-          Sign up / Log in
-        </NavLink> */}
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost avatar hover:bg-transparent"
+
+        {/* Profile Dropdown */}
+        <div className="relative">
+          <button
+            onClick={toggleDropdown}
+            className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-400 focus:outline-none"
           >
-            <div className="w-14 rounded-full transition-transform duration-200 hover:scale-110">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-white text-neutral-950 rounded-box z-[100] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          </button>
+          {isDropdownOpen && (
+            <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+              <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                 Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
+              </li>
+              <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                Settings
+              </li>
+              <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                Logout
+              </li>
+            </ul>
+          )}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

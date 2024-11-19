@@ -8,14 +8,38 @@ const AssignCoordinator = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCoordinators, setSelectedCoordinators] = useState({});
   const [showAddCompanyForm, setShowAddCompanyForm] = useState(false);
+  const getCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find((c) => c.startsWith(`${name}=`));
+    return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
+  };
   const [newCompany, setNewCompany] = useState({
     name: "",
     faculty: "",
   });
   const currentYear = 2024;
+  const [department, setDepartment] = useState(null); // Default to null to wait for department data
+  // const [currentYear,setCurrentYear]=useState(null)
+  // Fetch department from cookies
+  useEffect(() => {
+    const tokenString = getCookie("FcoordinatorData");
+
+    let token = null;
+
+    if (tokenString) {
+      try {
+        // Parse the cookie string into an object
+        token = JSON.parse(decodeURIComponent(tokenString));
+        setDepartment(token.department);
+        // setCurrentYear(token.year)
+      } catch (error) {
+        console.error("Error parsing cookie:", error);
+      }
+    }
+  }, []);
 
   const fetchData = () => {
-    fetch(`http://localhost:5000/cc/companies/dept/CSE`)
+    fetch(`http://localhost:5000/cc/companies/dept/${department}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -27,7 +51,7 @@ const AssignCoordinator = () => {
         setLoading(false);
       });
 
-    fetch(`http://localhost:5000/sc?department=CSE&year=${currentYear}`)
+    fetch(`http://localhost:5000/sc?department=${department}&year=${currentYear}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -38,7 +62,7 @@ const AssignCoordinator = () => {
 
   useEffect(() => {
     fetchData();
-  }, [currentYear]);
+  }, [department]);
 
   const handleCoordinatorChange = (companyId, coordinatorId) => {
     setSelectedCoordinators((prevState) => ({
