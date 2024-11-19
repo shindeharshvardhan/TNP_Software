@@ -157,7 +157,7 @@ const App = () => {
             <Route path="/details" element={<StudentDetails /> } />
             <Route path="/companies" element={<Companies /> } />
             <Route path="/company_description_form" element={<Company_Description_Form/>}/> */}
-
+<Route path="/company_description_form" element={<Company_Description_Form/>}/>
             <Route
               path="/cdashboard"
               element={<ProtectedRoute element={ContentNew} />}
@@ -178,10 +178,10 @@ const App = () => {
               path="/companies"
               element={<ProtectedRoute element={Companies} />}
             />
-            <Route
+            {/* <Route
               path="/company_description_form"
               element={<ProtectedRoute element={Company_Description_Form} />}
-            />
+            /> */}
 
             <Route path="/admin/login" element={<AdminLoginPage />} />
             {/* <Route path="/admin/login" element={<LoginPage /> } /> */}
