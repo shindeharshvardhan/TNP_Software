@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Company = require('../models/companyc'); // Ensure the path is correct
 const StudentCoordinator = require('../models/studentc'); // Assuming coordinator info is stored here
-
+const {sendEmail}=require('../controllers/sendmails')
 // Fetch companies based on department (faculty) with coordinator information
 router.get('/companies', async (req, res) => {
     const { department, year } = req.query; // Get department and year from query parameters
     console.log('Query parameters:', { department, year }); // Log both parameters
-
+    // console.log("called")
     try {
         // Create a query object to filter by department and year if provided
         const query = {};
@@ -53,15 +53,17 @@ router.get('/companies', async (req, res) => {
 
 // Fetch all companies for a specific department
 router.get('/companies/dept/:department', async (req, res) => {
+    console.log("hiii")
     const { department } = req.params; // Get department from URL parameters
     console.log('Department parameter:', department); // Log the department parameter for debugging
-    console.log("hiii")
+    
     try {
         // Fetch companies for the specified department, populating the coordinator info within visits
         const companies = await Company.find({ department })
             .populate('visits.coordinator', 'name email') // Populate coordinator name and email within visits
             .lean(); // Use lean to get plain JavaScript objects
 
+            console.log("cc"+companies)
         // If no companies are found for the specified department
         if (companies.length === 0) {
             return res.status(200).json({ message: `No companies found for the ${department} department` });
@@ -77,8 +79,20 @@ router.get('/companies/dept/:department', async (req, res) => {
                 hrContactName: visit.hrContactName,
                 hrContactEmail: visit.hrContactEmail,
                 coordinatedBy: visit.coordinator ? visit.coordinator.name : 'Not Assigned',
-                coordinatorEmail: visit.coordinator ? visit.coordinator.email : 'Not Assigned'
+                coordinatorEmail: visit.coordinator ? visit.coordinator.email : 'Not Assigned',
+                eligibleDepartments: Array.isArray(visit.eligibleDepartments) ? visit.eligibleDepartments.join(", ") : 'Not Provided', // Ensure it's an array before using .join()
+                ctc: visit.ctc ? `₹${visit.ctc}` : 'Not Provided',
+                jobRole: visit.jobRole || 'Not Specified',
+                location: visit.location || 'Not Specified',
+                isInternshipOffered: visit.isInternshipOffered ? 'Yes' : 'No',
+                internshipDuration: visit.internshipDuration ? `${visit.internshipDuration} months` : 'Not Specified',
+                internshipStipend: visit.internshipStipend ? `₹${visit.internshipStipend}` : 'Not Provided',
+                extraDetails: visit.extraDetails || 'None',
+                tenthEligibility: visit.tenthEligibility || 'Not Specified',
+                twelfthEligibility: visit.twelfthEligibility || 'Not Specified',
+                beAggregate: visit.beAggregate || 'Not Specified',
             }))
+            
         }));
 
         // Send the company list for the specified department
@@ -118,6 +132,21 @@ router.post('/companies/:companyId/visits', async (req, res) => {
         };
 
         // Add the new visit to the company's visits array
+       
+        StudentCoordinator.findById(coordinatorId)
+  .then((coordinator) => {
+    if (coordinator) {
+        sendEmail(coordinator.email,'k','check your dashboard','A company is assigned')
+    //   console.log('Email:', coordinator.email);
+    //   console.log('Name:', coordinator.name);
+      // Access other fields here
+    } else {
+      console.log('Coordinator not found');
+    }
+  })
+  .catch((err) => {
+    console.error('Error fetching coordinator:', err);
+  });
         company.visits.push(newVisit);
 
         // Save the updated company document

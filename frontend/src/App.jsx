@@ -40,6 +40,7 @@ import MessageToStudent from "./components/coordinator/MessageToStudent";
 import StudentNotificationPage from "./components/student/StudentNotificationPage";
 import { AuthContext } from "./components/Contexts/StudentAuthContext";
 import ProgressTracker from "./components/student/ProgressTracker";
+import CompanyCard from "./components/admin/CompanyCard";
 
 const App = () => {
 
@@ -108,6 +109,7 @@ const App = () => {
           <MinimalNavbar />
         )
       ) : (
+        // console.log("HII")
         <Navbar authStatus={authStatus} />
       )}
       {/* Pass authStatus to Navbar */}
@@ -186,6 +188,7 @@ const App = () => {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/faculty/login" element={<FacultyLogin />} />
             <Route path="/faculty-dashboard" element={<FacultyDashBoard />} />
+            <Route path="/faculty-dashboard/past" element={<CompanyCard />} />
             <Route
               path="/faculty-dashboard/assigncompanies"
               element={<AssignCoordinator />}
