@@ -53,7 +53,7 @@ function StudentLogin() {
 
   return (
     <AuthLayout>
-      <div className="container w-full h-full md:px-20">
+      <div className="container w-full h-full md:px-20 mt-24">
         <div className="glassmorphism rounded-2xl p-10 mx-auto mt-10 shadow-2xl">
           <h1 className="text-4xl font-bold text-neutral-950 p-3">Login</h1>
 
@@ -94,7 +94,7 @@ function StudentLogin() {
             {successMessage && <p className="text-green-500">{successMessage}</p>}
 
             <div className="text-center py-3">
-              <button className="btn bg-neutral-950 text-white btn-info" disabled={loading}>
+              <button className="btn bg-neutral-950 text-white btn-info w-full rounded p-2" disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
               </button>
             </div>

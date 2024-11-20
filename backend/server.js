@@ -14,6 +14,9 @@ const searchCompanies=require('./routes/searchCompanies')
 const sdr=require('./routes/studentdatasend')
 const app = express();
 const db = require("./config/dbConfig");
+const studentApplicationRoutes = require("./routes/student_application_routes");
+const studentNotificationRoutes = require("./routes/student_notification_routes");
+// const studentCompanyProgressRoutes = require("./routes/student_company_progress_routes");
 
 // Middleware setup
 app.use(cors({
@@ -63,6 +66,9 @@ app.use('/api/events', eventRoutes);
 
 app.use("/api/students", student_Registration_Routes);
 app.use("/api/students", student_Login_Routes);
+app.use("/api/students", studentApplicationRoutes);
+app.use("/api/students", studentNotificationRoutes);
+// app.use("/api/students", studentCompanyProgressRoutes);
 // (http://localhost:5000/api/companies/search?q=${query});
 app.use('/api/companies',searchCompanies)
 

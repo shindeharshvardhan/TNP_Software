@@ -95,7 +95,10 @@ const studentSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
   ugAggregate: { type: Number }, // New field to store UG aggregate
-  pgAggregate: { type: Number } // New field to store PG aggregate
+  pgAggregate: { type: Number }, // New field to store PG aggregate
+
+  companiesAccepted: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company", default: [] }],
+  companiesRejected: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company", default: [] }]
 });
 
 // Method to calculate the aggregate percentage for UG or PG data
