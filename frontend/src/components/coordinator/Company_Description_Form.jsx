@@ -150,7 +150,7 @@ const Company_Description_Form = () => {
         // completed: completed,  // Assuming `completed` is a checkbox or boolean field
         eligibleDepartments: selectedDepartments,  // Departments selected in the form
         ctc: ctc || 0,  // Assuming this is the CTC field in your form
-        jobrole: jobRole || "",  // Assuming this is the job role field in your form
+        jobRole: jobRole || "",  // Assuming this is the job role field in your form
         location: location || "",  // Assuming this is the location field in your form
         isInternshipOffered: showInternshipDetails || false,
         internshipDetails: internshipDetails,

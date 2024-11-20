@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import NavbarFaculty from "./NavbarFaculty";
 
 export default function CompanyCard() {
   const getCookie = (name) => {
@@ -51,19 +52,14 @@ export default function CompanyCard() {
   }, [department]);
 
   const handleCardClick = (company) => {
-    // Only update selected company and visits if there are visits
-    if (company.visits && company.visits.length > 0) {
-      setSelectedCompany(company);
-      setSelectedVisits(company.visits);
-    } else {
-      setSelectedCompany(company);
-      setSelectedVisits([]); // Reset visits to empty array if no visits
-    }
+    setSelectedCompany(company);
+    setSelectedVisits(company.visits || []);
   };
 
   const handleCloseModal = () => {
-    setSelectedCompany(null); // Close modal by resetting selected company
-    setSelectedVisits([]); // Reset selected visits
+    setSelectedCompany(null);
+    setSelectedVisits([]);
+    setSelectedYear(null);
   };
 
   const handleYearChange = (e) => {
@@ -78,21 +74,21 @@ export default function CompanyCard() {
     return <div>{error}</div>;
   }
 
-  // Filter visits based on the selected year
   const filteredVisits = selectedYear
-    ? selectedVisits.filter(visit => visit.year === selectedYear)
+    ? selectedVisits.filter((visit) => visit.year == selectedYear)
     : selectedVisits;
 
   return (
     <div>
-      <h1>Company Card</h1>
+      <NavbarFaculty/>
+      <h1 className="text-2xl font-bold mb-4">Company Card</h1>
 
       {companies.length > 0 ? (
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {companies.map((company) => (
             <div
               key={company.id}
-              className="border p-4 rounded shadow-lg cursor-pointer"
+              className="border p-4 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleCardClick(company)}
             >
               <h2 className="text-xl font-semibold">{company.name}</h2>
@@ -105,43 +101,46 @@ export default function CompanyCard() {
         <p>No companies found for this department.</p>
       )}
 
-      {/* Modal for visit information */}
-      {selectedCompany && selectedVisits.length > 0 && (
-        <div className="modal-overlay fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-          <div className="modal-content bg-white p-6 rounded shadow-lg w-3/4 relative">
-            {/* Close button */}
+      {/* Modal */}
+      {selectedCompany && (
+        <div className="modal-overlay fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+          <div className="modal-content bg-white p-6 rounded shadow-lg w-3/4 max-h-[90vh] overflow-y-auto relative">
             <button
               onClick={handleCloseModal}
-              className="absolute top-2 right-2 text-lg font-bold text-gray-600"
+              className="absolute top-2 right-2 text-lg font-bold text-gray-600 hover:text-gray-800"
             >
               X
             </button>
-            <h2 className="text-2xl font-semibold mb-4">Visit Information for {selectedCompany.name}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              Visit Information for {selectedCompany.name}
+            </h2>
 
-            {/* Dropdown to filter by year */}
+            {/* Year Filter */}
             <div className="mb-4">
-              <label htmlFor="year" className="mr-2 text-xl">Select Year:</label>
+              <label htmlFor="year" className="block text-lg font-medium">
+                Select Year:
+              </label>
               <select
                 id="year"
                 value={selectedYear || ""}
                 onChange={handleYearChange}
-                className="px-4 py-2 border border-gray-300 rounded-lg"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">-- Select a Year --</option>
                 {selectedVisits.map((visit, index) => (
-                  <option key={index} value={visit.year}>{visit.year}</option>
+                  <option key={index} value={visit.year}>
+                    {visit.year}
+                  </option>
                 ))}
               </select>
             </div>
 
-            {/* Display visit details */}
-            <div className="mt-4">
-              {filteredVisits.length === 0 ? (
-                <p>No visits found for this year.</p>
-              ) : (
+            {/* Visit Details */}
+            <div>
+              {filteredVisits.length > 0 ? (
                 filteredVisits.map((visit, index) => (
-                  <div key={index} className="border-b py-2">
-                    <p><strong>Year:</strong> {visit.year}</p>
+                  <div key={index} className="mb-4 border-b pb-4">
+                       <p><strong>Year:</strong> {visit.year}</p>
                     <p><strong>HR Contact:</strong> {visit.hrContactName} ({visit.hrContactEmail})</p>
                     <p><strong>Coordinated By:</strong> {visit.coordinatedBy}</p>
                     <p><strong>Coordinator Email:</strong> {visit.coordinatorEmail}</p>
@@ -157,6 +156,8 @@ export default function CompanyCard() {
                     <hr />
                   </div>
                 ))
+              ) : (
+                <p>No visits found for this year.</p>
               )}
             </div>
           </div>
