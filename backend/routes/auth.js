@@ -8,9 +8,10 @@ const router = express.Router();
 
 
 // Route 1: Check email in pre-existing coordinator collection
-router.post('/check-email', async (req, res) => {
+router.post('/check-email',passport.authenticate('coordinator-login'), async (req, res) => {
+    console.log("here")
     const { email } = req.body;
-
+    console.log("here")
     if (!email) {
         return res.status(400).json({ msg: 'Please provide an email' });
     }
@@ -36,12 +37,12 @@ router.post('/check-email', async (req, res) => {
 });
 
 // Route 2: Set password for the coordinator
-router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ msg: 'Please provide both email and password' });
-    }
+router.post('/register',passport.authenticate('coordinator-login'), async (req, res) => {
+    const { email } = req.body;
+    console.log("Here "+email)
+    // if (!email || !password) {
+    //     return res.status(400).json({ msg: 'Please provide both email and password' });
+    // }
 
     try {
         const database = await connectDB();

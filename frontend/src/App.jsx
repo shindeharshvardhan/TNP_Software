@@ -106,11 +106,12 @@ const App = () => {
         isLanding ? (
           ""
         ) : (
-          <MinimalNavbar />
+          // <MinimalNavbar />
+          console.log("HIII")
         )
       ) : (
-        // console.log("HII")
-        <Navbar authStatus={authStatus} />
+        console.log("HII")
+        // <Navbar authStatus={authStatus} />
       )}
       {/* Pass authStatus to Navbar */}
       <div className="flex-grow">

@@ -18,7 +18,7 @@ function SetPassword() {
         }
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+            const res = await axios.post('http://localhost:5000/api/authr/register', { email, password });
             alert(res.data.msg);
             if (res.data.msg === "User already exists. Please login.") {
                 navigate('/login');
