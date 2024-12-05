@@ -30,6 +30,7 @@ const AssignCoordinator = () => {
       try {
         // Parse the cookie string into an object
         token = JSON.parse(decodeURIComponent(tokenString));
+        console.log("hh"+token.department)
         setDepartment(token.department);
         // setCurrentYear(token.year)
       } catch (error) {
@@ -61,7 +62,9 @@ const AssignCoordinator = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (department) {
+      fetchData();
+    }
   }, [department]);
 
   const handleCoordinatorChange = (companyId, coordinatorId) => {

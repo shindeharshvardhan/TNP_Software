@@ -57,9 +57,10 @@ function Register() {
 
   const handleEmailCheck = async (e) => {
     e.preventDefault();
+    console.log(email)
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/check-email",
+        "http://localhost:5000/api/authr/check-email",
         { email }
       );
 

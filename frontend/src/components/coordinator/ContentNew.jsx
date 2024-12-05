@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../Contexts/Studentcoordinatorauth"; // Adjust the path as necessary
 import DriveCard from "./DriveCard";
 import ProgressTracker from "./ProgressTracker";
+import MyCalendar from "./MyCalendar";
 
 
 export default function ContentNew() {
@@ -10,7 +11,20 @@ export default function ContentNew() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentView, setCurrentView] = useState({ view: "list", company: null });
+  // const handleDateChange = (newDate) => {
+  //   // Ensure that only the date part is considered (strip time components)
+  //   const adjustedDate = new Date(newDate.setHours(0, 0, 0, 0));
+  //   setDate(adjustedDate);
+  //   onDateChange(adjustedDate); // Notify parent component about the date change
+  // };
 
+  // // Function to format date to 'YYYY-MM-DD' in local time
+  // const formatDateToYYYYMMDD = (date) => {
+  //   const year = date.getFullYear();
+  //   const month = ('0' + (date.getMonth() + 1)).slice(-2); // Add leading zero
+  //   const day = ('0' + date.getDate()).slice(-2); // Add leading zero
+  //   return `${year}-${month}-${day}`;
+  // };
   useEffect(() => {
     const fetchAssignedCompanies = async () => {
       if (!studentCoordinatorId) {
@@ -72,7 +86,15 @@ export default function ContentNew() {
   );
 
   return (
+    
+    
     <div className="w-full h-full pt-32 px-4 flex justify-center items-center">
+       {/* <MyCalendar
+          onDateChange={(date) => {
+            setSelectedDate(date);
+          }}
+          events={events} // Pass events to mark dates on the calendar
+        /> */}
       <div className="w-1/2 flex flex-col justify-center items-center gap-6">
       
         {/* Pending Companies */}

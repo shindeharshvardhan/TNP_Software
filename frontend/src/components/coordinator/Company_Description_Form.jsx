@@ -25,7 +25,6 @@ const Company_Description_Form = () => {
   const [trainingDuration, setTrainingDuration] = useState("");
   const [trainingStipend, setTrainingStipend] = useState("");
   const [otherDetails, setOtherDetails] = useState("");
-  const [fieldsRequired, setFieldsRequired] = useState([]);
 
   const ugDepts = [
     "BSC Applied Physics",
@@ -132,21 +131,18 @@ const Company_Description_Form = () => {
         twelfthEligibility: eligibility12th === "Custom" ? customEligibility12th : eligibility12th,
         beAggregate: eligibilityUG,  // Assuming `beAggregate` is part of your form
     };
-
     const internshipDetails = showInternshipDetails
         ? {
               internshipMonths: internshipDuration,
               stipend: internshipStipend,
           }
         : null;
-
     const trainingDetails = showTrainingDetails
         ? {
               trainingDuration,
               trainingStipend,
           }
         : null;
-
     const companyDescriptionData = {
         // hrContactName: hrContactName || "",  // Assuming this is available in your form state
         // hrContactEmail: hrContactEmail || "",
@@ -154,7 +150,7 @@ const Company_Description_Form = () => {
         // completed: completed,  // Assuming `completed` is a checkbox or boolean field
         eligibleDepartments: selectedDepartments,  // Departments selected in the form
         ctc: ctc || 0,  // Assuming this is the CTC field in your form
-        jobrole: jobRole || "",  // Assuming this is the job role field in your form
+        jobRole: jobRole || "",  // Assuming this is the job role field in your form
         location: location || "",  // Assuming this is the location field in your form
         isInternshipOffered: showInternshipDetails || false,
         internshipDetails: internshipDetails,
@@ -176,7 +172,6 @@ const Company_Description_Form = () => {
         alert("Failed to submit data");
     }
 };
-
 
   const loc = useLocation();
   const { companyName } = loc.state || {};
@@ -550,24 +545,6 @@ const Company_Description_Form = () => {
               value={otherDetails}
               onChange={(e) => setOtherDetails(e.target.value)}
             ></textarea>
-          </div>
-
-          {/* Fields Required by Company */}
-          <div className="mb-4">
-            <label className="block font-medium mb-2">Fields Required by Company</label>
-            <div className="grid grid-cols-2 gap-4">
-              {fieldsOptions.map((field) => (
-                <label key={field} className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    value={field}
-                    onChange={handleFieldRequirementChange}
-                    className="mr-2"
-                  />
-                  {field}
-                </label>
-              ))}
-            </div>
           </div>
 
           {/* Buttons */}
