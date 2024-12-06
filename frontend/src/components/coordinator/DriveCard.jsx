@@ -75,6 +75,12 @@ function DriveCard({ company, status }) {
   const handleShowStudentsClick = () => {
     navigate("/students", { state: { companyId: company._id } });
   };
+  const handleShowResultsClick = () => {
+    navigate("/results", { state: { company } });
+  };
+  const handleCompleteClick = () => {
+    navigate("/complete", { state: { company } });
+  };
 
   const isCompleted = driveStatus === "Completed";
 
@@ -152,14 +158,14 @@ function DriveCard({ company, status }) {
         {/* Conditional Button: Complete Drive or Show Students */}
         {isCompleted ? (
           <button
-            onClick={handleShowStudentsClick}
+            onClick={handleShowResultsClick}
             className="py-2 px-4 bg-purple-100 text-purple-700 font-semibold rounded-lg shadow-sm hover:bg-purple-200"
           >
             Show Students
           </button>
         ) : (
           <button
-            onClick={handleCompleteDrive}
+            onClick={handleCompleteClick}
             className="py-2 px-4 bg-red-100 text-red-700 font-semibold rounded-lg shadow-sm hover:bg-red-200"
           >
             Complete Drive

@@ -43,6 +43,8 @@ import ProgressTracker from "./components/student/ProgressTracker";
 import CompanyCard from "./components/admin/CompanyCard";
 import Rounds from "./components/coordinator/Rounds";
 import Round from "./components/coordinator/Round";
+import SelectedStudents from "./components/coordinator/SelectedStudents";
+import CompleteDrive from "./components/coordinator/CompleteDrive";
 
 const App = () => {
 
@@ -152,6 +154,8 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/set-password" element={<SetPassword />} />
             <Route path="/update_student" element={<MessageToStudent />} />
+            <Route path="/results" element={<SelectedStudents/>} />
+            <Route path="/complete" element={<CompleteDrive/>} />
 
             {/* Protected Routes (Accessible only if logged in) */}
             {/* <Route path="/cdashboard" element={<Content /> } />

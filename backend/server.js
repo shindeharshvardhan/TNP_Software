@@ -18,6 +18,7 @@ const studentApplicationRoutes = require("./routes/student_application_routes");
 const studentNotificationRoutes = require("./routes/student_notification_routes");
 const registerroute=require('./routes/registerauth')
 const rounds=require('./routes/round')
+const offerletter=require('./routes/offerletter')
 const cookieParser = require("cookie-parser")
 const progresstracker = require("./routes/student_progress_tracker_routes")
 // const studentCompanyProgressRoutes = require("./routes/student_company_progress_routes");
@@ -38,6 +39,7 @@ app.use('/cc', cr);
 app.use('/sdr',sdr)
 app.use('/api/authr',registerroute)
 app.use('/round',rounds)
+app.use('/offer',offerletter)
 const student_Registration_Routes = require("./routes/student_registration_Routes");
 const student_Login_Routes = require("./routes/student_login_Routes");
 
