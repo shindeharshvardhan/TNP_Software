@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-
 export default function MessageToStudent() {
   // Get the company data from the location
   const loc = useLocation();
@@ -42,6 +41,7 @@ export default function MessageToStudent() {
     }
   };
 
+
   return (
     <div className="pt-24"> {/* Adding padding to leave space for the navbar */}
       <div className="container mx-auto">
@@ -58,3 +58,4 @@ export default function MessageToStudent() {
     </div>
   );
 }
+

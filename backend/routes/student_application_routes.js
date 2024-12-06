@@ -29,11 +29,12 @@ router.post('/accept-company', async (req, res) => {
         }
 
         // Add the company to the student's accepted list
+        console.log(companyId+"here")
         student.companiesAccepted.push(companyId);
         await student.save();
 
         // Sort visits by date to get the latest visit
-        const visit = company.visits.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+        const visit = company.visits[company.visits.length-1];
         if (!visit) {
             return res.status(404).json({ error: "No valid visit found for this company" });
         }

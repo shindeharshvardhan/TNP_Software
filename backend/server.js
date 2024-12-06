@@ -17,6 +17,7 @@ const db = require("./config/dbConfig");
 const studentApplicationRoutes = require("./routes/student_application_routes");
 const studentNotificationRoutes = require("./routes/student_notification_routes");
 const registerroute=require('./routes/registerauth')
+const rounds=require('./routes/round')
 // const studentCompanyProgressRoutes = require("./routes/student_company_progress_routes");
 
 // Middleware setup
@@ -34,6 +35,7 @@ app.use('/fc', fr);
 app.use('/cc', cr);
 app.use('/sdr',sdr)
 app.use('/api/authr',registerroute)
+app.use('/round',rounds)
 const student_Registration_Routes = require("./routes/student_registration_Routes");
 const student_Login_Routes = require("./routes/student_login_Routes");
 
