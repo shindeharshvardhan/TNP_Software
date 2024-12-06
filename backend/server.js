@@ -18,6 +18,8 @@ const studentApplicationRoutes = require("./routes/student_application_routes");
 const studentNotificationRoutes = require("./routes/student_notification_routes");
 const registerroute=require('./routes/registerauth')
 const rounds=require('./routes/round')
+const cookieParser = require("cookie-parser")
+const progresstracker = require("./routes/student_progress_tracker_routes")
 // const studentCompanyProgressRoutes = require("./routes/student_company_progress_routes");
 
 // Middleware setup
@@ -62,6 +64,7 @@ app.use(session({
 // Initialize passport and session
 app.use(passport.initialize());
 app.use(passport.session()); // Session-based authentication
+app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRoutes,passport.authenticate("coordinator-login"));
@@ -73,6 +76,7 @@ app.use("/api/students", student_Registration_Routes);
 app.use("/api/students", student_Login_Routes);
 app.use("/api/students", studentApplicationRoutes);
 app.use("/api/students", studentNotificationRoutes);
+app.use("/api/students", progresstracker);
 // app.use("/api/students", studentCompanyProgressRoutes);
 // (http://localhost:5000/api/companies/search?q=${query});
 app.use('/api/companies',searchCompanies)

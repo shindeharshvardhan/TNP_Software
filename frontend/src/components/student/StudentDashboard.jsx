@@ -1,78 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MyCalendar from '../coordinator/MyCalendar';
-import EventForm from '../coordinator/EventForm';
-import EventList from '../coordinator/EventList';
 import '../../Content.css';
-import ProgressTracker from './ProgressTracker';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // For default styles
 
 function StudentDashboard() {
-  const [showForm, setShowForm] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Selected date from calendar
-  const [loading, setLoading] = useState(true); // State for loading
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [highlightedDates, setHighlightedDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null); // Track the selected date
+  const [filteredNotifications, setFilteredNotifications] = useState([]); // Store filtered notifications
 
-  // Fetch events from the server when the component mounts
+  // Fetch notifications when the component mounts
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchNotifications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/events');
-        setEvents(response.data);
+        const response = await axios.get('http://localhost:5000/api/students/notifications', {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setNotifications(response.data);
         setLoading(false);
+
+        // Extract the dates from the notifications and convert them to Date objects
+        const dates = response.data.map(notification => new Date(notification.date).toLocaleDateString());
+        setHighlightedDates(dates);
+
+        // Initially filter notifications for today's date or no date selected
+        setFilteredNotifications(response.data.filter(notification =>
+          new Date(notification.date).toLocaleDateString() === new Date().toLocaleDateString()
+        ));
       } catch (error) {
-        console.error('Error fetching events:', error);
+        console.error('Error fetching notifications:', error);
         setLoading(false);
       }
     };
 
-    fetchEvents();
+    fetchNotifications();
   }, []);
 
-  // Function to add a new event
-  const addEvent = (newEvent) => {
-    try {
-      // Assuming the event is successfully added
-      setEvents([...events, { ...newEvent, id: events.length + 1 }]);
-      setShowForm(false);
-
-      // Display success message
-      window.alert('Event created successfully!');
-    } catch (error) {
-      console.error('Error creating event:', error);
-
-      // Display error message
-      window.alert('Error occurred while creating the event. Please try again.');
-    }
+  // Function to check if a date is highlighted
+  const tileClassName = ({ date }) => {
+    const dateString = date.toLocaleDateString();
+    return highlightedDates.includes(dateString) ? 'highlighted-date' : null;
   };
 
-  // Filter events from today or future
-  const getUpcomingEvents = () => {
-    const today = new Date().setHours(0, 0, 0, 0);
-    return events.filter((event) => {
-      const eventDate = new Date(event.date.split('/').reverse().join('-')).setHours(0, 0, 0, 0);
-      return eventDate >= today;
-    });
-  };
+  // Handle date selection
+  const handleDateClick = (date) => {
+    const selectedDateString = date.toLocaleDateString();
+    setSelectedDate(selectedDateString);
 
-  // Helper function to format a date to 'YYYY-MM-DD'
-  const formatDateToYYYYMMDD = (date) => {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
-
-  const getEventsForSelectedDate = () => {
-    const formattedSelectedDate = formatDateToYYYYMMDD(selectedDate); // Format as YYYY-MM-DD
-    return events.filter((event) => event.date === formattedSelectedDate);
-  };
-
-  // Check if selected date is today
-  const isTodaySelected = () => {
-    const today = new Date().toLocaleDateString('en-GB'); // Format today as DD/MM/YYYY
-    const selectedFormattedDate = selectedDate.toLocaleDateString('en-GB');
-    return today === selectedFormattedDate;
+    // Filter notifications based on the selected date
+    const notificationsForSelectedDate = notifications.filter(notification =>
+      new Date(notification.date).toLocaleDateString() === selectedDateString
+    );
+    setFilteredNotifications(notificationsForSelectedDate);
   };
 
   return (
@@ -89,39 +74,39 @@ function StudentDashboard() {
           </button>
         </Link>
       </div>
-      <div className='flex flex-row items-center w-full h-3/5 justify-center gap-32'>
+
+      <div className="flex flex-row items-start justify-center gap-16 px-16">
         {/* Calendar Section */}
-        <div className='flex flex-col items-center'>
-          <MyCalendar
-            onDateChange={(date) => {
-              setSelectedDate(date);
-            }}
-            events={events} // Pass events to mark dates on the calendar
+        <div className="calendar-container w-1/3">
+          <Calendar
+            tileClassName={tileClassName}
+            defaultValue={new Date()}
+            onClickDay={handleDateClick} // Set the handler for date click
           />
         </div>
 
-        {/* Right Section (Event List / Form) */}
-        <div className='w-1/3'>
+        {/* Notifications Section */}
+        <div className='flex flex-col items-center w-2/3 h-3/5 justify-center gap-8'>
           {loading ? (
-            <p>Loading events...</p>
-          ) : showForm ? (
-            <EventForm addEvent={addEvent} selectedDate={selectedDate} />
-          ) : isTodaySelected() ? (
-            <EventList content="Upcoming Events" events={getUpcomingEvents()} /> // Show upcoming events if today is selected
+            <p>Loading notifications...</p>
           ) : (
-            <EventList content="Events" events={getEventsForSelectedDate()} /> // Show events for selected date
+            filteredNotifications.length > 0 ? (
+              filteredNotifications.map((notification, index) => (
+                <div key={index} className="notification-card bg-gray-100 p-6 m-4 rounded-lg shadow-md w-full">
+                  <h3 className="text-lg font-bold mb-2 text-indigo-600">{notification.companyName}</h3>
+                  <p className="text-gray-700">Round: <strong>{notification.roundName}</strong></p>
+                  <p className="text-gray-700">Date: <strong>{new Date(notification.date).toLocaleDateString()}</strong></p>
+                  <p className="text-gray-700">Venue: <strong>{notification.venue}</strong></p>
+                </div>
+              ))
+            ) : (
+              <p>No notifications available for this date.</p>
+            )
           )}
         </div>
       </div>
-      {/* <div className='flex justify-center'>
-        <ProgressTracker />
-      </div> */}
     </>
   );
 }
 
 export default StudentDashboard;
-
-
-
-

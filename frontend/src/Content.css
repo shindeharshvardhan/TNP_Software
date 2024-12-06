@@ -80,3 +80,37 @@
   color: #aaa;
   cursor: not-allowed;
 }
+
+/* Bright and Professional Calendar Date Highlighting */
+.highlighted-date {
+  background-color: seashell; /* Light Sky Blue (bright and lively) */
+  color: #fff; /* White text for high contrast */
+  border-radius: 50%;
+  padding: 6px;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Soft shadow to give a little depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for calendar dates */
+.react-calendar__tile--hover {
+  background-color: #D8B5FF; /* Soft lavender/purple for hover effect */
+  color: #fff; /* White text */
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for hover */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Active (clicked) date effect */
+.react-calendar__tile--active {
+  background-color: #5C6BC0; /* Bright Indigo for the active date */
+  color: white; /* White text for good contrast */
+  border-radius: 50%;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Prominent shadow for active date */
+}
+
+/* Border for dates with active status */
+.react-calendar__tile--hasActive {
+  border: 2px solid #5C6BC0; /* Indigo border for active date */
+}
