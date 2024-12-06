@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const OfferLetter = require('./OfferLetter');
 
 // Define the Round schema
 const roundSchema = new mongoose.Schema({
@@ -62,7 +63,11 @@ const visitSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student' // Reference to the Student schema
     }],
-    rounds: [roundSchema] // Array of rounds associated with the visit
+    rounds: [roundSchema], // Array of rounds associated with the visit
+    offerLetters: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'OfferLetter' // Reference to the OfferLetter schema
+    }]
 });
 
 // Define the Company schema
