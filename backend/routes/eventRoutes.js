@@ -72,22 +72,40 @@ const {
     getEventsByCompany,
     getTasksByDate,
     deleteEvent,
-    createTaskForEvent,  // Import the new createTaskForEvent function
+    createTaskForEvent,
+    updateTask,
+    deleteTask,
+    getTasksForEvent,
+    getAllTasksForCompany, // New method for fetching all tasks for a company
 } = require("../controllers/eventController");
 
-// Route to create or update an event
+// Create or update an event
 router.post("/", createOrUpdateEvent);
 
-// Route to get events for a company
-router.get("/:companyId", getEventsByCompany);
+// Get all events for a specific company
+router.get("/company/:companyId", getEventsByCompany);
 
-// Route to get tasks by date
-router.get("/tasks", getTasksByDate);
+// Get all tasks for a specific company
+router.get("/company/:companyId/tasks", getAllTasksForCompany);
 
-// Route to delete an event by ID
+// Get tasks for a specific date (requires companyId and date as query parameters)
+router.get("/tasks-by-date", getTasksByDate);
+
+// Create a new task for a specific event
+router.post("/create-task", (req, res) => {
+    // console.log("Create task route hit");
+    createTaskForEvent(req, res);
+  });
+
+  router.put("/update-task", updateTask);
+
+  // Delete a specific task from an event
+  router.delete("/tasks/:companyId/:eventName/:taskId", deleteTask);
+  
+  // Get all tasks for a specific event
+  router.get("/tasks/:companyId/:eventName", getTasksForEvent);
+  
+// Delete an event by its ID
 router.delete("/:eventId", deleteEvent);
-
-// Route to create a task for an event
-router.post("/create-task", createTaskForEvent);
 
 module.exports = router;

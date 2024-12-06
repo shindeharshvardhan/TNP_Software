@@ -157,6 +157,7 @@ const Company_Description_Form = () => {
         internshipStipend:internshipStipend,
         internshipDuration:internshipDuration,
         trainingDetails: trainingDetails,
+        deadline: applicationDeadline,
         extraDetails: otherDetails || "",  // Assuming `otherDetails` is an optional field
         ...eligibilityCriteria,  // Spread the eligibility criteria
     };
@@ -176,7 +177,7 @@ const Company_Description_Form = () => {
   const loc = useLocation();
   const { companyName } = loc.state || {};
   const {company} =loc.state||{}
-  console.log(company)
+  console.log(company+"HIIIII")
  
   return (
     <form onSubmit={handleSubmit}>

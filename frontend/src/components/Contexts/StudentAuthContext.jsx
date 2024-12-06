@@ -23,11 +23,11 @@ export const StudentAuthProvider = ({ children }) => {
     console.log('Cookie Auth Status:', cookieAuthStatus);
     console.log('Cookie PRN:', cookiePrn);
 
-    if(!cookieAuthStatus || !cookiePrn) {
-      console.log("Cookies are missing or invalid. Invalidating localStorage.");
-      localStorage.removeItem("isStudentAuthenticated");
-      localStorage.removeItem("studentPrn");
-    }
+    // if(!cookieAuthStatus || !cookiePrn) {
+    //   console.log("Cookies are missing or invalid. Invalidating localStorage.");
+    //   localStorage.removeItem("isStudentAuthenticated");
+    //   localStorage.removeItem("studentPrn");
+    // }
 
     // Check if cookies or localStorage have valid data
     if ((storedAuthStatus === 'true' && storedPrn) || (cookieAuthStatus === 'true' && cookiePrn)) {

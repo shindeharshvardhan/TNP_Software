@@ -26,6 +26,12 @@ router.post('/login', (req, res, next) => {
         sameSite: 'Lax', // Prevent CSRF attacks
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       });
+      res.cookie('studentid', student._id, {
+        httpOnly: true, // Ensures the cookie is only sent via HTTP(S), not accessible via JavaScript
+        secure: false, // Only secure in production
+        sameSite: 'Lax', // Prevent CSRF attacks
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      });
       res.cookie('studentPrn', student.prn, {
         httpOnly: false, // Accessible via JavaScript (to read in context)
         secure: false, // Only secure in production

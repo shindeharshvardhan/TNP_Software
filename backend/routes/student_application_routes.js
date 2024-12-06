@@ -10,19 +10,41 @@ router.post('/accept-company', async (req, res) => {
     try {
         const { studentPrn, companyId } = req.body;
 
+        // Fetch the student object by PRN
         const student = await Student.findOne({ prn: studentPrn }).populate("companiesAccepted");
         if (!student) {
             return res.status(404).json({ error: "Student not found" });
         }
 
-        student.companiesAccepted = student.companiesAccepted || []; // Initialize if undefined
+        // Fetch the company object by companyId
+        const company = await Company.findById(companyId);
+        if (!company) {
+            return res.status(404).json({ error: "Company not found" });
+        }
 
+        // Check if the company is already accepted
+        student.companiesAccepted = student.companiesAccepted || [];
         if (student.companiesAccepted.includes(companyId)) {
             return res.status(400).json({ error: "Company already accepted" });
         }
 
+        // Add the company to the student's accepted list
+        console.log(companyId+"here")
         student.companiesAccepted.push(companyId);
         await student.save();
+
+        // Sort visits by date to get the latest visit
+        const visit = company.visits[company.visits.length-1];
+        if (!visit) {
+            return res.status(404).json({ error: "No valid visit found for this company" });
+        }
+
+        // Add the student's ObjectId to the appliedStudents array of the relevant visit
+        console.log("Student ID being added to the appliedStudents array:", student._id);
+        visit.appliedStudents.push(student._id);
+        
+        await company.save();
+        console.log("Company after applying student:", company); // Log after saving
 
         res.status(200).json({ message: "Company accepted successfully" });
     } catch (error) {
@@ -32,52 +54,22 @@ router.post('/accept-company', async (req, res) => {
 });
 
 
-// Route to handle "reject company"
-router.post('/reject-company', async (req, res) => {
-    const { studentPrn, companyId } = req.body;
-
-    console.log("Request received to reject company");
-    console.log("Student PRN:", studentPrn);
-    console.log("Company ID:", companyId);
-
-    if(!ObjectId.isValid(companyId)) {
-        console.error("Invalid company ID");
-        return res.status(400).json({ message: "Invalid company ID" });
-    }
-
+// Route to get accepted companies (student responses)
+router.get("/:studentPrn/responses", async (req, res) => {
     try {
-        // Find the student by PRN
-        const student = await Student.findOne({ prn: studentPrn });
+        const { studentPrn } = req.params;
+
+        const student = await Student.findOne({ prn: studentPrn }).populate("companiesAccepted");
         if (!student) {
-            console.error("Student not found");
-            return res.status(404).json({ error: 'Student not found' });
+            return res.status(404).json({ error: "Student not found" });
         }
-        console.log("Found student:", student);
 
-        if (student.companiesRejected.includes(companyId)) {
-            console.log("Student has already rejected this company");
-            return res.status(400).json({ error: 'Already rejected this company' });
-        }
-        
-        // Find the company by ID
-        const company = await Company.findById(companyId);
-        if(!company) {
-            console.error("Company not found");
-            return res.status(404).json({ message: "Company not found" });
-        }
-        console.log("Found company:", company);
+        const acceptedCompanies = student.companiesAccepted.map(company => company._id);
 
-        // Check if the student has already rejected this company
-
-        // Add the company ID to the companiesRejected array
-        student.companiesRejected.push(companyId);
-        await student.save();
-        console.log("Student record updated:", student);
-
-        return res.status(200).json({ message: 'Successfully rejected the company' });
+        res.status(200).json({ acceptedCompanies });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error' });
+        console.error("Error fetching student responses:", error);
+        res.status(500).json({ error: "Server error" });
     }
 });
 

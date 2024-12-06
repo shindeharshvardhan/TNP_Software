@@ -41,6 +41,8 @@ import StudentNotificationPage from "./components/student/StudentNotificationPag
 import { AuthContext } from "./components/Contexts/StudentAuthContext";
 import ProgressTracker from "./components/student/ProgressTracker";
 import CompanyCard from "./components/admin/CompanyCard";
+import Rounds from "./components/coordinator/Rounds";
+import Round from "./components/coordinator/Round";
 
 const App = () => {
 
@@ -194,6 +196,8 @@ const App = () => {
               path="/faculty-dashboard/assigncompanies"
               element={<AssignCoordinator />}
             />
+            {/* <Route path="/rounds" element={<Round/>}/> */}
+            <Route path="/rounds" element={<Rounds/>}/>
             <Route
               path="/faculty-dashboard/companylist"
               element={<CompanyList />}
